@@ -1,6 +1,5 @@
-/* global gapi */
-
 import React from "react";
+import { gapi } from "gapi-script";
 const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 
 const App = () => {
@@ -9,26 +8,20 @@ const App = () => {
   let isPlaylistLoaded = false;
   let pageToken = undefined;
   const loadYoutubeApi = () => {
-    const script = document.createElement("script");
-    script.src = "https://apis.google.com/js/client.js";
-    script.onload = () => {
-      gapi.load("client", () => {
-        gapi.client.setApiKey(API_KEY);
-        gapi.client.load("youtube", "v3", () => {
-          updateGapiState(true);
-          console.log(
-            gapi.client.youtube.channels.list({
-              part: "snippet,contentDetails,statistics",
-              id: "UC_x5XG1OV2P6uZZ5FSM9Ttw",
-            })
-          );
-        });
+    gapi.load("client", () => {
+      gapi.client.setApiKey(API_KEY);
+      gapi.client.load("youtube", "v3", () => {
+        updateGapiState(true);
+        console.log(
+          gapi.client.youtube.channels.list({
+            part: "snippet,contentDetails,statistics",
+            id: "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+          })
+        );
       });
-    };
-    document.body.appendChild(script);
+    });
   };
   const execute = () => {
-    console.log("click");
     return gapi.client.youtube.playlistItems
       .list({
         part: "snippet,contentDetails",
@@ -38,7 +31,6 @@ const App = () => {
       })
       .then(
         function (response) {
-          console.log("response");
           let vidsArr = vids;
           !isPlaylistLoaded && response.result.items.map((e) => vidsArr.push(e));
           updateVids(vidsArr);
