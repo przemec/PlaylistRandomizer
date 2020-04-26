@@ -1,46 +1,21 @@
 import React from "react";
 import { gapi } from "gapi-script";
-import TextField from "@material-ui/core/TextField";
-import SearchIcon from "@material-ui/icons/Search";
+import { TextField, Grid, Paper } from "@material-ui/core/";
+import * as S from "./style";
 
-const SearchBar = () => {
-  const [playlistLink, setLink] = React.useState("");
-  const [vids, updateVids] = React.useState([]);
-  let pageToken = undefined;
-  let isPlaylistLoaded = false;
-  const search = () => {
-    const id = playlistLink.split("list=");
-    console.log("id", id[1]);
-    console.log("plaps", playlistLink);
-    setLink(id);
-    console.log(vids);
-    gapi.client.youtube.playlistItems
-      .list({
-        part: "snippet,contentDetails",
-        maxResults: 50,
-        playlistId: id[1],
-        pageToken: pageToken,
-      })
-      .then(
-        function (response) {
-          let vidsArr = vids;
-          !isPlaylistLoaded && response.result.items.map((e) => vidsArr.push(e));
-          updateVids(vidsArr);
-          if (response.result.nextPageToken) {
-            pageToken = response.result.nextPageToken;
-            search();
-          } else isPlaylistLoaded = true;
-        },
-        function (err) {
-          console.error("Execute error", err);
-        }
-      );
-  };
+const SearchBar = ({ search }) => {
+  const [playlistLink, setLink] = React.useState("https://www.youtube.com/playlist?list=PLkcsM8kKgr7Z6xpqX78ZgzEip4l96Sbux");
   return (
-    <>
-      <TextField value={playlistLink} onChange={(e) => setLink(e.target.value)} label="Playlist Link" />
-      <SearchIcon onClick={search} />
-    </>
+    <S.StyledPaper>
+      <S.FullHeight container direction="row" justify="center" alignItems="center">
+        <S.TextFieldCont item>
+          <TextField fullWidth value={playlistLink} onChange={(e) => setLink(e.target.value)} label="Playlist Link" />
+        </S.TextFieldCont>
+        <S.SearchCont item>
+          <S.StyledArrow onClick={() => search(playlistLink)} />
+        </S.SearchCont>
+      </S.FullHeight>
+    </S.StyledPaper>
   );
 };
 
