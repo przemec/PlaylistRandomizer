@@ -1,11 +1,17 @@
 import React from "react";
-import { gapi } from "gapi-script";
+import { Grid } from "@material-ui/core/";
+import * as S from "./style";
 
-const SingleResult = ({ song, index }) => {
+const SingleResult = ({ song, index, changeSong }) => {
+  const { thumbnails, title } = song.snippet;
   return (
-    <div>
-      {index + 1}. {song.snippet.title}
-    </div>
+    <S.StyledContainer container justify="flex-start" alignContent="center" onClick={() => changeSong(song.snippet.resourceId.videoId)}>
+      <Grid style={{ lineHeight: "90px" }}>{index + 1}.</Grid>
+      {thumbnails && (
+        <Grid style={{ background: `url(${thumbnails.medium.url})`, width: "160px", height: "90px", backgroundSize: "160px 90px" }} />
+      )}
+      <Grid style={{ lineHeight: "90px" }}>{title}</Grid>
+    </S.StyledContainer>
   );
 };
 

@@ -1,13 +1,14 @@
 import React from "react";
 import { gapi } from "gapi-script";
 import SearchBar from "./components/SearchBar";
-import ResultsGroup from "./modules/ResultsGroup";
+import ResultsScreen from "./modules/ResultsScreen";
 import { Grid } from "@material-ui/core/";
 const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 
 const App = () => {
-  let [gapiReady, updateGapiState] = React.useState(false);
-  let [playlistLoaded, updatePLState] = React.useState(false);
+  const [gapiReady, updateGapiState] = React.useState(false);
+  const [playlistLoaded, updatePLState] = React.useState(false);
+  const [currentSong, changeSong] = React.useState(undefined);
   const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
   let isPlaylistLoaded = false;
@@ -24,10 +25,6 @@ const App = () => {
   });
   const search = (playlistLink) => {
     const id = playlistLink.split("list=");
-    // console.log("id", id[1]);
-    // console.log("plaps", playlistLink);
-    // setLink(id);
-    console.log(vids);
     gapi.client.youtube.playlistItems
       .list({
         part: "snippet,contentDetails",
@@ -40,11 +37,13 @@ const App = () => {
           let vidsArr = vids;
           !isPlaylistLoaded && response.result.items.map((e) => vidsArr.push(e));
           updateVids(vidsArr);
+          console.log(vidsArr);
           if (response.result.nextPageToken) {
             pageToken = response.result.nextPageToken;
             search(playlistLink);
           } else {
             updatePLState(true);
+            changeSong(vidsArr[0].snippet.resourceId.videoId);
             isPlaylistLoaded = true;
           }
         },
@@ -57,7 +56,7 @@ const App = () => {
     gapiReady && (
       <Grid container direction="row" justify="center" alignItems="center" style={{ height: "100vh" }}>
         {!playlistLoaded && <SearchBar search={search} />}
-        {playlistLoaded && <ResultsGroup songs={vids} />}
+        {playlistLoaded && <ResultsScreen songs={vids} id={currentSong} changeSong={changeSong} />}
       </Grid>
     )
   );

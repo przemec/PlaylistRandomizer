@@ -1,10 +1,9 @@
 import React from "react";
-import { gapi } from "gapi-script";
-import { TextField, Grid, Paper } from "@material-ui/core/";
+import { TextField } from "@material-ui/core/";
 import * as S from "./style";
 
 const SearchBar = ({ search }) => {
-  const [playlistLink, setLink] = React.useState("https://www.youtube.com/playlist?list=PLkcsM8kKgr7Z6xpqX78ZgzEip4l96Sbux");
+  const [playlistLink, setLink] = React.useState("https://www.youtube.com/playlist?list=PLkcsM8kKgr7btMOtpx6ddVlF1qEnfkBpU");
   return (
     <S.StyledPaper>
       <S.FullHeight container direction="row" justify="center" alignItems="center">
