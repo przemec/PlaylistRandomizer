@@ -8,7 +8,6 @@ const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 const App = () => {
   const [gapiReady, updateGapiState] = React.useState(false);
   const [playlistLoaded, updatePLState] = React.useState(false);
-  const [currentSong, changeSong] = React.useState(undefined);
   const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
   let isPlaylistLoaded = false;
@@ -42,8 +41,7 @@ const App = () => {
             pageToken = response.result.nextPageToken;
             search(playlistLink);
           } else {
-            updatePLState(true);
-            changeSong(vidsArr[0].snippet.resourceId.videoId);
+            updatePLState(id[1]);
             isPlaylistLoaded = true;
           }
         },
@@ -56,7 +54,7 @@ const App = () => {
     gapiReady && (
       <Grid container direction="row" justify="center" alignItems="center" style={{ height: "100vh" }}>
         {!playlistLoaded && <SearchBar search={search} />}
-        {playlistLoaded && <ResultsScreen songs={vids} id={currentSong} changeSong={changeSong} />}
+        {playlistLoaded && <ResultsScreen songs={vids} playlistID={playlistLoaded} />}
       </Grid>
     )
   );

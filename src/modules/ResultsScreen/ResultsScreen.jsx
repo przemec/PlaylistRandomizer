@@ -1,11 +1,14 @@
 import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
 
-const ResultsScreen = ({ songs, id, changeSong }) => {
-  const [player, setPlayer] = React.useState(undefined);
+const ResultsScreen = ({ songs }) => {
+  const [player, setPlayer] = React.useState(0);
   const onPlayerReady = (e) => {
-    console.log("onPlayerReady");
-    e.target.playVideo();
+    let arr = [];
+    songs.map((ev) => {
+      arr.push(ev.snippet.resourceId.videoId);
+    });
+    e.target.loadPlaylist(arr);
   };
   if (!window.YT) {
     let c = document.getElementsByTagName("script").length;
@@ -26,16 +29,15 @@ const ResultsScreen = ({ songs, id, changeSong }) => {
       new window.YT.Player("youtube-player", {
         height: "315",
         width: "560",
-        videoId: id,
+        videoId: songs[0].snippet.resourceId.videoId,
         events: {
-          onReady: () => onPlayerReady,
+          onReady: onPlayerReady,
         },
       })
     );
   };
-  const playSong = (id) => {
-    player.loadVideoById(id);
-    changeSong(id);
+  const playSong = (index) => {
+    player.playVideoAt(index);
   };
   return (
     <>
