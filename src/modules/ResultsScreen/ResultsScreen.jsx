@@ -4,10 +4,7 @@ import ResultsGroup from "../../modules/ResultsGroup";
 const ResultsScreen = ({ songs }) => {
   const [player, setPlayer] = React.useState(0);
   const onPlayerReady = (e) => {
-    let arr = [];
-    songs.map((ev) => {
-      arr.push(ev.snippet.resourceId.videoId);
-    });
+    const arr = songs.map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
   };
   if (!window.YT) {

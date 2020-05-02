@@ -10,7 +10,6 @@ const App = () => {
   const [playlistLoaded, updatePLState] = React.useState(false);
   const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
-  let isPlaylistLoaded = false;
   const loadYoutubeApi = () => {
     gapi.load("client", () => {
       gapi.client.setApiKey(API_KEY);
@@ -34,15 +33,16 @@ const App = () => {
       .then(
         function (response) {
           let vidsArr = vids;
-          !isPlaylistLoaded && response.result.items.map((e) => vidsArr.push(e));
+          response.result.items.map((e) => vidsArr.push(e));
           updateVids(vidsArr);
           console.log(vidsArr);
           if (response.result.nextPageToken) {
             pageToken = response.result.nextPageToken;
             search(playlistLink);
           } else {
-            updatePLState(id[1]);
-            isPlaylistLoaded = true;
+            vidsArr.sort(() => Math.random() - 0.5);
+            updateVids(vidsArr);
+            updatePLState(true);
           }
         },
         function (err) {
@@ -54,7 +54,7 @@ const App = () => {
     gapiReady && (
       <Grid container direction="row" justify="center" alignItems="center" style={{ height: "100vh" }}>
         {!playlistLoaded && <SearchBar search={search} />}
-        {playlistLoaded && <ResultsScreen songs={vids} playlistID={playlistLoaded} />}
+        {playlistLoaded && <ResultsScreen songs={vids} />}
       </Grid>
     )
   );
