@@ -1,6 +1,5 @@
 import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
-import { Helmet } from "react-helmet";
 
 const ResultsScreen = ({ songs }) => {
   const [player, setPlayer] = React.useState();
@@ -11,6 +10,7 @@ const ResultsScreen = ({ songs }) => {
   };
   const onPlayerStateChange = (e) => {
     updateIndex(e.target.getPlaylistIndex());
+    document.title = songs[e.target.getPlaylistIndex()].snippet.title;
   };
   if (!window.YT) {
     let c = document.getElementsByTagName("script").length;
@@ -44,11 +44,8 @@ const ResultsScreen = ({ songs }) => {
   };
   return (
     <>
-      <Helmet>
-        <title>{songs[currentIndex].snippet.title}</title>
-      </Helmet>
       <div id="youtube-player" />
-      <ResultsGroup songs={songs} changeSong={playSong} />
+      <ResultsGroup songs={songs} changeSong={playSong} currentIndex={currentIndex} />
     </>
   );
 };
