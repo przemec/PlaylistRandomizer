@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core/";
 import * as S from "./style";
 
-const SingleResult = ({ song, index, changeSong }) => {
+const SingleResult = ({ song, index, changeSong, isPlaying }) => {
   const { thumbnails, title, resourceId } = song.snippet;
   return (
     <S.StyledContainer
