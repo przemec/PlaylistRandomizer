@@ -11,6 +11,8 @@ const ResultsScreen = ({ songs }) => {
   const onPlayerStateChange = (e) => {
     updateIndex(e.target.getPlaylistIndex());
     document.title = songs[e.target.getPlaylistIndex()].snippet.title;
+    let elmnt = document.getElementById(songs[e.target.getPlaylistIndex()].snippet.resourceId.videoId);
+    elmnt.scrollIntoView();
   };
   if (!window.YT) {
     let c = document.getElementsByTagName("script").length;
