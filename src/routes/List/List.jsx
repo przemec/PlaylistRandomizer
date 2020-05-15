@@ -1,7 +1,6 @@
 import React from "react";
 import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
-import { Grid } from "@material-ui/core/";
 
 const List = ({ match }) => {
   const [playlistLoaded, updatePLState] = React.useState(false);
@@ -38,12 +37,7 @@ const List = ({ match }) => {
         }
       );
   };
-  return (
-    <Grid container direction="row" justify="center" alignItems="center" style={{ height: "100vh" }}>
-      {!playlistLoaded && <></>}
-      {playlistLoaded && <ResultsScreen songs={vids} />}
-    </Grid>
-  );
+  return <>{playlistLoaded && <ResultsScreen songs={vids} />}</>;
 };
 
 export default List;
