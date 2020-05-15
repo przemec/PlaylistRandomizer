@@ -4,12 +4,12 @@ import ResultsScreen from "../../modules/ResultsScreen";
 import { Grid } from "@material-ui/core/";
 
 const List = ({ match }) => {
-  React.useEffect(() => {
-    match.params.id && search(match.params.id);
-  });
   const [playlistLoaded, updatePLState] = React.useState(false);
   const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
+  React.useEffect(() => {
+    match.params.id && !playlistLoaded && search(match.params.id);
+  });
   const search = (id) => {
     gapi.client.youtube.playlistItems
       .list({
