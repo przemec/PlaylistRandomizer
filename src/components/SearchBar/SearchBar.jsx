@@ -3,7 +3,7 @@ import { TextField } from "@material-ui/core/";
 import * as S from "./style";
 
 const SearchBar = ({ search }) => {
-  const [playlistLink, setLink] = React.useState("https://www.youtube.com/playlist?list=PLkcsM8kKgr7btMOtpx6ddVlF1qEnfkBpU");
+  const [playlistLink, setLink] = React.useState("");
   return (
     <S.StyledPaper>
       <S.FullHeight container direction="row" justify="center" alignItems="center">
