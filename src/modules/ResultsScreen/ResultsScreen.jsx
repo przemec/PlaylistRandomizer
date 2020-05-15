@@ -1,5 +1,6 @@
 import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
+import { Grid } from "@material-ui/core";
 
 const ResultsScreen = ({ songs }) => {
   const [player, setPlayer] = React.useState();
@@ -7,6 +8,10 @@ const ResultsScreen = ({ songs }) => {
   const onPlayerReady = (e) => {
     const arr = songs.map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
+    const that = e.target;
+    setTimeout(() => {
+      that.stopVideo();
+    }, 1000);
   };
   const onPlayerStateChange = (e) => {
     updateIndex(e.target.getPlaylistIndex());
@@ -45,10 +50,14 @@ const ResultsScreen = ({ songs }) => {
     player.playVideoAt(index);
   };
   return (
-    <>
-      <div id="youtube-player" />
-      <ResultsGroup songs={songs} changeSong={playSong} currentIndex={currentIndex} />
-    </>
+    <Grid container style={{ height: "100vh" }}>
+      <Grid item container xs={12} lg={5} justify="center" alignItems="center">
+        <div id="youtube-player" />
+      </Grid>
+      <Grid item container xs={12} lg={7} justify="center" alignItems="center">
+        <ResultsGroup songs={songs} changeSong={playSong} currentIndex={currentIndex} />
+      </Grid>
+    </Grid>
   );
 };
 
