@@ -36,8 +36,8 @@ const ResultsScreen = ({ songs }) => {
   window.onYouTubeIframeAPIReady = () => {
     setPlayer(
       new window.YT.Player("youtube-player", {
-        height: "315",
-        width: "560",
+        height: "345",
+        width: "615",
         videoId: songs[0].snippet.resourceId.videoId,
         events: {
           onReady: onPlayerReady,
