@@ -1,6 +1,7 @@
 import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
 import { Grid } from "@material-ui/core";
+import * as S from "./style";
 
 const ResultsScreen = ({ songs }) => {
   const [player, setPlayer] = React.useState();
@@ -36,8 +37,6 @@ const ResultsScreen = ({ songs }) => {
   window.onYouTubeIframeAPIReady = () => {
     setPlayer(
       new window.YT.Player("youtube-player", {
-        height: "345",
-        width: "615",
         videoId: songs[0].snippet.resourceId.videoId,
         events: {
           onReady: onPlayerReady,
@@ -51,10 +50,13 @@ const ResultsScreen = ({ songs }) => {
   };
   return (
     <Grid container style={{ height: "100vh" }}>
-      <Grid item container xs={12} lg={5} justify="center" alignItems="center">
-        <div id="youtube-player" />
-      </Grid>
-      <Grid item container xs={12} lg={7} justify="center" alignItems="center">
+      <S.PlayerContainer item xs={12} lg={6}>
+        <S.Title>{songs[currentIndex].snippet.title}</S.Title>
+        <S.PlayerWrapper>
+          <S.Player id="youtube-player" />
+        </S.PlayerWrapper>
+      </S.PlayerContainer>
+      <Grid item container xs={12} lg={6} justify="center" alignItems="center">
         <ResultsGroup songs={songs} changeSong={playSong} currentIndex={currentIndex} />
       </Grid>
     </Grid>
