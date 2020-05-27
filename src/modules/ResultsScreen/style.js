@@ -12,8 +12,9 @@ export const PlayerContainer = styled(Grid)`
 
 export const PlayerWrapper = styled(Grid)`
   position: relative;
-  padding-bottom: 45%;
+  padding-bottom: min(45%, 450px);
   height: 0;
+  max-width: 800px;
 `;
 
 export const Player = styled(Grid)`
@@ -27,6 +28,7 @@ export const Player = styled(Grid)`
 export const Title = styled(Grid)`
   font-size: 2vh;
   margin: 10px 0;
+  max-width: 800px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
