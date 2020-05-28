@@ -50,15 +50,15 @@ const ResultsScreen = ({ songs }) => {
   };
   return (
     <Grid container style={{ height: "100vh" }}>
-      <S.PlayerContainer item xs={12} lg={6}>
+      <S.PlayerContainer item xs={12} md={6} lg={5}>
         <S.Title>{songs[currentIndex].snippet.title}</S.Title>
         <S.PlayerWrapper>
           <S.Player id="youtube-player" />
         </S.PlayerWrapper>
       </S.PlayerContainer>
-      <Grid item container xs={12} lg={6} justify="center" alignItems="center">
+      <S.ResultsContainer item container xs={12} md={6} lg={7} justify="center" alignItems="center">
         <ResultsGroup songs={songs} changeSong={playSong} currentIndex={currentIndex} />
-      </Grid>
+      </S.ResultsContainer>
     </Grid>
   );
 };

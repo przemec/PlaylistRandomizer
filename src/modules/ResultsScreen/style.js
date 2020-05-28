@@ -5,6 +5,16 @@ export const PlayerContainer = styled(Grid)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  @media (max-width: 960px) {
+    height: 52%;
+  }
+  @media (max-width: 800px) {
+    height: 50%;
+  }
+  @media (max-width: 600px) {
+    height: 40%;
+  }
   & > * {
     width: 80%;
   }
@@ -32,4 +42,17 @@ export const Title = styled(Grid)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+`;
+
+export const ResultsContainer = styled(Grid)`
+  height: 100%;
+  @media (max-width: 960px) {
+    height: 48%;
+  }
+  @media (max-width: 800px) {
+    height: 50%;
+  }
+  @media (max-width: 600px) {
+    height: 60%;
+  }
 `;
