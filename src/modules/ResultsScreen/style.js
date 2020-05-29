@@ -6,7 +6,9 @@ export const PlayerContainer = styled(Grid)`
   flex-direction: column;
   align-items: center;
   height: 100%;
+  width: 60%;
   @media (max-width: 960px) {
+    width: 100%;
     height: 52%;
   }
   @media (max-width: 800px) {
@@ -17,6 +19,26 @@ export const PlayerContainer = styled(Grid)`
   }
   & > * {
     width: 80%;
+  }
+`;
+
+export const ResultsContainer = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 40%;
+  max-width: 800px;
+  @media (max-width: 960px) {
+    max-width: unset;
+    width: 100%;
+    height: 48%;
+  }
+  @media (max-width: 800px) {
+    height: 50%;
+  }
+  @media (max-width: 600px) {
+    height: 60%;
   }
 `;
 
@@ -42,17 +64,4 @@ export const Title = styled(Grid)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-`;
-
-export const ResultsContainer = styled(Grid)`
-  height: 100%;
-  @media (max-width: 960px) {
-    height: 48%;
-  }
-  @media (max-width: 800px) {
-    height: 50%;
-  }
-  @media (max-width: 600px) {
-    height: 60%;
-  }
 `;
