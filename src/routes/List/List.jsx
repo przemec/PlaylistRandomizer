@@ -1,6 +1,7 @@
 import React from "react";
 import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
+import LoadingPanel from "../../components/LoadingPanel";
 
 const List = ({ match }) => {
   const [playlistLoaded, updatePLState] = React.useState(false);
@@ -22,7 +23,6 @@ const List = ({ match }) => {
           let vidsArr = vids;
           response.result.items.map((e) => vidsArr.push(e));
           updateVids(vidsArr);
-          console.log(vidsArr);
           if (response.result.nextPageToken) {
             pageToken = response.result.nextPageToken;
             search(id);
@@ -37,7 +37,8 @@ const List = ({ match }) => {
         }
       );
   };
-  return <>{playlistLoaded && <ResultsScreen songs={vids} />}</>;
+  if (playlistLoaded) return <ResultsScreen songs={vids} />;
+  return <LoadingPanel />;
 };
 
 export default List;
