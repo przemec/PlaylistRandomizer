@@ -20,7 +20,7 @@ const ResultsScreen = () => {
     updateIndex(e.target.getPlaylistIndex());
     document.title = songs[e.target.getPlaylistIndex()].snippet.title;
     let elmnt = document.getElementById(songs[e.target.getPlaylistIndex()].snippet.resourceId.videoId);
-    elmnt.scrollIntoView();
+    elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
   };
   if (!window.YT) {
     let c = document.getElementsByTagName("script").length;
