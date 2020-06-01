@@ -2,9 +2,11 @@ import React from "react";
 import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
+import LoadingError from "../../components/LoadingError";
 
 const List = ({ match }) => {
   const [playlistLoaded, updatePLState] = React.useState(false);
+  const [loadingErr, loadErr] = React.useState(false);
   const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
   React.useEffect(() => {
@@ -33,12 +35,15 @@ const List = ({ match }) => {
           }
         },
         function (err) {
-          console.error("Execute error", err);
+          if (err.result.error.code === (404 || 403)) {
+            loadErr(true);
+          }
         }
       );
   };
   if (playlistLoaded) return <ResultsScreen songs={vids} />;
-  return <LoadingPanel />;
+  else if (loadingErr) return <LoadingError />;
+  else return <LoadingPanel />;
 };
 
 export default List;
