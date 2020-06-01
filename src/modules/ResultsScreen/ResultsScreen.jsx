@@ -1,9 +1,11 @@
 import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
 import { Grid } from "@material-ui/core";
+import { store } from "../../store";
 import * as S from "./style";
 
-const ResultsScreen = ({ songs }) => {
+const ResultsScreen = () => {
+  const songs = store.getState().playlist;
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const onPlayerReady = (e) => {

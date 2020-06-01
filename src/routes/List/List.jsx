@@ -3,11 +3,12 @@ import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 import LoadingError from "../../components/LoadingError";
+import { loadPlaylist, randomizePlaylist } from "../../store/actions";
+import { store } from "../../store";
 
 const List = ({ match }) => {
   const [playlistLoaded, updatePLState] = React.useState(false);
   const [loadingErr, loadErr] = React.useState(false);
-  const [vids, updateVids] = React.useState([]);
   let pageToken = undefined;
   React.useEffect(() => {
     match.params.id && !playlistLoaded && search(match.params.id);
@@ -22,15 +23,12 @@ const List = ({ match }) => {
       })
       .then(
         function (response) {
-          let vidsArr = vids;
-          response.result.items.map((e) => vidsArr.push(e));
-          updateVids(vidsArr);
+          store.dispatch(loadPlaylist(response.result.items));
           if (response.result.nextPageToken) {
             pageToken = response.result.nextPageToken;
             search(id);
           } else {
-            vidsArr.sort(() => Math.random() - 0.5);
-            updateVids(vidsArr);
+            store.dispatch(randomizePlaylist());
             updatePLState(true);
           }
         },
@@ -41,7 +39,7 @@ const List = ({ match }) => {
         }
       );
   };
-  if (playlistLoaded) return <ResultsScreen songs={vids} />;
+  if (playlistLoaded) return <ResultsScreen />;
   else if (loadingErr) return <LoadingError />;
   else return <LoadingPanel />;
 };
