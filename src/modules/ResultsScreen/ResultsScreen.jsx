@@ -2,10 +2,11 @@ import React from "react";
 import ResultsGroup from "../../modules/ResultsGroup";
 import { Grid } from "@material-ui/core";
 import { store } from "../../store";
+import { randomizePlaylist } from "../../store/actions";
 import * as S from "./style";
 
 const ResultsScreen = () => {
-  const [pages] = React.useState(store.getState().playlist);
+  const [pages, updatePages] = React.useState(store.getState().playlist);
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
@@ -69,6 +70,12 @@ const ResultsScreen = () => {
     } else {
       player.playVideoAt(index);
     }
+  };
+  const shuffle = async () => {
+    await store.dispatch(randomizePlaylist());
+    updatePages(store.getState().playlist);
+    const arr = store.getState().playlist[0].map((ev) => ev.snippet.resourceId.videoId);
+    player.loadPlaylist(arr);
   };
   return (
     <Grid container style={{ height: "100vh" }}>
