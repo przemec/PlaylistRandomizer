@@ -3,7 +3,7 @@ import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 import LoadingError from "../../components/LoadingError";
-import { loadPlaylist, randomizePlaylist } from "../../store/actions";
+import { loadPlaylist, slicePlaylist, randomizePlaylist } from "../../store/actions";
 import { store } from "../../store";
 
 const List = ({ match }) => {
@@ -28,6 +28,7 @@ const List = ({ match }) => {
             pageToken = response.result.nextPageToken;
             search(id);
           } else {
+            store.dispatch(slicePlaylist());
             store.dispatch(randomizePlaylist());
             updatePLState(true);
           }

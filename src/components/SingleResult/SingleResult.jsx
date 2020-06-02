@@ -1,11 +1,11 @@
 import React from "react";
 import * as S from "./style";
 
-const SingleResult = ({ song, index, changeSong, isPlaying, lp }) => {
-  const { thumbnails, title, resourceId } = song.snippet;
+const SingleResult = ({ song, index, page, changeSong, isPlaying, lp }) => {
+  const { thumbnails, title } = song.snippet;
   return (
-    <S.StyledContainer onClick={() => changeSong(index)} id={resourceId.videoId} isplaying={isPlaying ? 1 : 0}>
-      <S.StyledLp lp={lp}>{index + 1}.</S.StyledLp>
+    <S.StyledContainer onClick={() => changeSong(index, page)} id={`index${index}`} isplaying={isPlaying ? 1 : 0}>
+      <S.StyledLp lp={lp}>{index + 1 + page * 200}.</S.StyledLp>
       {thumbnails && thumbnails.medium && <S.Thumbnail thumb={thumbnails.medium.url} />}
       <S.StyledTitle lp={lp}>{title}</S.StyledTitle>
     </S.StyledContainer>
