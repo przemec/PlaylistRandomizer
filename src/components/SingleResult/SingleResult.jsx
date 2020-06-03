@@ -7,7 +7,9 @@ const SingleResult = ({ song, index, page, changeSong, isPlaying, lp }) => {
     <S.StyledContainer onClick={() => changeSong(index, page)} id={`index${index}`} isplaying={isPlaying ? 1 : 0}>
       <S.StyledLp lp={lp}>{index + 1 + page * 200}.</S.StyledLp>
       {thumbnails && thumbnails.medium && <S.Thumbnail thumb={thumbnails.medium.url} />}
-      <S.StyledTitle lp={lp}>{title}</S.StyledTitle>
+      <S.StyledTitle lp={lp} className="title">
+        {title}
+      </S.StyledTitle>
     </S.StyledContainer>
   );
 };

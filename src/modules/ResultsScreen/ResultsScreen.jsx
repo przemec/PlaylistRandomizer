@@ -24,11 +24,12 @@ const ResultsScreen = () => {
     const arr = pages[currentPage].map((ev) => ev.snippet.resourceId.videoId);
     e.target.playerInfo.playlist = arr;
     updateIndex(e.target.getPlaylistIndex());
-    document.title = pages[currentPage][e.target.getPlaylistIndex()].snippet.title;
     let elmnt = document.getElementById(`index${e.target.getPlaylistIndex()}`);
-    elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-    if (e.target.getPlayerState() === 0 && e.target.getPlaylistIndex() === 199) {
-      displayNext(true);
+    const title = elmnt.getElementsByClassName(`title`)[0].innerHTML;
+    document.title = title;
+    if (e.target.getPlayerState() === 0) {
+      elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      e.target.getPlaylistIndex() === 199 && displayNext(true);
     }
   };
   if (!window.YT) {
@@ -57,10 +58,22 @@ const ResultsScreen = () => {
     );
   };
   const nextPage = () => {
-    updatePage(playingPage + 1);
-    playSong(0, playingPage + 1);
-    updateIndex(0);
-    displayNext(false);
+    if (pages[currentPage + 1]) {
+      updatePage(currentPage + 1);
+    }
+  };
+  const previousPage = () => {
+    if (pages[currentPage - 1]) {
+      updatePage(currentPage - 1);
+    }
+  };
+  const playNextPage = () => {
+    if (pages[playingPage + 1]) {
+      updatePage(playingPage + 1);
+      playSong(0, playingPage + 1);
+      updateIndex(0);
+      displayNext(false);
+    }
   };
   const playSong = (index, page) => {
     if (page !== playingPage) {
@@ -84,10 +97,16 @@ const ResultsScreen = () => {
         <S.PlayerWrapper>
           <S.Player id="youtube-player" />
         </S.PlayerWrapper>
-        {nextDisplay && <S.Button200 onClick={nextPage}>Click to play next 200 songs</S.Button200>}
+        {nextDisplay && <S.Button200 onClick={playNextPage}>Click to play next 200 songs</S.Button200>}
       </S.PlayerContainer>
       <S.ResultsContainer item>
-        <ResultsGroup songs={pages[currentPage]} page={currentPage} changeSong={playSong} currentIndex={currentIndex} />
+        <ResultsGroup
+          songs={pages[currentPage]}
+          page={currentPage}
+          isHighlighted={playingPage === currentPage}
+          changeSong={playSong}
+          currentIndex={currentIndex}
+        />
       </S.ResultsContainer>
     </Grid>
   );

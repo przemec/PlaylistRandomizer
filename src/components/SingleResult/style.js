@@ -13,7 +13,7 @@ export const StyledContainer = styled(Grid)`
 export const StyledLp = styled(Grid)`
   font-size: 2vh;
   text-align: center;
-  width: ${({ lp }) => `${lp * 11}px`};
+  width: ${({ lp }) => `calc(${lp * 11}px + 4px)`};
 `;
 
 export const StyledTitle = styled(Grid)`
@@ -22,7 +22,7 @@ export const StyledTitle = styled(Grid)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - ${({ lp }) => `${lp * 11}px - 16vh`});
+  width: calc(100% - ${({ lp }) => `${lp * 11}px - 16vh - 4px`});
 `;
 
 export const Thumbnail = styled(Grid)`
