@@ -7,7 +7,7 @@ const ResultsGroup = ({ songs, page, changeSong, currentIndex, isHighlighted }) 
   const arr = songs.map((e, i) => (
     <SingleResult key={i} song={e} index={i} changeSong={changeSong} isPlaying={currentIndex === i && isHighlighted} lp={lp} page={page} />
   ));
-  return <S.StyledList>{arr}</S.StyledList>;
+  return <S.StyledList id="songlist">{arr}</S.StyledList>;
 };
 
 export default ResultsGroup;

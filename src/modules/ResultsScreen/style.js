@@ -66,6 +66,11 @@ export const Title = styled(Grid)`
   overflow: hidden;
 `;
 
+export const TitleNext = styled(Title)`
+  font-size: 1.8vh;
+  margin-top: 0;
+`;
+
 export const Button200 = styled(Grid)`
   width: 250px;
   height: 100px;
