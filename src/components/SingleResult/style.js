@@ -16,7 +16,9 @@ export const StyledLp = styled(Grid)`
   width: ${({ lp }) => `calc(${lp * 11}px + 4px)`};
 `;
 
-export const StyledTitle = styled(Grid)`
+export const StyledTitle = styled.a`
+  text-decoration: none;
+  color: black;
   font-size: 1.8vh;
   padding: 0 5px;
   white-space: nowrap;
