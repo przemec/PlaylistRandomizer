@@ -7,9 +7,9 @@ export const PlayerContainer = styled(Grid)`
   align-items: center;
   height: 100%;
   width: 60%;
-  @media (max-width: 960px) {
+  @media (max-width: 959px) {
     width: 100%;
-    height: 52%;
+    height: 57%;
   }
   @media (max-width: 800px) {
     height: 50%;
@@ -23,22 +23,26 @@ export const PlayerContainer = styled(Grid)`
 `;
 
 export const ResultsContainer = styled(Grid)`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
   width: 40%;
   max-width: 800px;
-  @media (max-width: 960px) {
+  @media (max-width: 959px) {
     max-width: unset;
     width: 100%;
-    height: 48%;
+    height: 43%;
   }
   @media (max-width: 800px) {
     height: 50%;
   }
   @media (max-width: 600px) {
     height: 60%;
+  }
+  &:hover .listControl {
+    opacity: 1;
   }
 `;
 

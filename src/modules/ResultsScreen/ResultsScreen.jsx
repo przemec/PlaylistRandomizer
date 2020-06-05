@@ -1,8 +1,9 @@
 import React from "react";
-import ResultsGroup from "../../modules/ResultsGroup";
 import { Grid } from "@material-ui/core";
 import { store } from "../../store";
 import { randomizePlaylist } from "../../store/actions";
+import ResultsGroup from "../../modules/ResultsGroup";
+import ListControl from "../../components/ListControl";
 import * as S from "./style";
 
 const ResultsScreen = () => {
@@ -102,12 +103,13 @@ const ResultsScreen = () => {
       </S.PlayerContainer>
       <S.ResultsContainer item>
         <ResultsGroup
-          songs={songs[currentPage]}
+          songs={songs}
           page={currentPage}
           isHighlighted={playingPage === currentPage}
           changeSong={playSong}
           currentIndex={currentIndex}
         />
+        {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
       </S.ResultsContainer>
     </Grid>
   );
