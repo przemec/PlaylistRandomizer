@@ -5,6 +5,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 export const StyledPaper = styled(Paper)`
   width: 40vw;
   height: 25vh;
+  min-width: 320px;
+  max-height: 200px;
   background: rgba(0, 0, 55, 0.1);
 `;
 
