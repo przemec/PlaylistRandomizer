@@ -7,18 +7,31 @@ export const PlayerContainer = styled(Grid)`
   align-items: center;
   height: 100%;
   width: 60%;
-  @media (max-width: 959px) {
+  & > * {
+    width: 80%;
+  }
+  @media (max-width: 959px) and (min-height: 900px) {
     width: 100%;
     height: 57%;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 800px) and (min-height: 900px) {
     height: 50%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 600px) and (min-height: 900px) {
     height: 40%;
   }
-  & > * {
-    width: 80%;
+  @media (max-width: 730px) and (max-height: 899px) {
+    width: 100%;
+    height: 60%;
+  }
+  @media (max-width: 650px) and (max-height: 899px) {
+    height: 55%;
+  }
+  @media (max-width: 580px) and (max-height: 899px) {
+    height: 50%;
+  }
+  @media (max-width: 420px) and (max-height: 899px) {
+    height: 40%;
   }
 `;
 
@@ -30,15 +43,28 @@ export const ResultsContainer = styled(Grid)`
   height: 100%;
   width: 40%;
   max-width: 800px;
-  @media (max-width: 959px) {
+  @media (max-width: 959px) and (min-height: 900px) {
     max-width: unset;
     width: 100%;
     height: 43%;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 800px) and (min-height: 900px) {
     height: 50%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 600px) and (min-height: 900px) {
+    height: 60%;
+  }
+  @media (max-width: 730px) and (max-height: 899px) {
+    width: 100%;
+    height: 40%;
+  }
+  @media (max-width: 650px) and (max-height: 899px) {
+    height: 45%;
+  }
+  @media (max-width: 580px) and (max-height: 899px) {
+    height: 50%;
+  }
+  @media (max-width: 420px) and (max-height: 899px) {
     height: 60%;
   }
   &:hover .listControl {
