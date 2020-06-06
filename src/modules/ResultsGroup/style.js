@@ -6,4 +6,7 @@ export const StyledList = styled(Grid)`
   height: 100%;
   overflow-y: scroll;
   background: rgba(0, 0, 55, 0.1);
+  & > *:last-child {
+    margin-bottom: 60px;
+  }
 `;
