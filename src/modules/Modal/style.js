@@ -2,6 +2,11 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core/";
 
 export const ModalBackground = styled(Grid)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: ${({ withshadow }) => (withshadow ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0)")};
+  z-index: 100;
   width: 100vw;
   height: 100vh;
   display: flex;

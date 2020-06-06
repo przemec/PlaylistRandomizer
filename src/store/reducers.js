@@ -1,9 +1,19 @@
 import { combineReducers } from "redux";
-import { playlistOperations, CHANGE_THEME } from "./actions";
+import { playlistOperations, CHANGE_THEME, SWITCH_MODAL } from "./actions";
 
 const themes = (state = [], action) => {
   switch (action.type) {
     case CHANGE_THEME:
+      return state;
+    default:
+      return state;
+  }
+};
+
+const modal = (state = true, action) => {
+  switch (action.type) {
+    case SWITCH_MODAL:
+      state = !state;
       return state;
     default:
       return state;
@@ -51,6 +61,7 @@ const playlist = (state = [], action) => {
 const todoApp = combineReducers({
   themes,
   playlist,
+  modal,
 });
 
 export default todoApp;

@@ -1,13 +1,25 @@
 import React from "react";
 import * as S from "./style";
-import SingleResult from "../../components/SingleResult";
+import { switchModal } from "../../store/actions";
+import { connect } from "react-redux";
 
-const Modal = ({ component }) => {
-  return (
-    <S.ModalBackground>
+const Modal = ({ component, withShadow, isRemovable, switchM, modal }) => {
+  return modal ? (
+    <S.ModalBackground withshadow={withShadow ? 1 : 0} onClick={() => isRemovable && switchM(false)}>
       <S.ComponentWrapper>{component}</S.ComponentWrapper>
     </S.ModalBackground>
+  ) : (
+    <></>
   );
 };
 
-export default Modal;
+const mapSTP = (state) => ({
+  modal: state.modal,
+});
+const mapDTP = (dispatch) => ({
+  switchM: (e) => {
+    dispatch(switchModal(e));
+  },
+});
+
+export default connect(mapSTP, mapDTP)(Modal);

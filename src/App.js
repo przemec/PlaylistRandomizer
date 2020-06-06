@@ -3,6 +3,8 @@ import { gapi } from "gapi-script";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SearchScreen from "./routes/Search";
 import List from "./routes/List";
+import { Provider } from "react-redux";
+import { store } from "./store";
 const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 
 const App = () => {
@@ -19,16 +21,18 @@ const App = () => {
     loadYoutubeApi();
   });
   return (
-    <BrowserRouter>
-      <Switch>
-        {gapiReady && (
-          <>
-            <Route path="/list/:id" component={List} />
-            <Route exact path="/" component={SearchScreen} />
-          </>
-        )}
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          {gapiReady && (
+            <>
+              <Route path="/list/:id" component={List} />
+              <Route exact path="/" component={SearchScreen} />
+            </>
+          )}
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

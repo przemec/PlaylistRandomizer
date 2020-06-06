@@ -1,18 +1,17 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { store } from "../../store";
-import { randomizePlaylist } from "../../store/actions";
+import { connect } from "react-redux";
+import * as A from "../../store/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
+import Modal from "../Modal";
 import * as S from "./style";
 
-const ResultsScreen = () => {
-  const [songs, updateSongs] = React.useState(store.getState().playlist);
+const ResultsScreen = ({ switchM, modal, randomizeP, songs }) => {
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
-  const [nextDisplay, displayNext] = React.useState(false);
   const onPlayerReady = (e) => {
     const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
@@ -30,7 +29,7 @@ const ResultsScreen = () => {
     document.title = title;
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      e.target.getPlaylistIndex() === 199 && displayNext(true);
+      e.target.getPlaylistIndex() === 199 && switchM(true);
     }
   };
   if (!window.YT) {
@@ -69,7 +68,7 @@ const ResultsScreen = () => {
       updatePage(playingPage + 1);
       playSong(0, playingPage + 1);
       updateIndex(0);
-      displayNext(false);
+      switchM(false);
     }
   };
   const playSong = (index, page) => {
@@ -82,37 +81,55 @@ const ResultsScreen = () => {
     }
   };
   const shuffle = async () => {
-    await store.dispatch(randomizePlaylist());
-    updateSongs(store.getState().playlist);
-    const arr = store.getState().playlist[0].map((ev) => ev.snippet.resourceId.videoId);
+    await randomizeP();
+    const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
     player.loadPlaylist(arr);
   };
   return (
-    <Grid container style={{ height: "100vh" }}>
-      <S.PlayerContainer item>
-        <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
-        <S.TitleNext>
-          {songs[playingPage][currentIndex + 1]
-            ? "Next: " + songs[playingPage][currentIndex + 1].snippet.title
-            : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].snippet.title}
-        </S.TitleNext>
-        <S.PlayerWrapper>
-          <S.Player id="youtube-player" />
-        </S.PlayerWrapper>
-        {nextDisplay && <S.Button200 onClick={playNextPage}>Click to play next 200 songs</S.Button200>}
-      </S.PlayerContainer>
-      <S.ResultsContainer item>
-        <ResultsGroup
-          songs={songs}
-          page={currentPage}
-          isHighlighted={playingPage === currentPage}
-          changeSong={playSong}
-          currentIndex={currentIndex}
-        />
-        {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
-      </S.ResultsContainer>
-    </Grid>
+    <>
+      <Grid container style={{ height: "100vh" }}>
+        <S.PlayerContainer item>
+          <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
+          <S.TitleNext>
+            {songs[playingPage][currentIndex + 1]
+              ? "Next: " + songs[playingPage][currentIndex + 1].snippet.title
+              : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].snippet.title}
+          </S.TitleNext>
+          <S.PlayerWrapper>
+            <S.Player id="youtube-player" wmode="transparent" />
+          </S.PlayerWrapper>
+        </S.PlayerContainer>
+        <S.ResultsContainer item>
+          <ResultsGroup
+            songs={songs}
+            page={currentPage}
+            isHighlighted={playingPage === currentPage}
+            changeSong={playSong}
+            currentIndex={currentIndex}
+          />
+          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
+        </S.ResultsContainer>
+      </Grid>
+      <Modal
+        component={<S.Button200 onClick={playNextPage}>Click to play next 200 songs</S.Button200>}
+        withShadow={true}
+        isRemovable={true}
+      />
+    </>
   );
 };
 
-export default ResultsScreen;
+const mapSTP = (state) => ({
+  modal: state.modal,
+  songs: state.playlist,
+});
+const mapDTP = (dispatch) => ({
+  switchM: (e) => {
+    dispatch(A.switchModal(e));
+  },
+  randomizeP: (e) => {
+    dispatch(A.randomizePlaylist(e));
+  },
+});
+
+export default connect(mapSTP, mapDTP)(ResultsScreen);
