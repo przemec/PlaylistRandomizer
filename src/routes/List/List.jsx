@@ -3,7 +3,7 @@ import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 import Modal from "../../modules/Modal";
-import { loadPlaylist, slicePlaylist, randomizePlaylist } from "../../store/actions";
+import { loadPlaylist, slicePlaylist, randomizePlaylist, switchModal } from "../../store/actions";
 import { store } from "../../store";
 
 const List = ({ match }) => {
@@ -12,7 +12,9 @@ const List = ({ match }) => {
   let pageToken = undefined;
   React.useEffect(() => {
     match.params.id && !playlistLoaded && search(match.params.id);
-  });
+    store.dispatch(switchModal(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const search = (id) => {
     gapi.client.youtube.playlistItems
       .list({
@@ -30,6 +32,7 @@ const List = ({ match }) => {
           } else {
             store.dispatch(slicePlaylist());
             store.dispatch(randomizePlaylist());
+            store.dispatch(switchModal(false));
             updatePLState(true);
           }
         },

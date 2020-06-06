@@ -27,6 +27,6 @@ export function changeTheme(key) {
   return { type: CHANGE_THEME, key };
 }
 
-export function switchModal() {
-  return { type: SWITCH_MODAL };
+export function switchModal(val) {
+  return { type: SWITCH_MODAL, val };
 }

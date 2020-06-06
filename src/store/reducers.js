@@ -10,10 +10,10 @@ const themes = (state = [], action) => {
   }
 };
 
-const modal = (state = true, action) => {
+const modal = (state = false, action) => {
   switch (action.type) {
     case SWITCH_MODAL:
-      state = !state;
+      state = action.val;
       return state;
     default:
       return state;
