@@ -3,14 +3,6 @@ import { keyframes } from "styled-components";
 import { Grid } from "@material-ui/core/";
 import LoopIcon from "@material-ui/icons/Autorenew";
 
-export const Container = styled(Grid)`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const StyledPaper = styled(Grid)`
   width: 250px;
   height: 100px;
@@ -21,6 +13,10 @@ export const StyledPaper = styled(Grid)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyledPaperErr = styled(StyledPaper)`
+  background: rgba(155, 0, 0, 0.1);
 `;
 
 const rotate = keyframes`

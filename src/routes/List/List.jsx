@@ -2,7 +2,7 @@ import React from "react";
 import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
-import LoadingError from "../../components/LoadingError";
+import Modal from "../../modules/Modal";
 import { loadPlaylist, slicePlaylist, randomizePlaylist } from "../../store/actions";
 import { store } from "../../store";
 
@@ -40,9 +40,7 @@ const List = ({ match }) => {
         }
       );
   };
-  if (playlistLoaded) return <ResultsScreen />;
-  else if (loadingErr) return <LoadingError />;
-  else return <LoadingPanel />;
+  return playlistLoaded ? <ResultsScreen /> : <Modal component={<LoadingPanel err={loadingErr} />} />;
 };
 
 export default List;
