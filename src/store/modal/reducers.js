@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import { SWITCH_MODAL } from "./actions";
 
 const modal = (state = false, action) => {
