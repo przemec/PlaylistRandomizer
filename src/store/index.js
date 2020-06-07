@@ -1,6 +1,6 @@
 import { createStore } from "redux";
-import todoApp from "./reducers";
+import reducers from "./reducers";
 
-export const store = createStore(todoApp);
+export const store = createStore(reducers);
 
 // store.subscribe(() => console.log(store.getState()));

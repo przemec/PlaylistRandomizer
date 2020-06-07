@@ -58,10 +58,10 @@ const playlist = (state = [], action) => {
   }
 };
 
-const todoApp = combineReducers({
+const reducers = combineReducers({
   themes,
   playlist,
   modal,
 });
 
-export default todoApp;
+export default reducers;
