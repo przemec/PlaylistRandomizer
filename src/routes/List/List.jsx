@@ -3,7 +3,8 @@ import { gapi } from "gapi-script";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 import Modal from "../../modules/Modal";
-import * as A from "../../store/actions";
+import * as P from "../../store/playlist/actions";
+import * as M from "../../store/modal/actions";
 import { connect } from "react-redux";
 
 const List = ({ match, sliceP, randomizeP, loadP, switchM }) => {
@@ -20,10 +21,10 @@ const List = ({ match, sliceP, randomizeP, loadP, switchM }) => {
           pageToken: pageToken,
         })
         .then(
-          function (response) {
-            loadP(response.result.items);
-            if (response.result.nextPageToken) {
-              pageToken = response.result.nextPageToken;
+          function (res) {
+            loadP(res.result.items);
+            if (res.result.nextPageToken) {
+              pageToken = res.result.nextPageToken;
               search(id);
             } else {
               sliceP();
@@ -48,16 +49,16 @@ const List = ({ match, sliceP, randomizeP, loadP, switchM }) => {
 
 const mapDTP = (dispatch) => ({
   switchM: (e) => {
-    dispatch(A.switchModal(e));
+    dispatch(M.switchModal(e));
   },
   randomizeP: () => {
-    dispatch(A.randomizePlaylist());
+    dispatch(P.randomizePlaylist());
   },
   sliceP: () => {
-    dispatch(A.slicePlaylist());
+    dispatch(P.slicePlaylist());
   },
   loadP: (e) => {
-    dispatch(A.loadPlaylist(e));
+    dispatch(P.loadPlaylist(e));
   },
 });
 

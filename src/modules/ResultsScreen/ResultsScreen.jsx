@@ -1,7 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import * as A from "../../store/actions";
+import * as P from "../../store/playlist/actions";
+import * as M from "../../store/modal/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import Modal from "../Modal";
@@ -125,10 +126,10 @@ const mapSTP = (state) => ({
 });
 const mapDTP = (dispatch) => ({
   switchM: (e) => {
-    dispatch(A.switchModal(e));
+    dispatch(M.switchModal(e));
   },
   randomizeP: (e) => {
-    dispatch(A.randomizePlaylist(e));
+    dispatch(P.randomizePlaylist(e));
   },
 });
 

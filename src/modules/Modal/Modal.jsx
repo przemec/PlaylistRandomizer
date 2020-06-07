@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./style";
-import { switchModal } from "../../store/actions";
+import { switchModal } from "../../store/modal/actions";
 import { connect } from "react-redux";
 
 const Modal = ({ component, withShadow, isRemovable, switchM, modal }) => {
