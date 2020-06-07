@@ -11,7 +11,7 @@ export const StyledContainer = styled(Grid)`
 `;
 
 export const StyledLp = styled(Grid)`
-  font-size: 2vh;
+  font-size: 2vmin;
   text-align: center;
   width: ${({ lp }) => `calc(${lp * 11}px + 4px)`};
 `;
@@ -19,18 +19,18 @@ export const StyledLp = styled(Grid)`
 export const StyledTitle = styled.a`
   text-decoration: none;
   color: black;
-  font-size: 1.8vh;
+  font-size: 1.8vmin;
   padding: 0 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - ${({ lp }) => `${lp * 11}px - 16vh - 4px`});
+  width: calc(100% - ${({ lp }) => `${lp * 11}px - 16vmin - 4px`});
 `;
 
 export const Thumbnail = styled(Grid)`
   background: ${({ thumb }) => `url(${thumb})`};
-  width: 16vh;
-  height: 9vh;
+  width: 16vmin;
+  height: 9vmin;
   background-size: cover;
   max-height: 90px;
   max-width: 160px;

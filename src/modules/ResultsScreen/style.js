@@ -33,6 +33,10 @@ export const PlayerContainer = styled(Grid)`
   @media (max-width: 420px) and (max-height: 899px) {
     height: 40%;
   }
+  @media (max-width: 1000px) and (min-height: 1200px) {
+    height: 35%;
+    width: 100%;
+  }
 `;
 
 export const ResultsContainer = styled(Grid)`
@@ -66,6 +70,11 @@ export const ResultsContainer = styled(Grid)`
   }
   @media (max-width: 420px) and (max-height: 899px) {
     height: 60%;
+  }
+  @media (max-width: 1000px) and (min-height: 1200px) {
+    height: 65%;
+    width: 100%;
+    max-width: unset;
   }
   &:hover .listControl {
     opacity: 1;
