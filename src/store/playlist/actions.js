@@ -1,12 +1,17 @@
 export const playlistOperations = {
-  LOAD: "LOAD_PLAYLIST",
+  LOAD_PART: "LOAD_PART",
+  LOAD_PLAYLIST: "LOAD_PLAYLIST",
   SLICE: "SLICE_PLAYLIST",
   RANDOMIZE: "RANDOMIZE_PLAYLIST",
   CLEAR: "CLEAR_PLAYLIST",
 };
 
+export function loadPart(list) {
+  return { type: playlistOperations.LOAD_PART, list };
+}
+
 export function loadPlaylist(list) {
-  return { type: playlistOperations.LOAD, list };
+  return { type: playlistOperations.LOAD_PLAYLIST, list };
 }
 
 export function slicePlaylist() {
