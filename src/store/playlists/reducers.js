@@ -7,8 +7,6 @@ const playlists = (state = [], action) => {
         id: action.id,
         list: action.list,
       };
-      console.log(action, listObj);
-      // state = [...state, listObj];
       return [...state, listObj];
     case playlistsOperations.EDIT:
       state.map((e) => {

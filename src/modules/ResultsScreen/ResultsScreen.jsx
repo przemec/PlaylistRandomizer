@@ -2,13 +2,15 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
+import * as PS from "../../store/playlists/actions";
 import * as M from "../../store/modal/actions";
+import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import Modal from "../Modal";
 import * as S from "./style";
 
-const ResultsScreen = ({ switchM, modal, randomizeP, songs }) => {
+const ResultsScreen = ({ switchM, randomizeP, songs, currentID }) => {
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
@@ -99,6 +101,7 @@ const ResultsScreen = ({ switchM, modal, randomizeP, songs }) => {
           <S.PlayerWrapper>
             <S.Player id="youtube-player" wmode="transparent" />
           </S.PlayerWrapper>
+          {/* <S.Button200 onClick={() => downloadPlaylistData(currentID, "refresh")}>RRRRRRRR</S.Button200> */}
         </S.PlayerContainer>
         <S.ResultsContainer item>
           <ResultsGroup
@@ -121,7 +124,6 @@ const ResultsScreen = ({ switchM, modal, randomizeP, songs }) => {
 };
 
 const mapSTP = (state) => ({
-  modal: state.modal,
   songs: state.playlist,
 });
 const mapDTP = (dispatch) => ({
@@ -130,6 +132,9 @@ const mapDTP = (dispatch) => ({
   },
   randomizeP: (e) => {
     dispatch(P.randomizePlaylist(e));
+  },
+  editPlaylist: (e, list) => {
+    dispatch(PS.editPlaylist(e, list));
   },
 });
 
