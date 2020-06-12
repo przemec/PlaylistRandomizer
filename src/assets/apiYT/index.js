@@ -8,7 +8,6 @@ import { gapi } from "gapi-script";
 const downloadPlaylistData = (id, action) => {
   let pageToken = undefined;
   let listt = [];
-  console.log("action", action);
   const dsp = store.dispatch;
   if (action === "refresh") {
     dsp(M.switchModal(true));
@@ -23,11 +22,9 @@ const downloadPlaylistData = (id, action) => {
           id: id,
         })
         .then(
-          function () {},
+          function (res) {},
           function (err) {
-            if (err.result.error.code === (404 || 403)) {
-              dsp(L.loadError(true));
-            }
+            dsp(L.loadError(true));
           }
         );
     gapi.client.youtube.playlistItems
@@ -59,9 +56,7 @@ const downloadPlaylistData = (id, action) => {
           }
         },
         function (err) {
-          if (err.result.error.code === (404 || 403)) {
-            dsp(L.loadError(true));
-          }
+          dsp(L.loadError(true));
         }
       );
   };

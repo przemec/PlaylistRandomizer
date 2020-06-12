@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
 import * as M from "../../store/modal/actions";
-import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
+import PlayerControl from "../../components/PlayerControl";
 import Modal from "../Modal";
 import * as S from "./style";
 
-const ResultsScreen = ({ switchM, randomizeP, songs, currentID }) => {
+const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
@@ -101,7 +101,7 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentID }) => {
           <S.PlayerWrapper>
             <S.Player id="youtube-player" wmode="transparent" />
           </S.PlayerWrapper>
-          {/* <S.Button200 onClick={() => downloadPlaylistData(currentID, "refresh")}>RRRRRRRR</S.Button200> */}
+          <PlayerControl currentListID={currentListID} shuffle={shuffle} />
         </S.PlayerContainer>
         <S.ResultsContainer item>
           <ResultsGroup

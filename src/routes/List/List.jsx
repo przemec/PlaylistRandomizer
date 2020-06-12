@@ -23,7 +23,7 @@ const List = ({ match, sliceP, randomizeP, switchM, playlists, loadPlaylist, pla
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return playlistLoaded ? <ResultsScreen currentID={match.params.id} /> : <Modal component={<LoadingPanel err={loadingErr} />} />;
+  return playlistLoaded ? <ResultsScreen currentListID={match.params.id} /> : <Modal component={<LoadingPanel err={loadingErr} />} />;
 };
 
 const mapSTP = (state) => ({
