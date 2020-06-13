@@ -90,7 +90,7 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
   };
   return (
     <>
-      <Grid container style={{ height: "calc(100vh - 50px)" }}>
+      <Grid container style={{ height: "calc(100vh - 40px)" }}>
         <S.PlayerContainer item>
           <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
           <S.TitleNext>

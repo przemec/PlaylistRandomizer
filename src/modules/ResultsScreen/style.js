@@ -10,29 +10,44 @@ export const PlayerContainer = styled(Grid)`
   & > * {
     width: 80%;
   }
-  @media (max-width: 959px) and (min-height: 900px) {
+  /*pc*/
+  @media (max-width: 900px) and (min-height: 900px) {
     width: 100%;
-    height: 57%;
+    height: 65%;
   }
   @media (max-width: 800px) and (min-height: 900px) {
-    height: 50%;
+    height: 58%;
+  }
+  @media (max-width: 700px) and (min-height: 900px) {
+    height: 53%;
   }
   @media (max-width: 600px) and (min-height: 900px) {
-    height: 40%;
+    height: 48%;
   }
-  @media (max-width: 730px) and (max-height: 899px) {
+  /*lapk*/
+  @media (max-width: 700px) and (max-height: 899px) {
     width: 100%;
+    height: 70%;
+  }
+  @media (max-width: 600px) and (max-height: 899px) {
     height: 60%;
   }
-  @media (max-width: 650px) and (max-height: 899px) {
-    height: 55%;
-  }
-  @media (max-width: 580px) and (max-height: 899px) {
+  /*mob*/
+  @media (max-width: 500px) and (max-height: 899px) {
     height: 50%;
   }
   @media (max-width: 420px) and (max-height: 899px) {
-    height: 40%;
+    height: 44%;
   }
+  @media (max-width: 450px) and (max-height: 650px) {
+    height: 50%;
+  }
+  /*small mob horizontal*/
+  @media (max-width: 700px) and (max-height: 500px) {
+    width: 50%;
+    height: 100%;
+  }
+  /*mob desktop mode*/
   @media (max-width: 1000px) and (min-height: 1200px) {
     height: 35%;
     width: 100%;
@@ -47,30 +62,45 @@ export const ResultsContainer = styled(Grid)`
   height: 100%;
   width: 40%;
   max-width: 800px;
-  @media (max-width: 959px) and (min-height: 900px) {
+  /*pc*/
+  @media (max-width: 900px) and (min-height: 900px) {
     max-width: unset;
     width: 100%;
-    height: 43%;
+    height: 35%;
   }
   @media (max-width: 800px) and (min-height: 900px) {
-    height: 50%;
+    height: 42%;
+  }
+  @media (max-width: 700px) and (min-height: 900px) {
+    height: 47%;
   }
   @media (max-width: 600px) and (min-height: 900px) {
-    height: 60%;
+    height: 52%;
   }
-  @media (max-width: 730px) and (max-height: 899px) {
+  /*lapk*/
+  @media (max-width: 700px) and (max-height: 899px) {
     width: 100%;
+    height: 30%;
+  }
+  @media (max-width: 600px) and (max-height: 899px) {
     height: 40%;
   }
-  @media (max-width: 650px) and (max-height: 899px) {
-    height: 45%;
-  }
-  @media (max-width: 580px) and (max-height: 899px) {
+  /*mob*/
+  @media (max-width: 500px) and (max-height: 899px) {
     height: 50%;
   }
   @media (max-width: 420px) and (max-height: 899px) {
-    height: 60%;
+    height: 56%;
   }
+  @media (max-width: 450px) and (max-height: 650px) {
+    height: 50%;
+  }
+  /*small mob horizontal*/
+  @media (max-width: 700px) and (max-height: 500px) {
+    width: 50%;
+    height: 100%;
+  }
+  /*mob desktop mode*/
   @media (max-width: 1000px) and (min-height: 1200px) {
     height: 65%;
     width: 100%;
