@@ -1,8 +1,8 @@
 import React from "react";
-import * as P from "./parts";
+import * as S from "./style";
 
 const AppBar = () => {
-  return <P.StyledAppBar position="sticky"></P.StyledAppBar>;
+  return <S.StyledAppBar position="sticky" />;
 };
 
 export default AppBar;
