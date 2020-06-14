@@ -5,7 +5,7 @@ export const ModalBackground = styled(Grid)`
   position: absolute;
   top: 0;
   left: 0;
-  background: ${({ withshadow }) => (withshadow ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0)")};
+  background: rgba(0, 0, 0, 0.3);
   z-index: 100;
   width: 100vw;
   height: 100vh;

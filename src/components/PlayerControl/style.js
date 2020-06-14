@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core/";
 export const Container = styled(Grid)`
   width: 100%;
   height: 10vmin;
-  max-height: 80px;
+  max-height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;

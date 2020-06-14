@@ -3,18 +3,22 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
-import * as M from "../../store/modal/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import PlayerControl from "../../components/PlayerControl";
 import Modal from "../Modal";
 import * as S from "./style";
 
-const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
+const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
+  React.useEffect(() => {
+    const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
+    player && player.loadPlaylist(arr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [songs]);
   const onPlayerReady = (e) => {
     const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
@@ -32,7 +36,7 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
     document.title = title;
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      e.target.getPlaylistIndex() === 199 && switchM(true);
+      // e.target.getPlaylistIndex() === 199 && switchM(true);
     }
   };
   if (!window.YT) {
@@ -71,7 +75,6 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
       updatePage(playingPage + 1);
       playSong(0, playingPage + 1);
       updateIndex(0);
-      switchM(false);
     }
   };
   const playSong = (index, page) => {
@@ -82,11 +85,6 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
     } else {
       player.playVideoAt(index);
     }
-  };
-  const shuffle = async () => {
-    await randomizeP();
-    const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
-    player.loadPlaylist(arr);
   };
   return (
     <>
@@ -101,7 +99,7 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
           <S.PlayerWrapper>
             <S.Player id="youtube-player" wmode="transparent" />
           </S.PlayerWrapper>
-          <PlayerControl currentListID={currentListID} shuffle={shuffle} />
+          <PlayerControl currentListID={currentListID} shuffle={randomizeP} />
         </S.PlayerContainer>
         <S.ResultsContainer item>
           <ResultsGroup
@@ -114,11 +112,11 @@ const ResultsScreen = ({ switchM, randomizeP, songs, currentListID }) => {
           {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
         </S.ResultsContainer>
       </Grid>
-      <Modal
+      {/* <Modal
         component={<S.Button200 onClick={playNextPage}>Click to play next 200 songs</S.Button200>}
         withShadow={true}
         isRemovable={true}
-      />
+      /> */}
     </>
   );
 };
@@ -127,9 +125,6 @@ const mapSTP = (state) => ({
   songs: state.playlist,
 });
 const mapDTP = (dispatch) => ({
-  switchM: (e) => {
-    dispatch(M.switchModal(e));
-  },
   randomizeP: (e) => {
     dispatch(P.randomizePlaylist(e));
   },

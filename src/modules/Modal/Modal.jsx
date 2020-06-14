@@ -1,12 +1,16 @@
 import React from "react";
 import * as S from "./style";
-import { switchModal } from "../../store/modal/actions";
+import { hideModal } from "../../store/modal/actions";
 import { connect } from "react-redux";
+import * as pages from "./pages";
 
-const Modal = ({ component, withShadow, isRemovable, switchM, modal }) => {
-  return modal ? (
-    <S.ModalBackground withshadow={withShadow ? 1 : 0} onClick={() => isRemovable && switchM(false)}>
-      <S.ComponentWrapper>{component}</S.ComponentWrapper>
+const Modal = ({ isvisible, type, hideM }) => {
+  const CurrentScreen = pages[type];
+  return isvisible ? (
+    <S.ModalBackground onClick={() => hideM()}>
+      <S.ComponentWrapper>
+        <CurrentScreen />
+      </S.ComponentWrapper>
     </S.ModalBackground>
   ) : (
     <></>
@@ -14,11 +18,12 @@ const Modal = ({ component, withShadow, isRemovable, switchM, modal }) => {
 };
 
 const mapSTP = (state) => ({
-  modal: state.modal,
+  type: state.modal.type,
+  isvisible: state.modal.isvisible,
 });
 const mapDTP = (dispatch) => ({
-  switchM: (e) => {
-    dispatch(switchModal(e));
+  hideM: () => {
+    dispatch(hideModal());
   },
 });
 

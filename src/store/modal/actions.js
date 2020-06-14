@@ -1,5 +1,9 @@
-export const SWITCH_MODAL = "SWITCH_MODAL";
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
 
-export function switchModal(val) {
-  return { type: SWITCH_MODAL, val };
+export function showModal(typ) {
+  return { type: SHOW_MODAL, typ };
+}
+export function hideModal() {
+  return { type: HIDE_MODAL };
 }

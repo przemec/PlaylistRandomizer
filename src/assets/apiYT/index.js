@@ -1,6 +1,5 @@
 import * as PS from "../../store/playlists/actions";
 import * as P from "../../store/playlist/actions";
-import * as M from "../../store/modal/actions";
 import * as L from "../../store/listloadstate/actions";
 import { store } from "../../store";
 import { gapi } from "gapi-script";
@@ -10,7 +9,6 @@ const downloadPlaylistData = (id, action) => {
   let listt = [];
   const dsp = store.dispatch;
   if (action === "refresh") {
-    dsp(M.switchModal(true));
     dsp(L.updatePLstate(false));
     dsp(P.clearPlaylist());
   }
@@ -47,7 +45,6 @@ const downloadPlaylistData = (id, action) => {
               await dsp(P.slicePlaylist());
               await dsp(P.randomizePlaylist());
               await dsp(L.updatePLstate(true));
-              await dsp(M.switchModal(false));
             } else if (action === "refresh") {
               await dsp(PS.editPlaylist(id, listt));
               //eslint-disable-next-line

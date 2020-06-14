@@ -1,10 +1,11 @@
-import { SWITCH_MODAL } from "./actions";
+import { SHOW_MODAL, HIDE_MODAL } from "./actions";
 
-const modal = (state = false, action) => {
+const modal = (state = { isvisible: false, type: undefined }, action) => {
   switch (action.type) {
-    case SWITCH_MODAL:
-      state = action.val;
-      return state;
+    case SHOW_MODAL:
+      return { ...state, isvisible: true, type: action.typ };
+    case HIDE_MODAL:
+      return { ...state, isvisible: false };
     default:
       return state;
   }
