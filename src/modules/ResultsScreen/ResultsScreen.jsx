@@ -6,7 +6,6 @@ import * as PS from "../../store/playlists/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import PlayerControl from "../../components/PlayerControl";
-import Modal from "../Modal";
 import * as S from "./style";
 
 const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
@@ -112,11 +111,6 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
           {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
         </S.ResultsContainer>
       </Grid>
-      {/* <Modal
-        component={<S.Button200 onClick={playNextPage}>Click to play next 200 songs</S.Button200>}
-        withShadow={true}
-        isRemovable={true}
-      /> */}
     </>
   );
 };

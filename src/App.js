@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SearchScreen from "./routes/Search";
 import List from "./routes/List";
 import AppBar from "./components/AppBar";
+import Modal from "./modules/Modal";
 import { Provider } from "react-redux";
 import { store } from "./store";
 const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
@@ -28,6 +29,7 @@ const App = () => {
           {gapiReady && (
             <>
               <AppBar />
+              <Modal />
               <Route path="/list/:id" component={List} />
               <Route exact path="/" component={SearchScreen} />
             </>

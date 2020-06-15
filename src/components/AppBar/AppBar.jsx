@@ -11,11 +11,11 @@ const AppBar = ({ showM }) => {
     <S.StyledAppBar>
       <Grid></Grid>
       <S.IconContainer>
-        <S.IconWrapper onClick={() => showM("InfoPage")}>
-          <HelpOutlineIcon />
-        </S.IconWrapper>
         <S.IconWrapper onClick={() => showM("SettingsPage")}>
           <SettingsIcon />
+        </S.IconWrapper>
+        <S.IconWrapper onClick={() => showM("InfoPage")}>
+          <HelpOutlineIcon />
         </S.IconWrapper>
       </S.IconContainer>
     </S.StyledAppBar>
