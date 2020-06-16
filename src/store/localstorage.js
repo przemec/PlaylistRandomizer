@@ -7,9 +7,31 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state) => {
+export const savePlaylists = (state) => {
   try {
-    const localstate = JSON.stringify(state);
-    localStorage.setItem("reduxstate", localstate);
+    let localstate = localStorage.getItem("reduxstate");
+    localstate === null ? (localstate = {}) : (localstate = JSON.parse(localstate));
+    const update = { ...localstate, playlists: state };
+    const updateString = JSON.stringify(update);
+    localStorage.setItem("reduxstate", updateString);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const saveThemeKey = (key) => {
+  try {
+    let localstate = localStorage.getItem("reduxstate");
+    localstate === null && (localstate = {});
+    const update = { ...localstate, currenttheme: key };
+    const updateString = JSON.stringify(update);
+    localStorage.setItem("reduxstate", updateString);
+  } catch (err) {}
+};
+
+export const clearState = () => {
+  try {
+    const localstate = localStorage.getItem("reduxstate");
+    localstate !== null && localStorage.setItem("reduxstate", {});
   } catch (err) {}
 };
