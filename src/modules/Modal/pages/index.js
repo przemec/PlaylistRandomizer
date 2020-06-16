@@ -1,4 +1,4 @@
-import SettingsPage from "./SettingsPage";
+import ThemePage from "./ThemePage";
 import InfoPage from "./InfoPage";
 
-export { SettingsPage, InfoPage };
+export { ThemePage, InfoPage };

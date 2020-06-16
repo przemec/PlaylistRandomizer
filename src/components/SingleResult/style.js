@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core/";
 
 export const StyledContainer = styled(Grid)`
   margin: 5px 0;
-  background: ${({ isplaying }) => isplaying && "lightblue"};
+  background: ${({ isplaying, theme }) => isplaying && theme.primary};
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -13,7 +13,9 @@ export const StyledContainer = styled(Grid)`
 export const StyledLp = styled(Grid)`
   font-size: 2vmin;
   text-align: center;
-  width: ${({ lp }) => `calc(${lp * 11}px + 4px)`};
+  width: 5vmin;
+  padding: 0 1vmin;
+  color: ${({ isplaying, theme }) => (isplaying ? theme.appbarText : theme.resultText)};
 `;
 
 export const StyledTitle = styled.a`
@@ -24,7 +26,8 @@ export const StyledTitle = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - ${({ lp }) => `${lp * 11}px - 16vmin - 4px`});
+  width: calc(100% - 21vmin);
+  color: ${({ isplaying, theme }) => (isplaying ? theme.appbarText : theme.resultText)};
 `;
 
 export const Thumbnail = styled(Grid)`

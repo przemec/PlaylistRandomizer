@@ -5,9 +5,14 @@ const SingleResult = ({ song, index, page, changeSong, isPlaying, lp }) => {
   const { thumbnails, title, resourceId } = song.snippet;
   return (
     <S.StyledContainer onClick={() => changeSong(index, page)} id={`index${index}`} isplaying={isPlaying ? 1 : 0}>
-      <S.StyledLp lp={lp}>{index + 1 + page * 200}.</S.StyledLp>
+      <S.StyledLp isplaying={isPlaying ? 1 : 0}>{index + 1 + page * 200}.</S.StyledLp>
       {thumbnails && thumbnails.medium && <S.Thumbnail thumb={thumbnails.medium.url} />}
-      <S.StyledTitle lp={lp} className="title" href={`https://youtu.be/${resourceId.videoId}`} onClick={(e) => e.preventDefault()}>
+      <S.StyledTitle
+        isplaying={isPlaying ? 1 : 0}
+        className="title"
+        href={`https://youtu.be/${resourceId.videoId}`}
+        onClick={(e) => e.preventDefault()}
+      >
         {title}
       </S.StyledTitle>
     </S.StyledContainer>

@@ -133,6 +133,7 @@ export const Title = styled(Grid)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: ${({ theme }) => theme.resultText};
 `;
 
 export const TitleNext = styled(Title)`

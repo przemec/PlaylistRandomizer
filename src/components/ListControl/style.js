@@ -27,14 +27,20 @@ export const ArrowWrapper = styled(Grid)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(0deg, #00000055, transparent 90%);
+  background: linear-gradient(0deg, ${({ theme }) => theme.background}, transparent 90%);
   transition: all 0.2s ease-in-out;
-  opacity: ${({ isactive }) => (isactive ? 0.5 : 0.5)};
+  opacity: 0.5;
   &:hover {
     opacity: ${({ isactive }) => (isactive ? 1 : 0.5)};
     cursor: ${({ isactive }) => (isactive ? "pointer" : "auto")};
   }
   & > * {
     opacity: ${({ isactive }) => (isactive ? 1 : 0)};
+  }
+  & svg {
+    fill: ${({ theme }) => theme.primary};
+  }
+  &:hover svg {
+    fill: ${({ theme }) => theme.primaryHover};
   }
 `;

@@ -48,23 +48,19 @@ export const darkThemeList = [
 
 const enhanceTheme = (theme) => {
   let themeConstants = {
-    success: "#43a047",
-    info: "#1976d2",
-    warning: "#ffa000",
-    error: "#d32f2f",
-    textWhite: "#ffffffdd",
-    textWhiteHover: "#fff",
+    appbarText: "#ffffffdd",
+    appbarTextHover: "#fff",
+    resultText: "#000000aa",
+    resultTextHover: "#000",
     background: "#f5f5f5",
     backgroundAccent: "#eee",
   };
   if (theme.type === "dark")
     themeConstants = {
-      success: "#aef2b1",
-      info: "#86b5e3",
-      warning: "#e6b96e",
-      error: "#f76060",
-      textWhite: "#eee",
-      textWhiteHover: "#fff",
+      appbarText: "#eee",
+      appbarTextHover: "#fff",
+      resultText: "#eee",
+      resultTextHover: "#fff",
       background: "#121212",
       backgroundAccent: "#232323",
     };
@@ -92,3 +88,5 @@ export default {
   darkPurple: enhanceTheme(darkPurple),
   darkRed: enhanceTheme(darkRed),
 };
+
+export const mainTheme = "brick";
