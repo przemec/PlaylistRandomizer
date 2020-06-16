@@ -3,14 +3,14 @@ import playlist from "./playlist";
 import playlists from "./playlists";
 import modal from "./modal";
 import listloadstate from "./listloadstate";
-import currenttheme from "./currenttheme";
+import theme from "./theme";
 
 const reducers = combineReducers({
   playlist,
   playlists,
   modal,
   listloadstate,
-  currenttheme,
+  theme,
 });
 
 export default reducers;

@@ -23,7 +23,7 @@ export const saveThemeKey = (key) => {
   try {
     let localstate = localStorage.getItem("reduxstate");
     localstate === null ? (localstate = {}) : (localstate = JSON.parse(localstate));
-    const update = { ...localstate, currenttheme: key };
+    const update = { ...localstate, theme: key };
     const updateString = JSON.stringify(update);
     localStorage.setItem("reduxstate", updateString);
   } catch (err) {}

@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 const ThmProvider = ({ themeKey, children }) => <ThemeProvider theme={themes[themeKey]}>{children}</ThemeProvider>;
 
 const mapSTP = (store) => ({
-  themeKey: store.currenttheme,
+  themeKey: store.theme,
 });
 
 export default connect(mapSTP)(ThmProvider);
