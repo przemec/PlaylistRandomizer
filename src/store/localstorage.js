@@ -22,7 +22,7 @@ export const savePlaylists = (state) => {
 export const saveThemeKey = (key) => {
   try {
     let localstate = localStorage.getItem("reduxstate");
-    localstate === null && (localstate = {});
+    localstate === null ? (localstate = {}) : (localstate = JSON.parse(localstate));
     const update = { ...localstate, currenttheme: key };
     const updateString = JSON.stringify(update);
     localStorage.setItem("reduxstate", updateString);
@@ -32,6 +32,6 @@ export const saveThemeKey = (key) => {
 export const clearState = () => {
   try {
     const localstate = localStorage.getItem("reduxstate");
-    localstate !== null && localStorage.setItem("reduxstate", {});
+    localstate !== null && localStorage.removeItem("reduxstate");
   } catch (err) {}
 };
