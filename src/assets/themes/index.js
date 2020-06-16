@@ -31,11 +31,7 @@ export const lightThemeList = [
   { key: "magenta", color: "#d53c81", secondary: "#d0d0d0" },
   { key: "pink", color: "#d32eb2", secondary: "#d0d0d0" },
   { key: "purple", color: "#9B59B6", secondary: "#d0d0d0" },
-  {
-    key: "intensivePurple",
-    color: "#542ed3",
-    secondary: "#d0d0d0",
-  },
+  { key: "intensivePurple", color: "#542ed3", secondary: "#d0d0d0" },
   { key: "grey", color: "#37474F", secondary: "#d0d0d0" },
 ];
 
