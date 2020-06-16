@@ -15,6 +15,19 @@ export const StyledAppBar = styled(Grid)`
   justify-content: space-between;
 `;
 
+export const Title = styled(Grid)`
+  margin-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 20px;
+  width: 100%;
+  max-width: 200px;
+  height: 40px;
+  line-height: 40px;
+`;
+
 export const IconContainer = styled(Grid)`
   display: flex;
   align-items: center;

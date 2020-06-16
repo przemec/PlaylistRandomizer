@@ -2,14 +2,19 @@ import React from "react";
 import * as S from "./style";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { Grid } from "@material-ui/core";
+import { Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { showModal } from "../../store/modal/actions";
 
 const AppBar = ({ showM }) => {
   return (
     <S.StyledAppBar>
-      <Grid></Grid>
+      <Hidden xsDown>
+        <S.Title>YouTube Randomizer</S.Title>
+      </Hidden>
+      <Hidden smUp>
+        <S.Title>YTR</S.Title>
+      </Hidden>
       <S.IconContainer>
         <S.IconWrapper onClick={() => showM("SettingsPage")}>
           <SettingsIcon />
