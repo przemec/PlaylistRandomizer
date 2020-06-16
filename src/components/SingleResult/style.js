@@ -13,7 +13,7 @@ export const StyledContainer = styled(Grid)`
 export const StyledLp = styled(Grid)`
   font-size: 2vmin;
   text-align: center;
-  width: 5vmin;
+  width: 4vmin;
   padding: 0 1vmin;
   color: ${({ isplaying, theme }) => (isplaying ? theme.appbarText : theme.resultText)};
 `;
