@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core/";
 import { useHistory } from "react-router-dom";
 
 const SearchPage = () => {
+  document.title = "YT Randomizer";
   const history = useHistory();
   const search = (playlistLink) => {
     const id = playlistLink.split("list=");

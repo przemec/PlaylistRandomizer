@@ -31,7 +31,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     e.target.playerInfo.playlist = arr;
     updateIndex(e.target.getPlaylistIndex());
     let elmnt = document.getElementById(`index${e.target.getPlaylistIndex()}`);
-    const title = elmnt.getElementsByClassName(`title`)[0].innerHTML;
+    let title = elmnt && elmnt.getElementsByClassName(`title`)[0].innerHTML;
     document.title = title;
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
