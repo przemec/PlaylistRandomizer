@@ -9,7 +9,7 @@ export const Container = styled(Grid)`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  background: ${({ theme }) => theme.appBarBackground};
+  background: ${({ theme }) => theme.backgroundAccent};
   max-width: 800px;
 `;
 
@@ -26,9 +26,9 @@ export const IconWrapper = styled(Grid)`
   justify-content: center;
   border-radius: 2vmin;
   & svg {
-    fill: ${({ theme }) => theme.appbarText};
+    fill: ${({ theme }) => theme.primary};
   }
   &:hover svg {
-    fill: ${({ theme }) => theme.appbarTextHover};
+    fill: ${({ theme }) => theme.primaryHover};
   }
 `;
