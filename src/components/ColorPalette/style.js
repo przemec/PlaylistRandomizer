@@ -11,7 +11,7 @@ export const StyledHeader = styled.div`
 `;
 
 export const StyledContainer = styled(Grid)`
-  padding: 5%;
+  padding: 3%;
 `;
 
 export const StyledField = styled(Grid)`

@@ -8,7 +8,7 @@ const Modal = ({ isvisible, type, hideM }) => {
   const CurrentScreen = pages[type];
   return isvisible ? (
     <S.ModalBackground onClick={() => hideM()}>
-      <S.ComponentWrapper>
+      <S.ComponentWrapper onClick={(e) => e.stopPropagation()}>
         <CurrentScreen />
       </S.ComponentWrapper>
     </S.ModalBackground>

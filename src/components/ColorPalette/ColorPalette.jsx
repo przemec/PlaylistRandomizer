@@ -10,15 +10,7 @@ const ColorPalette = ({ theme, updateTheme, themeType }) => {
     const { color, secondary, key } = el;
     console.log(theme, key);
     return (
-      <S.StyledField
-        key={key}
-        color={color}
-        border={secondary}
-        onClick={(e) => {
-          updateTheme(key);
-          e.stopPropagation();
-        }}
-      >
+      <S.StyledField key={key} color={color} border={secondary} onClick={() => updateTheme(key)}>
         {theme === key && "✔"}
       </S.StyledField>
     );
