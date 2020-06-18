@@ -10,7 +10,7 @@ const SearchBar = ({ search }) => {
           <S.StyledTextField fullWidth value={playlistLink} onChange={(e) => setLink(e.target.value)} label="Playlist Link" />
         </S.TextFieldCont>
         <S.SearchCont item>
-          <S.StyledArrow onClick={() => search(playlistLink)} />
+          <S.StyledArrow onClick={() => playlistLink && search(playlistLink)} />
         </S.SearchCont>
       </S.FullHeight>
     </S.StyledPaper>
