@@ -22,6 +22,7 @@ export const StyledTextField = styled(TextField)`
   }
   & label[class*="Mui-focused"],
   &:hover label,
+  & [class*="MuiInput-underline"]::after,
   & [class*="MuiInput-underline"][class*="Mui-focused"]::after {
     color: ${({ theme }) => theme.primaryHover};
     border-color: ${({ theme }) => theme.primaryHover};
