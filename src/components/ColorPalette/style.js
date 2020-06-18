@@ -15,6 +15,9 @@ export const StyledContainer = styled(Grid)`
 `;
 
 export const StyledField = styled(Grid)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 8vh;
   height: 8vh;
   margin: 1vh;
@@ -27,7 +30,6 @@ export const StyledField = styled(Grid)`
   line-height: 7.2vh;
   text-align: center;
   cursor: pointer;
-  color: ${({ theme }) => theme.appbarText};
   font-size: 3vh;
   opacity: 0.9;
 
@@ -36,5 +38,10 @@ export const StyledField = styled(Grid)`
   }
   &:hover {
     opacity: 1;
+  }
+  & svg {
+    fill: ${({ border }) => border};
+    height: 5vh;
+    width: 5vh;
   }
 `;

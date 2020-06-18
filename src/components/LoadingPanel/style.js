@@ -5,9 +5,9 @@ import LoopIcon from "@material-ui/icons/Autorenew";
 
 export const PanelBackground = styled(Grid)`
   position: absolute;
-  top: 0;
+  top: 40px;
   left: 0;
-  z-index: 100;
+  z-index: 90;
   width: 100vw;
   height: calc(100vh - 40px);
   display: flex;
@@ -25,10 +25,15 @@ export const StyledPanel = styled(Grid)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: ${({ theme }) => theme.resultText};
+  & svg {
+    fill: ${({ theme }) => theme.primary};
+  }
+  background: ${({ theme }) => theme.backgroundAccent};
 `;
 
 export const StyledPanelErr = styled(StyledPanel)`
-  background: rgba(155, 0, 0, 0.1);
+  background: ${({ theme }) => theme.backgroundAccent};
 `;
 
 const rotate = keyframes`

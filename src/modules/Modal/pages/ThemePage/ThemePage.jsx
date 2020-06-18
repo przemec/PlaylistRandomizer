@@ -13,10 +13,10 @@ const ThemePage = () => {
     <Grid container justify="center" alignItems="center">
       <S.Header> Theme Settings</S.Header>
       <S.ThemeTypeCont container justify="center" alignItems="center">
-        <S.StyledField isactive={themeType === "light"} onClick={() => changeType("light")}>
+        <S.StyledField isactive={themeType === "light" ? 1 : 0} onClick={() => changeType("light")}>
           {themeType === "light" ? <WbSunnyIcon /> : <WbSunnyOutlinedIcon />}
         </S.StyledField>
-        <S.StyledField isactive={themeType === "dark"} onClick={() => changeType("dark")}>
+        <S.StyledField isactive={themeType === "dark" ? 1 : 0} onClick={() => changeType("dark")}>
           {themeType === "dark" ? <Brightness2Icon /> : <Brightness2OutlinedIcon />}
         </S.StyledField>
       </S.ThemeTypeCont>
