@@ -12,7 +12,7 @@ export const darkPurple = {
   type: "dark",
 };
 
-export const darkRed = {
+export const darkBrick = {
   primary: "#ef9a9a",
   primaryHover: "#e57373",
   appBarBackground: "#232323",

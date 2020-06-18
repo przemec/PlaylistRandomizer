@@ -5,13 +5,6 @@ export const defaultTheme = {
   type: "light",
 };
 
-export const blue = {
-  primary: "#1976D2",
-  primaryHover: "#1867b6",
-  appBarBackground: "#1976D2",
-  type: "light",
-};
-
 export const steelBlue = {
   primary: "#2980B9",
   primaryHover: "#1b7bba",
@@ -54,13 +47,6 @@ export const salmon = {
   type: "light",
 };
 
-export const red = {
-  primary: "#E74C3C",
-  primaryHover: "#e53827",
-  appBarBackground: "#E74C3C",
-  type: "light",
-};
-
 export const brick = {
   primary: "#C0392B",
   primaryHover: "#bf2a1b",
@@ -68,17 +54,10 @@ export const brick = {
   type: "light",
 };
 
-export const magenta = {
+export const pink = {
   primary: "#d53c81",
   primaryHover: "#c63074",
   appBarBackground: "#d53c81",
-  type: "light",
-};
-
-export const pink = {
-  primary: "#d32eb2",
-  primaryHover: "#c521a4",
-  appBarBackground: "#d32eb2",
   type: "light",
 };
 
