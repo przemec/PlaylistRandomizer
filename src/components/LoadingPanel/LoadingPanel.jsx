@@ -15,7 +15,7 @@ const LoadingPanel = ({ err }) => {
         <S.StyledPanelErr>
           <Grid>Loading Error!</Grid>
           <Grid>
-            <Link to="/">Back to Home Page</Link>
+            <S.StyledLink to="/">Back to Home Page</S.StyledLink>
           </Grid>
         </S.StyledPanelErr>
       )}

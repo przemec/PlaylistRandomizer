@@ -1,4 +1,4 @@
-export const defaultTheme = {
+export const blue = {
   primary: "#303f9f",
   primaryHover: "#283593",
   appBarBackground: "#303f9f",
@@ -13,9 +13,9 @@ export const steelBlue = {
 };
 
 export const cyan = {
-  primary: "#27d1a7",
-  primaryHover: "#24ba95",
-  appBarBackground: "#27d1a7",
+  primary: "#20ac89",
+  primaryHover: "#188167",
+  appBarBackground: "#20ac89",
   type: "light",
 };
 
@@ -34,23 +34,23 @@ export const olive = {
 };
 
 export const orange = {
-  primary: "#FF8F00",
+  primary: "#ff8f00",
   primaryHover: "#ff7800",
-  appBarBackground: "#FF8F00",
+  appBarBackground: "#ff8f00",
   type: "light",
 };
 
 export const salmon = {
-  primary: "#FF5252",
+  primary: "#ff5252",
   primaryHover: "#fd3c3c",
-  appBarBackground: "#FF5252",
+  appBarBackground: "#ff5252",
   type: "light",
 };
 
 export const brick = {
-  primary: "#C0392B",
+  primary: "#c0392b",
   primaryHover: "#bf2a1b",
-  appBarBackground: "#C0392B",
+  appBarBackground: "#c0392b",
   type: "light",
 };
 
@@ -62,9 +62,9 @@ export const pink = {
 };
 
 export const purple = {
-  primary: "#9B59B6",
+  primary: "#9b59b6",
   primaryHover: "#9548b5",
-  appBarBackground: "#9B59B6",
+  appBarBackground: "#9b59b6",
   type: "light",
 };
 
@@ -76,8 +76,8 @@ export const intensivePurple = {
 };
 
 export const grey = {
-  primary: "#37474F",
+  primary: "#37474f",
   primaryHover: "#2a3940",
-  appBarBackground: "#37474F",
+  appBarBackground: "#37474f",
   type: "light",
 };

@@ -8,8 +8,8 @@ export const Header = styled(Grid)`
   line-height: 50px;
   font-size: 22px;
   padding-left: 20px;
-  color: ${({ theme }) => theme.resultText};
-  border-bottom: 2px solid ${({ theme }) => theme.resultText};
+  color: ${({ theme }) => theme.defaultText};
+  border-bottom: 2px solid ${({ theme }) => theme.defaultText};
 `;
 
 export const ThemeTypeCont = styled(Grid)`
@@ -27,14 +27,14 @@ export const StyledField = styled(Grid)`
   border-radius: 2vh;
   border-width: 0.5vh;
   border-style: solid;
-  border-color: ${({ theme }) => theme.resultText};
+  border-color: ${({ theme }) => theme.defaultText};
   transition: 0.2s all ease-in-out;
   line-height: 7.2vh;
   text-align: center;
   cursor: pointer;
   opacity: ${({ isactive }) => (isactive ? 1 : 0.8)};
   & svg {
-    fill: ${({ theme, isactive }) => (isactive ? theme.primary : theme.resultText)};
+    fill: ${({ theme, isactive }) => (isactive ? theme.primary : theme.defaultText)};
     height: 5vh;
     width: 5vh;
   }

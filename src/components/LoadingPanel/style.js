@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { Grid } from "@material-ui/core/";
+import { Link } from "react-router-dom";
 import LoopIcon from "@material-ui/icons/Autorenew";
 
 export const PanelBackground = styled(Grid)`
@@ -15,6 +16,10 @@ export const PanelBackground = styled(Grid)`
   justify-content: center;
 `;
 
+export const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.primary};
+`;
+
 export const StyledPanel = styled(Grid)`
   width: 250px;
   height: 100px;
@@ -25,7 +30,7 @@ export const StyledPanel = styled(Grid)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.resultText};
+  color: ${({ theme }) => theme.defaultText};
   & svg {
     fill: ${({ theme }) => theme.primary};
   }

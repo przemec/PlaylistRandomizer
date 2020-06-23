@@ -17,15 +17,25 @@ export const FullHeight = styled(Grid)`
 `;
 
 export const StyledTextField = styled(TextField)`
-  &:hover [class*="MuiInput-underline"]:not(.Mui-disabled)::before {
-    border-color: ${({ theme }) => theme.primaryHover};
+  & input {
+    color: ${({ theme }) => theme.defaultText};
   }
+
+  & [class*="MuiInput-underline"]:not(.Mui-disabled)::before {
+    border-color: ${({ theme }) => theme.defaultText};
+  }
+  & label {
+    color: ${({ theme }) => theme.defaultText};
+    border-color: ${({ theme }) => theme.defaultText};
+  }
+  &:hover [class*="MuiInput-underline"]:not(.Mui-disabled)::before,
   & label[class*="Mui-focused"],
   &:hover label,
   & [class*="MuiInput-underline"]::after,
   & [class*="MuiInput-underline"][class*="Mui-focused"]::after {
-    color: ${({ theme }) => theme.primaryHover};
-    border-color: ${({ theme }) => theme.primaryHover};
+    color: ${({ theme }) => theme.primary};
+    border-color: ${({ theme }) => theme.primary};
+    border-width: 2px;
   }
 `;
 
