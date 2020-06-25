@@ -13,11 +13,17 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
+  const [isnextpage, nextpage] = React.useState(false);
   React.useEffect(() => {
     const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
     player && player.loadPlaylist(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songs]);
+  React.useEffect(() => {
+    isnextpage && playNextPage();
+    nextpage(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isnextpage]);
   const onPlayerReady = (e) => {
     const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
@@ -35,7 +41,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     document.title = title;
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      // e.target.getPlaylistIndex() === 199 && switchM(true);
+      e.target.getPlaylistIndex() === 199 && nextpage(true);
     }
   };
   if (!window.YT) {
