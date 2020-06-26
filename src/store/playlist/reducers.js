@@ -30,6 +30,8 @@ const playlist = (state = [], action) => {
         }
       }
       allSongs.sort(() => Math.random() - 0.5);
+      allSongs.sort(() => Math.random() - 0.5);
+      allSongs.sort(() => Math.random() - 0.5);
       const slicedRandom = slice200(allSongs);
       state = slicedRandom;
       return state;
