@@ -22,9 +22,7 @@ const mapSTP = (state) => ({
   isvisible: state.modal.isvisible,
 });
 const mapDTP = (dispatch) => ({
-  hideM: () => {
-    dispatch(hideModal());
-  },
+  hideM: () => dispatch(hideModal()),
 });
 
 export default connect(mapSTP, mapDTP)(Modal);

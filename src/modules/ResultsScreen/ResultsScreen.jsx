@@ -125,12 +125,8 @@ const mapSTP = (state) => ({
   songs: state.playlist,
 });
 const mapDTP = (dispatch) => ({
-  randomizeP: (e) => {
-    dispatch(P.randomizePlaylist(e));
-  },
-  editPlaylist: (e, list) => {
-    dispatch(PS.editPlaylist(e, list));
-  },
+  randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
+  editPlaylist: (e, list) => dispatch(PS.editPlaylist(e, list)),
 });
 
 export default connect(mapSTP, mapDTP)(ResultsScreen);

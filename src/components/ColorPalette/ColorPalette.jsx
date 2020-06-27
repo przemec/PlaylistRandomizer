@@ -26,9 +26,7 @@ const mapSTP = (state) => ({
   theme: state.theme,
 });
 const mapDTP = (dispatch) => ({
-  updateTheme: (themeKey, themeType) => {
-    dispatch(T.changeTheme(themeKey, themeType));
-  },
+  updateTheme: (themeKey, themeType) => dispatch(T.changeTheme(themeKey, themeType)),
 });
 
 export default connect(mapSTP, mapDTP)(ColorPalette);

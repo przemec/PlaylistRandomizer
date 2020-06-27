@@ -26,9 +26,7 @@ const AppBar = ({ showM }) => (
 );
 
 const mapDTP = (dispatch) => ({
-  showM: (type) => {
-    dispatch(showModal(type));
-  },
+  showM: (type) => dispatch(showModal(type)),
 });
 
 export default connect(null, mapDTP)(AppBar);
