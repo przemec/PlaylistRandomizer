@@ -32,8 +32,11 @@ export const PlayerContainer = styled(Grid)`
   @media (max-width: 600px) and (max-height: 899px) {
     height: 60%;
   }
+  @media (max-width: 500px) and (max-height: 740px) {
+    height: 60%;
+  }
   /*mob*/
-  @media (max-width: 500px) and (max-height: 899px) {
+  @media (max-width: 500px) and (max-height: 899px) and (min-height: 741px) {
     height: 50%;
   }
   @media (max-width: 420px) and (max-height: 899px) {
@@ -85,8 +88,11 @@ export const ResultsContainer = styled(Grid)`
   @media (max-width: 600px) and (max-height: 899px) {
     height: 40%;
   }
+  @media (max-width: 501px) and (max-height: 741px) {
+    height: 40%;
+  }
   /*mob*/
-  @media (max-width: 500px) and (max-height: 899px) {
+  @media (max-width: 500px) and (max-height: 899px) and (min-height: 740px) {
     height: 50%;
   }
   @media (max-width: 420px) and (max-height: 899px) {
@@ -113,9 +119,8 @@ export const ResultsContainer = styled(Grid)`
 
 export const PlayerWrapper = styled(Grid)`
   position: relative;
-  padding-bottom: min(45%, 450px);
+  padding-bottom: 45%;
   height: 0;
-  max-width: 800px;
 `;
 
 export const Player = styled(Grid)`
@@ -129,7 +134,6 @@ export const Player = styled(Grid)`
 export const Title = styled(Grid)`
   font-size: 2vh;
   margin: 10px 0;
-  max-width: 800px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -139,16 +143,4 @@ export const Title = styled(Grid)`
 export const TitleNext = styled(Title)`
   font-size: 1.8vh;
   margin-top: 0;
-`;
-
-export const Button200 = styled(Grid)`
-  width: 250px;
-  height: 100px;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  background: rgba(200, 200, 255, 1);
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;

@@ -33,11 +33,11 @@ export const darkThemeList = [
 
 const enhanceTheme = (theme) => {
   let themeConstants = {
-    defaultText: "#000000aa",
+    defaultText: "#0a0a0a",
     defaultTextHover: "#000",
-    colorText: "#ffffffdd",
+    colorText: "#eee",
     colorTextHover: "#fff",
-    appbarText: "#ffffffdd",
+    appbarText: "#eee",
     appbarTextHover: "#fff",
     background: "#f5f5f5",
     backgroundAccent: "#dadada",
@@ -46,7 +46,7 @@ const enhanceTheme = (theme) => {
     themeConstants = {
       defaultText: "#eee",
       defaultTextHover: "#fff",
-      colorText: "#000000aa",
+      colorText: "#0a0a0a",
       colorTextHover: "#000",
       appbarText: "#eee",
       appbarTextHover: "#fff",

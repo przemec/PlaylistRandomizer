@@ -10,7 +10,6 @@ export const Container = styled(Grid)`
   align-items: center;
   justify-content: flex-end;
   background: ${({ theme }) => theme.backgroundAccent};
-  max-width: 800px;
 `;
 
 export const IconWrapper = styled(Grid)`
