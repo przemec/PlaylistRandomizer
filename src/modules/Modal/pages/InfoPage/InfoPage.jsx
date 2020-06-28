@@ -4,13 +4,12 @@ import { Grid } from "@material-ui/core/";
 
 const InfoPage = () => (
   <Grid container justify="center" alignItems="center">
-    <S.MainHeader>About</S.MainHeader>
     <S.StyledContainer container justify="center">
       <S.QHeader>What is this page?</S.QHeader>
       <S.Answer>
-        Playlist Randomizer lets You play YouTube randomized YouTube playlists. Playing and loading is way quicker and more stable than on
-        the YouTube page, because lists are stored locally in browser storage. If minimalistic style, multiple themes and high
-        responsiveness is what You want, then this page is perfect for You!
+        Playlist Randomizer lets You play randomized YouTube playlists. Playing and loading is way quicker and more stable than on the
+        YouTube page, because lists are stored locally in browser storage. If minimalistic style, multiple themes and high responsiveness is
+        what You want, then this page is perfect for You!
       </S.Answer>
       <S.QHeader>Why is playlist cut into 200-songs segments?</S.QHeader>
       <S.Answer>

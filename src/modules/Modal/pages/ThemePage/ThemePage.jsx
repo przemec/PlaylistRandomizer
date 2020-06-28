@@ -11,7 +11,6 @@ import { swapTheme } from "../../../../store/theme/actions";
 
 const ThemePage = ({ themeType, swapTheme }) => (
   <Grid container justify="center" alignItems="center">
-    <S.Header> Theme Settings</S.Header>
     <S.ThemeTypeCont container justify="center" alignItems="center">
       <S.StyledField isactive={themeType === "light" ? 1 : 0} onClick={() => swapTheme("light")}>
         {themeType === "light" ? <WbSunnyIcon /> : <WbSunnyOutlinedIcon />}

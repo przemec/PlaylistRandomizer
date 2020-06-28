@@ -1,17 +1,6 @@
 import styled from "styled-components";
 import { Grid } from "@material-ui/core/";
 
-export const MainHeader = styled(Grid)`
-  width: 90%;
-  margin: 0 5%;
-  height: 50px;
-  line-height: 50px;
-  font-size: 22px;
-  padding-left: 20px;
-  color: ${({ theme }) => theme.defaultText};
-  border-bottom: 2px solid ${({ theme }) => theme.defaultText};
-`;
-
 export const StyledContainer = styled(Grid)`
   padding: 0 20px;
   margin: 0 5%;

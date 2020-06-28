@@ -28,3 +28,39 @@ export const ComponentWrapper = styled(Grid)`
   max-width: 900px;
   margin: 20px 0;
 `;
+
+export const Header = styled(Grid)`
+  width: 90%;
+  margin: 0 5%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid ${({ theme }) => theme.defaultText};
+`;
+
+export const Title = styled(Grid)`
+  width: calc(100% - 30px);
+  height: 50px;
+  line-height: 50px;
+  font-size: 22px;
+  padding-left: 20px;
+  color: ${({ theme }) => theme.defaultText};
+`;
+
+export const CloseWrapper = styled(Grid)`
+  width: 40px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  & svg {
+    width: 30px;
+    height: 30px;
+    fill: ${({ theme }) => theme.defaultText};
+  }
+  &:hover svg {
+    fill: ${({ theme }) => theme.defaultTextHover};
+  }
+`;
