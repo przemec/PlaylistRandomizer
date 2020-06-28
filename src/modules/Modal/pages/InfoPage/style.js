@@ -19,6 +19,7 @@ export const QHeader = styled(Grid)`
 `;
 
 export const Answer = styled(Grid)`
+  line-height: 26px;
   width: 100%;
   margin: 10px 0;
   font-size: 16px;
@@ -26,5 +27,10 @@ export const Answer = styled(Grid)`
   color: ${({ theme }) => theme.defaultText};
   &:last-child {
     margin-bottom: 25px;
+  }
+  & svg {
+    height: 20px;
+    transform: translateY(4px);
+    fill: ${({ theme }) => theme.defaultText};
   }
 `;

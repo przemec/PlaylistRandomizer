@@ -20,7 +20,6 @@ export const StyledLp = styled(Grid)`
 
 export const StyledTitle = styled.a`
   text-decoration: none;
-  color: black;
   font-size: 1.8vmin;
   padding: 0 5px;
   white-space: nowrap;
