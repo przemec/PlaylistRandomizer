@@ -26,7 +26,7 @@ export const Title = styled(Link)`
   width: 100%;
   max-width: 200px;
   height: 40px;
-  line-height: 35px;
+  line-height: 40px;
   cursor: pointer;
   text-decoration: none;
   &:hover {
