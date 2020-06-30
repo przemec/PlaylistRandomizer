@@ -17,7 +17,7 @@ export const StyledAppBar = styled(Grid)`
 `;
 
 export const Title = styled(Link)`
-  margin-left: 15px;
+  margin: 0 10px 0 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
