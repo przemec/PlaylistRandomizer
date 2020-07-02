@@ -14,6 +14,7 @@ export const ListControl = styled(Grid)`
   background: linear-gradient(0deg, #00000088, transparent 90%);
   transition: all 0.2s ease-in-out;
   opacity: 0;
+  z-index: 7;
 `;
 
 export const ListControlMob = styled(ListControl)`

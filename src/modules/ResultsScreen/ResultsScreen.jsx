@@ -92,21 +92,21 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     }
   };
   return (
-    <>
-      <Grid container style={{ height: "calc(100vh - 40px)" }}>
-        <S.PlayerContainer item>
-          <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
-          <S.TitleNext>
-            {songs[playingPage][currentIndex + 1]
-              ? "Next: " + songs[playingPage][currentIndex + 1].snippet.title
-              : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].snippet.title}
-          </S.TitleNext>
-          <S.PlayerWrapper>
-            <S.Player id="youtube-player" wmode="transparent" />
-          </S.PlayerWrapper>
-          <PlayerControl currentListID={currentListID} shuffle={randomizeP} />
-        </S.PlayerContainer>
-        <S.ResultsContainer item>
+    <S.MainCont>
+      <S.PlayerContainer>
+        <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
+        <S.TitleNext>
+          {songs[playingPage][currentIndex + 1]
+            ? "Next: " + songs[playingPage][currentIndex + 1].snippet.title
+            : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].snippet.title}
+        </S.TitleNext>
+        <S.PlayerWrapper>
+          <S.Player id="youtube-player" wmode="transparent" />
+        </S.PlayerWrapper>
+        <PlayerControl currentListID={currentListID} shuffle={randomizeP} />
+      </S.PlayerContainer>
+      <S.ResultsContainer>
+        <S.ResultsGroupWrapper>
           <ResultsGroup
             songs={songs}
             page={currentPage}
@@ -114,10 +114,10 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             changeSong={playSong}
             currentIndex={currentIndex}
           />
-          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
-        </S.ResultsContainer>
-      </Grid>
-    </>
+          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}{" "}
+        </S.ResultsGroupWrapper>
+      </S.ResultsContainer>
+    </S.MainCont>
   );
 };
 

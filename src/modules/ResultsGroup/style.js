@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core/";
 
 export const StyledList = styled(Grid)`
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
   background: ${({ theme }) => theme.backgroundAccent};
   & > *:last-child {
     margin-bottom: 60px;
