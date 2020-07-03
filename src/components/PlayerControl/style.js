@@ -8,8 +8,14 @@ export const Container = styled(Grid)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: ${({ theme }) => theme.backgroundAccent};
+`;
+
+export const ToolsCont = styled(Grid)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const IconWrapper = styled(Grid)`

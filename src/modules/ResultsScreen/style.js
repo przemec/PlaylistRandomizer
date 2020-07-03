@@ -68,7 +68,7 @@ export const PlayerWrapper = styled(Grid)`
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
-    padding-bottom: 56.4%;
+    padding-bottom: 56.25%;
   }
 `;
 

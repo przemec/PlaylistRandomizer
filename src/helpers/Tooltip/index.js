@@ -7,7 +7,6 @@ const StyledTooltip = styled((props) => (
     classes={{ popper: props.className, tooltip: "tooltip" }}
     {...props}
     disableFocusListener
-    disableTouchListener
     placement={props.placement || "bottom"}
   />
 ))`

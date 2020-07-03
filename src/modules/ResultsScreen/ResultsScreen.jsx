@@ -9,9 +9,11 @@ import * as S from "./style";
 
 const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
+  const [isPlayerLoaded, loadPlayer] = React.useState(false);
   const [currentIndex, updateIndex] = React.useState(0);
   const [currentPage, updatePage] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
+  const [playerState, updatePlayerState] = React.useState(-1);
   const [isnextpage, nextpage] = React.useState(false);
   React.useEffect(() => {
     const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
@@ -24,6 +26,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   const onPlayerReady = (e) => {
+    loadPlayer(true);
     const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
     e.target.loadPlaylist(arr);
     const that = e.target;
@@ -41,6 +44,9 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
       e.target.getPlaylistIndex() === 199 && nextpage(true);
+    }
+    if (e.target.getPlayerState() === 1 || e.target.getPlayerState() === 2) {
+      updatePlayerState(e.target.getPlayerState());
     }
   };
   if (!window.YT) {
@@ -102,7 +108,16 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
         <S.PlayerWrapper>
           <S.Player id="youtube-player" wmode="transparent" />
         </S.PlayerWrapper>
-        <PlayerControl currentListID={currentListID} shuffle={randomizeP} />
+        {isPlayerLoaded && (
+          <PlayerControl
+            currentListID={currentListID}
+            shuffle={randomizeP}
+            playNext={() => player.nextVideo()}
+            playPrev={() => player.previousVideo()}
+            switchPlayerState={() => (playerState === 2 ? player.playVideo() : player.pauseVideo())}
+            playerState={playerState}
+          />
+        )}
       </S.PlayerContainer>
       <S.ResultsContainer>
         <S.ResultsGroupWrapper>
@@ -113,7 +128,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             changeSong={playSong}
             currentIndex={currentIndex}
           />
-          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}{" "}
+          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
         </S.ResultsGroupWrapper>
       </S.ResultsContainer>
     </S.MainCont>
