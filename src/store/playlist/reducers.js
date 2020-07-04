@@ -1,4 +1,4 @@
-import { playlistOperations } from "./actions";
+import { playlistOperations as P } from "./actions";
 
 const slice200 = (songs) => {
   const allPages = Math.floor(songs.length / 200);
@@ -10,34 +10,31 @@ const slice200 = (songs) => {
   return pages;
 };
 
-const playlist = (state = [], action) => {
+const playlist = (state = { list: [] }, action) => {
+  console.log(state.list, state);
   switch (action.type) {
-    case playlistOperations.LOAD_PART:
-      action.list.map((e) => (state = [...state, e]));
+    case P.LOAD_PART:
+      console.log(state.list, state);
+      action.list.map((e) => (state.list = [...state.list, e]));
       return state;
-    case playlistOperations.LOAD_PLAYLIST:
-      state = action.list;
-      return state;
-    case playlistOperations.SLICE:
-      const pages = slice200(state);
-      state = pages;
-      return state;
-    case playlistOperations.RANDOMIZE:
+    case P.LOAD_PLAYLIST:
+      return { ...state, list: action.list, id: action.id, updated: action.updated };
+    case P.SLICE:
+      const pages = slice200(state.list);
+      return { ...state, list: pages };
+    case P.RANDOMIZE:
       let allSongs = [];
-      for (let i = 0; i < state.length; i++) {
-        for (let j = 0; j < state[i].length; j++) {
-          allSongs.push(state[i][j]);
+      for (let i = 0; i < state.list.length; i++) {
+        for (let j = 0; j < state.list[i].length; j++) {
+          allSongs.push(state.list[i][j]);
         }
       }
       allSongs.sort(() => Math.random() - 0.5);
       allSongs.sort(() => Math.random() - 0.5);
-      allSongs.sort(() => Math.random() - 0.5);
       const slicedRandom = slice200(allSongs);
-      state = slicedRandom;
-      return state;
-    case playlistOperations.CLEAR:
-      state = [];
-      return state;
+      return { ...state, list: slicedRandom };
+    case P.CLEAR:
+      return { list: [] };
     default:
       return state;
   }

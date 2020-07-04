@@ -1,16 +1,17 @@
 import React from "react";
-import ResultsScreen from "../../modules/ResultsScreen";
-import LoadingPanel from "../../components/LoadingPanel";
+import { connect } from "react-redux";
+import downloadPlaylistData from "../../assets/apiYT";
 import * as P from "../../store/playlist/actions";
 import * as L from "../../store/listloadstate/actions";
-import downloadPlaylistData from "../../assets/apiYT";
-import { connect } from "react-redux";
+import ResultsScreen from "../../modules/ResultsScreen";
+import LoadingPanel from "../../components/LoadingPanel";
 
 const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoaded, loadingErr, updatePLstate }) => {
   React.useEffect(() => {
     const savedlist = playlists.filter((e) => e.id === match.params.id && e);
     if (savedlist.length !== 0) {
-      loadPlaylist(savedlist[0].list);
+      const { list, id, updated } = savedlist[0];
+      loadPlaylist(list, id, updated);
       sliceP();
       randomizeP();
       updatePLstate(true);
@@ -35,8 +36,8 @@ const mapDTP = (dispatch) => ({
   sliceP: () => {
     dispatch(P.slicePlaylist());
   },
-  loadPlaylist: (e) => {
-    dispatch(P.loadPlaylist(e));
+  loadPlaylist: (list, id, updated) => {
+    dispatch(P.loadPlaylist(list, id, updated));
   },
   updatePLstate: (e) => {
     dispatch(L.updatePLstate(e));

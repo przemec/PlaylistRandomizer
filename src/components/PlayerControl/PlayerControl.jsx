@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import * as S from "./style";
 import downloadPlaylistData from "../../assets/apiYT";
 import Tooltip from "../../helpers/Tooltip";
@@ -9,7 +10,7 @@ import SkipNextIcon from "@material-ui/icons/SkipNext";
 import PauseIcon from "@material-ui/icons/Pause";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 
-const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlayerState, playerState }) => (
+const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlayerState, playerState, updated }) => (
   <S.Container>
     <S.ToolsCont>
       <Tooltip title="Play previous">
@@ -32,7 +33,7 @@ const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlaye
           <ShuffleIcon />
         </S.IconWrapper>
       </Tooltip>
-      <Tooltip title="Refresh playlist data">
+      <Tooltip title={<>Refresh playlist data {updated && <div style={{ clear: "both" }}>Lastly updated: {updated}</div>}</>}>
         <S.IconWrapper onClick={() => downloadPlaylistData(currentListID, "refresh")}>
           <CloudDownloadIcon />
         </S.IconWrapper>
@@ -41,4 +42,8 @@ const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlaye
   </S.Container>
 );
 
-export default PlayerControl;
+const mapSTP = (state) => ({
+  updated: state.playlist.updated,
+});
+
+export default connect(mapSTP)(PlayerControl);

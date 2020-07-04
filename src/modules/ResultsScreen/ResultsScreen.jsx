@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
+import * as S from "./style";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import PlayerControl from "../../components/PlayerControl";
-import * as S from "./style";
 
 const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
@@ -128,7 +128,9 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             changeSong={playSong}
             currentIndex={currentIndex}
           />
-          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
+          {songs[1] && (
+            <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />
+          )}
         </S.ResultsGroupWrapper>
       </S.ResultsContainer>
     </S.MainCont>
@@ -136,7 +138,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
 };
 
 const mapSTP = (state) => ({
-  songs: state.playlist,
+  songs: state.playlist.list,
 });
 const mapDTP = (dispatch) => ({
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),

@@ -14,6 +14,7 @@ const StyledTooltip = styled((props) => (
     color: ${({ theme }) => theme.colorText};
     background: ${({ theme }) => theme.defaultText};
     font-size: 12px;
+    text-align: center;
   }
 `;
 

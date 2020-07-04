@@ -1,23 +1,29 @@
-import { playlistsOperations } from "./actions";
+import { playlistsOperations as PS } from "./actions";
 import * as LS from "../localstorage";
 
 const playlists = (state = [], action) => {
+  const d = new Date();
+  const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}, ${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
   switch (action.type) {
-    case playlistsOperations.ADD:
+    case PS.ADD:
       const listObj = {
         id: action.id,
+        updated: time,
         list: action.list,
       };
       LS.savePlaylists([...state, listObj]);
       return [...state, listObj];
-    case playlistsOperations.EDIT:
+    case PS.EDIT:
       state.map((e) => {
-        e.id === action.id && (e.list = action.list);
+        if (e.id === action.id) {
+          e.updated = time;
+          e.list = action.list;
+        }
         return e;
       });
       LS.savePlaylists(state);
       return state;
-    case playlistsOperations.CLEAR:
+    case PS.CLEAR:
       state = [];
       return state;
     default:
