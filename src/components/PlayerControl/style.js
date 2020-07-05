@@ -23,7 +23,7 @@ export const IconWrapper = styled(Grid)`
   height: 8vmin;
   max-width: 50px;
   max-height: 50px;
-  margin: 0 10px;
+  margin: 0 5px;
   display: flex;
   cursor: pointer;
   flex-direction: row;

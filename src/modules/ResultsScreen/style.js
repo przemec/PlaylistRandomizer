@@ -12,6 +12,21 @@ export const MainCont = styled(Grid)`
   }
 `;
 
+export const Title = styled(Grid)`
+  box-sizing: border-box;
+  font-size: 18px;
+  margin: 10px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: ${({ theme }) => theme.defaultText};
+`;
+
+export const TitleNext = styled(Title)`
+  font-size: 16px;
+  margin-top: 0;
+`;
+
 export const PlayerContainer = styled(Grid)`
   box-sizing: border-box;
   display: flex;
@@ -20,6 +35,7 @@ export const PlayerContainer = styled(Grid)`
   height: 100%;
   width: 60%;
   & > * {
+    max-width: 100vw;
     width: 80%;
   }
   @media (max-width: 900px) and (min-height: 900px),
@@ -30,6 +46,9 @@ export const PlayerContainer = styled(Grid)`
     width: 100%;
     & > * {
       width: 100%;
+    }
+    & ${Title} {
+      padding: 0 10px;
     }
   }
 `;
@@ -78,18 +97,4 @@ export const Player = styled(Grid)`
   left: 0;
   width: 100%;
   height: 100%;
-`;
-
-export const Title = styled(Grid)`
-  font-size: 2vh;
-  margin: 10px 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: ${({ theme }) => theme.defaultText};
-`;
-
-export const TitleNext = styled(Title)`
-  font-size: 1.8vh;
-  margin-top: 0;
 `;

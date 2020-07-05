@@ -33,7 +33,7 @@ const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlaye
           <ShuffleIcon />
         </S.IconWrapper>
       </Tooltip>
-      <Tooltip title={<>Refresh playlist data {updated && <div style={{ clear: "both" }}>Lastly updated: {updated}</div>}</>}>
+      <Tooltip title={<>Refresh playlist data {updated && <div style={{ clear: "both" }}>Last update: {updated}</div>}</>}>
         <S.IconWrapper onClick={() => downloadPlaylistData(currentListID, "refresh")}>
           <CloudDownloadIcon />
         </S.IconWrapper>

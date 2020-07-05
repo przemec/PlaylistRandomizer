@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 
-export const StyledHeader = styled.div`
-  color: ${({ theme }) => theme.primary};
-  width: 100vw;
-  height: auto;
-  line-height: 3.5vh;
-  font-size: 3.5vh;
-  text-align: center;
-`;
-
 export const StyledContainer = styled(Grid)`
   padding: 3%;
 `;
@@ -30,7 +21,6 @@ export const StyledField = styled(Grid)`
   line-height: 7.2vh;
   text-align: center;
   cursor: pointer;
-  font-size: 3vh;
   opacity: 0.9;
 
   &::selection {

@@ -39,22 +39,32 @@ export const StyledContainer = styled(Grid)`
 `;
 
 export const StyledLp = styled(Grid)`
-  font-size: 2vmin;
+  font-size: 18px;
   text-align: center;
   width: 4vmin;
   padding: 0 1vmin;
   color: ${({ isplaying, theme }) => (isplaying ? theme.colorText : theme.defaultText)};
+  @media (max-width: 900px) and (min-height: 900px),
+    (max-width: 650px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 export const StyledTitle = styled.a`
   text-decoration: none;
-  font-size: 1.8vmin;
+  font-size: 17px;
   padding: 0 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   width: calc(100% - 21vmin);
   color: ${({ isplaying, theme }) => (isplaying ? theme.colorText : theme.defaultText)};
+  @media (max-width: 900px) and (min-height: 900px),
+    (max-width: 650px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 export const Thumbnail = styled(Grid)`
@@ -62,6 +72,8 @@ export const Thumbnail = styled(Grid)`
   width: 16vmin;
   height: 9vmin;
   background-size: cover;
+  min-height: 45px;
+  min-width: 80px;
   max-height: 90px;
   max-width: 160px;
 `;
