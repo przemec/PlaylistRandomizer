@@ -15,6 +15,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [playingPage, playPage] = React.useState(0);
   const [playerState, updatePlayerState] = React.useState(-1);
   const [isnextpage, nextpage] = React.useState(false);
+  const [titleswap, swaptitle] = React.useState(false);
   React.useEffect(() => {
     const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
     player && player.loadPlaylist(arr);
@@ -25,6 +26,11 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     nextpage(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
+  React.useEffect(() => {
+    document.title = songs[playingPage][currentIndex].snippet.title;
+    swaptitle(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [titleswap]);
   const onPlayerReady = (e) => {
     loadPlayer(true);
     const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
@@ -39,8 +45,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     e.target.playerInfo.playlist = arr;
     updateIndex(e.target.getPlaylistIndex());
     let elmnt = document.getElementById(`index${e.target.getPlaylistIndex()}`);
-    let title = elmnt && elmnt.getElementsByClassName(`title`)[0].innerHTML;
-    document.title = title;
+    swaptitle(true);
     if (e.target.getPlayerState() === 0) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
       e.target.getPlaylistIndex() === 199 && nextpage(true);
@@ -98,14 +103,14 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   };
   const playNextSong = () => {
     if (songs[playingPage][currentIndex + 1]) {
-      player.nextVideo();
+      playSong(currentIndex + 1, playingPage);
     } else if (songs[playingPage + 1]) {
       playNextPage();
     }
   };
   const playPrevSong = () => {
     if (songs[playingPage][currentIndex - 1]) {
-      player.previousVideo();
+      playSong(currentIndex - 1, playingPage);
     } else if (songs[playingPage - 1]) {
       playPrevPage();
     }
@@ -139,7 +144,15 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             playPrev={playPrevSong}
             isPrevActive={songs[playingPage][currentIndex - 1] || (songs[playingPage - 1] && songs[playingPage - 1][199])}
             isNextActive={songs[playingPage][currentIndex + 1] || (songs[playingPage + 1] && songs[playingPage + 1][0])}
-            switchPlayerState={() => (playerState === 2 ? player.playVideo() : player.pauseVideo())}
+            switchPlayerState={() => {
+              if (playerState === 2) {
+                updatePlayerState(1);
+                player.playVideo();
+              } else if (playerState === 1) {
+                player.pauseVideo();
+                updatePlayerState(2);
+              }
+            }}
             playerState={playerState}
           />
         )}
