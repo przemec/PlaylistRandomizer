@@ -87,6 +87,29 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
       updateIndex(0);
     }
   };
+  const playPrevPage = () => {
+    if (songs[playingPage - 1]) {
+      const elmnt = document.getElementById("songlist");
+      elmnt.scrollTop = elmnt.scrollHeight;
+      updatePage(playingPage - 1);
+      playSong(199, playingPage - 1);
+      updateIndex(199);
+    }
+  };
+  const playNextSong = () => {
+    if (songs[playingPage][currentIndex + 1]) {
+      player.nextVideo();
+    } else if (songs[playingPage + 1]) {
+      playNextPage();
+    }
+  };
+  const playPrevSong = () => {
+    if (songs[playingPage][currentIndex - 1]) {
+      player.previousVideo();
+    } else if (songs[playingPage - 1]) {
+      playPrevPage();
+    }
+  };
   const playSong = (index, page) => {
     if (page !== playingPage) {
       const arr = songs[page].map((ev) => ev.snippet.resourceId.videoId);
@@ -112,8 +135,10 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
           <PlayerControl
             currentListID={currentListID}
             shuffle={randomizeP}
-            playNext={() => player.nextVideo()}
-            playPrev={() => player.previousVideo()}
+            playNext={playNextSong}
+            playPrev={playPrevSong}
+            isPrevActive={songs[playingPage][currentIndex - 1] || (songs[playingPage - 1] && songs[playingPage - 1][199])}
+            isNextActive={songs[playingPage][currentIndex + 1] || (songs[playingPage + 1] && songs[playingPage + 1][0])}
             switchPlayerState={() => (playerState === 2 ? player.playVideo() : player.pauseVideo())}
             playerState={playerState}
           />
@@ -128,9 +153,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             changeSong={playSong}
             currentIndex={currentIndex}
           />
-          {songs[1] && (
-            <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />
-          )}
+          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
         </S.ResultsGroupWrapper>
       </S.ResultsContainer>
     </S.MainCont>

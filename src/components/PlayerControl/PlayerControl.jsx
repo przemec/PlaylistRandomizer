@@ -10,22 +10,36 @@ import SkipNextIcon from "@material-ui/icons/SkipNext";
 import PauseIcon from "@material-ui/icons/Pause";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 
-const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, switchPlayerState, playerState, updated }) => (
+const PlayerControl = ({
+  currentListID,
+  shuffle,
+  playNext,
+  playPrev,
+  switchPlayerState,
+  playerState,
+  updated,
+  isPrevActive,
+  isNextActive,
+}) => (
   <S.Container>
     <S.ToolsCont>
-      <Tooltip title="Play previous">
-        <S.IconWrapper onClick={playPrev}>
-          <SkipPreviousIcon />
-        </S.IconWrapper>
-      </Tooltip>
+      {isPrevActive && (
+        <Tooltip title="Play previous">
+          <S.IconWrapper onClick={playPrev}>
+            <SkipPreviousIcon />
+          </S.IconWrapper>
+        </Tooltip>
+      )}
       <Tooltip title={playerState === 2 ? "Play" : "Pause"}>
         <S.IconWrapper onClick={switchPlayerState}>{playerState === 2 ? <PlayArrowIcon /> : <PauseIcon />}</S.IconWrapper>
       </Tooltip>
-      <Tooltip title="Play next">
-        <S.IconWrapper onClick={playNext}>
-          <SkipNextIcon />
-        </S.IconWrapper>
-      </Tooltip>
+      {isNextActive && (
+        <Tooltip title="Play next">
+          <S.IconWrapper onClick={playNext}>
+            <SkipNextIcon />
+          </S.IconWrapper>
+        </Tooltip>
+      )}
     </S.ToolsCont>
     <S.ToolsCont>
       <Tooltip title="Shuffle playlist">
