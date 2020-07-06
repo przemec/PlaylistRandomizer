@@ -11,10 +11,8 @@ const slice200 = (songs) => {
 };
 
 const playlist = (state = { list: [] }, action) => {
-  console.log(state.list, state);
   switch (action.type) {
     case P.LOAD_PART:
-      console.log(state.list, state);
       action.list.map((e) => (state.list = [...state.list, e]));
       return state;
     case P.LOAD_PLAYLIST:
