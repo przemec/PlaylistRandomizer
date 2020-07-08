@@ -1,37 +1,25 @@
-export const loadState = () => {
+export const loadState = (key) => {
   try {
-    const localstate = localStorage.getItem("ytrandomizer");
+    const localstate = localStorage.getItem(key);
     return localstate === null ? undefined : JSON.parse(localstate);
   } catch (err) {
     return undefined;
   }
 };
 
-export const savePlaylists = (state) => {
+export const saveStateLocally = (key, state) => {
   try {
-    let localstate = localStorage.getItem("ytrandomizer");
-    localstate === null ? (localstate = {}) : (localstate = JSON.parse(localstate));
-    const update = { ...localstate, playlists: state };
-    const updateString = JSON.stringify(update);
-    localStorage.setItem("ytrandomizer", updateString);
+    localStorage.setItem(key, JSON.stringify(state));
   } catch (err) {
     console.log(err);
   }
 };
 
-export const saveThemeKey = (key) => {
-  try {
-    let localstate = localStorage.getItem("ytrandomizer");
-    localstate === null ? (localstate = {}) : (localstate = JSON.parse(localstate));
-    const update = { ...localstate, theme: key };
-    const updateString = JSON.stringify(update);
-    localStorage.setItem("ytrandomizer", updateString);
-  } catch (err) {}
-};
-
 export const clearState = () => {
   try {
-    const localstate = localStorage.getItem("ytrandomizer");
-    localstate !== null && localStorage.removeItem("ytrandomizer");
+    const lists = localStorage.getItem("playlists");
+    lists !== null && localStorage.removeItem("playlists");
+    const theme = localStorage.getItem("theme");
+    theme !== null && localStorage.removeItem("theme");
   } catch (err) {}
 };

@@ -16,7 +16,7 @@ const playlist = (state = { list: [] }, action) => {
       action.list.map((e) => (state.list = [...state.list, e]));
       return state;
     case P.LOAD_PLAYLIST:
-      return { ...state, list: action.list, id: action.id, updated: action.updated };
+      return { ...state, list: action.list, id: action.id, updated: action.updated, isFav: action.isFav };
     case P.SLICE:
       const pages = slice200(state.list);
       return { ...state, list: pages };

@@ -10,8 +10,8 @@ const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoad
   React.useEffect(() => {
     const savedlist = playlists.filter((e) => e.id === match.params.id && e);
     if (savedlist.length !== 0) {
-      const { list, id, updated } = savedlist[0];
-      loadPlaylist(list, id, updated);
+      const { list, id, updated, isFav } = savedlist[0];
+      loadPlaylist(list, id, updated, isFav);
       sliceP();
       randomizeP();
       updatePLstate(true);
@@ -36,8 +36,8 @@ const mapDTP = (dispatch) => ({
   sliceP: () => {
     dispatch(P.slicePlaylist());
   },
-  loadPlaylist: (list, id, updated) => {
-    dispatch(P.loadPlaylist(list, id, updated));
+  loadPlaylist: (list, id, updated, isFav) => {
+    dispatch(P.loadPlaylist(list, id, updated, isFav));
   },
   updatePLstate: (e) => {
     dispatch(L.updatePLstate(e));

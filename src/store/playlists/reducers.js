@@ -10,19 +10,23 @@ const playlists = (state = [], action) => {
       const listObj = {
         id: action.id,
         updated: time,
+        isFav: false,
+        listData: action.listData,
         list: action.list,
       };
-      LS.savePlaylists([...state, listObj]);
+      LS.saveStateLocally("playlists", [...state, listObj]);
       return [...state, listObj];
     case PS.EDIT:
       state.map((e) => {
         if (e.id === action.id) {
           e.updated = time;
+          e.listData.thumbnail = action.listData.thumbnail;
+          e.listData.title = action.listData.title;
           e.list = action.list;
         }
         return e;
       });
-      LS.savePlaylists(state);
+      LS.saveStateLocally("playlists", state);
       return state;
     case PS.CLEAR:
       state = [];

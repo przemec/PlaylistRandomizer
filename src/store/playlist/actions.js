@@ -10,8 +10,8 @@ export function loadPart(list) {
   return { type: playlistOperations.LOAD_PART, list };
 }
 
-export function loadPlaylist(list, id, updated) {
-  return { type: playlistOperations.LOAD_PLAYLIST, list, id, updated };
+export function loadPlaylist(list, id, updated, isFav) {
+  return { type: playlistOperations.LOAD_PLAYLIST, list, id, updated, isFav };
 }
 
 export function slicePlaylist() {

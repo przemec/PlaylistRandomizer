@@ -6,6 +6,7 @@ import { gapi } from "gapi-script";
 
 const downloadPlaylistData = (id, action) => {
   let pageToken = undefined;
+  let listData = {};
   let listt = [];
   const dsp = store.dispatch;
   if (action === "refresh") {
@@ -20,7 +21,15 @@ const downloadPlaylistData = (id, action) => {
           id: id,
         })
         .then(
-          function (res) {},
+          function (res) {
+            const { channelTitle, thumbnails, title, publishedAt } = res.result.items[0].snippet;
+            listData = {
+              author: channelTitle,
+              thumbnail: thumbnails.standard.url,
+              title,
+              publishedAt,
+            };
+          },
           function (err) {
             dsp(L.loadError(true));
           }
@@ -41,12 +50,12 @@ const downloadPlaylistData = (id, action) => {
             search(id);
           } else {
             if (action === "add") {
-              await dsp(PS.addPlaylist(id, listt));
+              await dsp(PS.addPlaylist(id, listt, listData));
               await dsp(P.slicePlaylist());
               await dsp(P.randomizePlaylist());
               await dsp(L.updatePLstate(true));
             } else if (action === "refresh") {
-              await dsp(PS.editPlaylist(id, listt));
+              await dsp(PS.editPlaylist(id, listt, listData));
               //eslint-disable-next-line
               location.reload();
             }
