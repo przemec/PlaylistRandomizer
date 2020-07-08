@@ -17,7 +17,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [isnextpage, nextpage] = React.useState(false);
   const [titleswap, swaptitle] = React.useState(false);
   React.useEffect(() => {
-    const arr = songs[0].map((ev) => ev.snippet.resourceId.videoId);
+    const arr = songs[0].map((ev) => ev.videoId);
     player && player.loadPlaylist(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songs]);
@@ -27,13 +27,13 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   React.useEffect(() => {
-    document.title = songs[playingPage][currentIndex].snippet.title;
+    document.title = songs[playingPage][currentIndex].title;
     swaptitle(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [titleswap]);
   const onPlayerReady = (e) => {
     loadPlayer(true);
-    const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
+    const arr = songs[currentPage].map((ev) => ev.videoId);
     e.target.loadPlaylist(arr);
     const that = e.target;
     setTimeout(() => {
@@ -41,7 +41,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     }, 1000);
   };
   const onPlayerStateChange = (e) => {
-    const arr = songs[currentPage].map((ev) => ev.snippet.resourceId.videoId);
+    const arr = songs[currentPage].map((ev) => ev.videoId);
     e.target.playerInfo.playlist = arr;
     updateIndex(e.target.getPlaylistIndex());
     let elmnt = document.getElementById(`index${e.target.getPlaylistIndex()}`);
@@ -71,7 +71,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   window.onYouTubeIframeAPIReady = () => {
     setPlayer(
       new window.YT.Player("youtube-player", {
-        videoId: songs[0][0].snippet.resourceId.videoId,
+        videoId: songs[0][0].videoId,
         events: {
           onReady: onPlayerReady,
           onStateChange: onPlayerStateChange,
@@ -117,7 +117,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   };
   const playSong = (index, page) => {
     if (page !== playingPage) {
-      const arr = songs[page].map((ev) => ev.snippet.resourceId.videoId);
+      const arr = songs[page].map((ev) => ev.videoId);
       player.loadPlaylist(arr, index);
       playPage(page);
     } else {
@@ -127,11 +127,11 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   return (
     <S.MainCont>
       <S.PlayerContainer>
-        <S.Title>{songs[playingPage][currentIndex].snippet.title}</S.Title>
+        <S.Title>{songs[playingPage][currentIndex].title}</S.Title>
         <S.TitleNext>
           {songs[playingPage][currentIndex + 1]
-            ? "Next: " + songs[playingPage][currentIndex + 1].snippet.title
-            : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].snippet.title}
+            ? "Next: " + songs[playingPage][currentIndex + 1].title
+            : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].title}
         </S.TitleNext>
         <S.PlayerWrapper>
           <S.Player id="youtube-player" wmode="transparent" />

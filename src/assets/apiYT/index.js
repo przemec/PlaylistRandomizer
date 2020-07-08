@@ -43,8 +43,18 @@ const downloadPlaylistData = (id, action) => {
       })
       .then(
         async (res) => {
-          dsp(P.loadPart(res.result.items));
-          res.result.items.map((e) => (listt = [...listt, e]));
+          const items = res.result.items.map((e) => {
+            const item = {
+              videoPublishedAt: e.contentDetails.videoPublishedAt,
+              addedToPlaylistAt: e.snippet.publishedAt,
+              videoId: e.snippet.resourceId.videoId,
+              title: e.snippet.title,
+              thumbnail: e.snippet.thumbnails && e.snippet.thumbnails.medium,
+            };
+            listt = [...listt, item];
+            return item;
+          });
+          dsp(P.loadPart(items));
           if (res.result.nextPageToken) {
             pageToken = res.result.nextPageToken;
             search(id);
