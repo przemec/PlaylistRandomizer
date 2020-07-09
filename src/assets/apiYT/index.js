@@ -45,10 +45,10 @@ const downloadPlaylistData = (id, action) => {
         async (res) => {
           const items = res.result.items.map((e) => {
             const item = {
-              videoPublishedAt: e.contentDetails.videoPublishedAt,
-              addedToPlaylistAt: e.snippet.publishedAt,
-              videoId: e.snippet.resourceId.videoId,
               title: e.snippet.title,
+              videoId: e.snippet.resourceId.videoId,
+              addedToPlaylistAt: e.snippet.publishedAt,
+              videoPublishedAt: e.contentDetails.videoPublishedAt,
               thumbnail: e.snippet.thumbnails && e.snippet.thumbnails.medium,
             };
             listt = [...listt, item];

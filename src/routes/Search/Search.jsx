@@ -1,7 +1,7 @@
 import React from "react";
-import SearchBar from "../../components/SearchBar";
-import { Grid } from "@material-ui/core/";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core/";
+import SearchBar from "../../components/SearchBar";
 
 const SearchPage = () => {
   document.title = "YT Randomizer";
