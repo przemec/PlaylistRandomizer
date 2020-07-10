@@ -75,9 +75,6 @@ export const ResultsContainer = styled(Grid)`
     max-width: unset;
     width: 100%;
   }
-  &:hover .listControl {
-    opacity: 1;
-  }
 `;
 
 export const PlayerWrapper = styled(Grid)`
