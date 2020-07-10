@@ -134,7 +134,6 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
       player.playVideoAt(index);
     }
   };
-  console.log(isPlayerLoaded);
   return (
     <S.MainCont>
       <S.PlayerContainer>

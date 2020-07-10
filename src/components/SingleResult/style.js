@@ -42,6 +42,7 @@ export const StyledLp = styled(Grid)`
   font-size: 18px;
   text-align: center;
   width: 4vmin;
+  min-width: 28px;
   padding: 0 1vmin;
   color: ${({ isplaying, theme }) => (isplaying ? theme.colorText : theme.defaultText)};
   @media (max-width: 900px) and (min-height: 900px),
@@ -67,8 +68,7 @@ export const StyledTitle = styled.a`
   }
 `;
 
-export const Thumbnail = styled(Grid)`
-  background: ${({ thumb }) => `url(${thumb})`};
+export const Thumbnail = styled.img`
   width: 16vmin;
   height: 9vmin;
   background-size: cover;

@@ -3,11 +3,10 @@ import * as S from "./style";
 
 const SingleResult = ({ song, index, page, changeSong, isPlaying }) => {
   const { thumbnail, title, videoId } = song;
-  // console.log(song);
   return (
     <S.StyledContainer onClick={() => changeSong(index, page)} id={`index${index}`} isplaying={isPlaying ? 1 : 0}>
       <S.StyledLp isplaying={isPlaying ? 1 : 0}>{index + 1 + page * 200}.</S.StyledLp>
-      {thumbnail && <S.Thumbnail thumb={thumbnail.url} />}
+      {thumbnail && <S.Thumbnail src={thumbnail.url} loading="lazy" alt="..." />}
       <S.StyledTitle
         isplaying={isPlaying ? 1 : 0}
         className="title"
