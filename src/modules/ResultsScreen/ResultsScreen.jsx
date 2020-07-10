@@ -5,6 +5,7 @@ import * as PS from "../../store/playlists/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import ListControl from "../../components/ListControl";
 import PlayerControl from "../../components/PlayerControl";
+import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
 const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
@@ -16,6 +17,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const [playerState, updatePlayerState] = React.useState(-1);
   const [isnextpage, nextpage] = React.useState(false);
   const [titleswap, swaptitle] = React.useState(false);
+  const [listscroll, tryscroll] = React.useState(false);
   React.useEffect(() => {
     const arr = songs[0].map((ev) => ev.videoId);
     player && player.loadPlaylist(arr);
@@ -31,8 +33,17 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     swaptitle(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [titleswap]);
+  React.useEffect(() => {
+    let elmnt = document.getElementById(`index${currentIndex}`);
+    if (playingPage === currentPage && elmnt) {
+      elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+    }
+    tryscroll(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listscroll]);
   const onPlayerReady = (e) => {
     loadPlayer(true);
+    document.getElementById("youtube-player").style.visibility = "visible";
     const arr = songs[currentPage].map((ev) => ev.videoId);
     e.target.loadPlaylist(arr);
     const that = e.target;
@@ -44,10 +55,9 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     const arr = songs[currentPage].map((ev) => ev.videoId);
     e.target.playerInfo.playlist = arr;
     updateIndex(e.target.getPlaylistIndex());
-    let elmnt = document.getElementById(`index${e.target.getPlaylistIndex()}`);
     swaptitle(true);
     if (e.target.getPlayerState() === 0) {
-      elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      tryscroll(true);
       e.target.getPlaylistIndex() === 199 && nextpage(true);
     }
     if (e.target.getPlayerState() === 1 || e.target.getPlayerState() === 2) {
@@ -124,15 +134,20 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
       player.playVideoAt(index);
     }
   };
+  console.log(isPlayerLoaded);
   return (
     <S.MainCont>
       <S.PlayerContainer>
-        <S.Title>{songs[playingPage][currentIndex].title}</S.Title>
-        <S.TitleNext>
-          {songs[playingPage][currentIndex + 1]
-            ? "Next: " + songs[playingPage][currentIndex + 1].title
-            : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].title}
-        </S.TitleNext>
+        {isPlayerLoaded && (
+          <>
+            <S.Title>{songs[playingPage][currentIndex].title}</S.Title>
+            <S.TitleNext>
+              {songs[playingPage][currentIndex + 1]
+                ? "Next: " + songs[playingPage][currentIndex + 1].title
+                : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].title}
+            </S.TitleNext>
+          </>
+        )}
         <S.PlayerWrapper>
           <S.Player id="youtube-player" wmode="transparent" />
         </S.PlayerWrapper>
@@ -157,18 +172,21 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
           />
         )}
       </S.PlayerContainer>
-      <S.ResultsContainer>
-        <S.ResultsGroupWrapper>
-          <ResultsGroup
-            songs={songs}
-            page={currentPage}
-            isHighlighted={playingPage === currentPage}
-            changeSong={playSong}
-            currentIndex={currentIndex}
-          />
-          {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
-        </S.ResultsGroupWrapper>
-      </S.ResultsContainer>
+      {isPlayerLoaded && (
+        <S.ResultsContainer>
+          <S.ResultsGroupWrapper>
+            <ResultsGroup
+              songs={songs}
+              page={currentPage}
+              isHighlighted={playingPage === currentPage}
+              changeSong={playSong}
+              currentIndex={currentIndex}
+            />
+            {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
+          </S.ResultsGroupWrapper>
+        </S.ResultsContainer>
+      )}
+      {!isPlayerLoaded && <LoadingPanel />}
     </S.MainCont>
   );
 };
