@@ -30,6 +30,7 @@ export const IconWrapper = styled(Grid)`
   align-items: center;
   justify-content: center;
   border-radius: 2vmin;
+  opacity: ${({ isdisabled }) => (!isdisabled ? 1 : 0.5)};
   & svg {
     fill: ${({ theme }) => theme.primary};
   }

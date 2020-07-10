@@ -3,18 +3,15 @@ import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
-import ListControl from "../../components/ListControl";
 import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
-const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
+const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
   const [isPlayerLoaded, loadPlayer] = React.useState(false);
   const [currentIndex, updateIndex] = React.useState(0);
-  const [currentPage, updatePage] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
-  const [playerState, updatePlayerState] = React.useState(-1);
   const [isnextpage, nextpage] = React.useState(false);
   const [titleswap, swaptitle] = React.useState(false);
   const [listscroll, tryscroll] = React.useState(false);
@@ -24,7 +21,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songs]);
   React.useEffect(() => {
-    isnextpage && playNextPage();
+    isnextpage && playSong(0, playingPage + 1);
     nextpage(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
@@ -34,8 +31,8 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [titleswap]);
   React.useEffect(() => {
-    let elmnt = document.getElementById(`index${currentIndex}`);
-    if (playingPage === currentPage && elmnt) {
+    let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
+    if (elmnt) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
     }
     tryscroll(false);
@@ -44,7 +41,7 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
   const onPlayerReady = (e) => {
     loadPlayer(true);
     document.getElementById("youtube-player").style.visibility = "visible";
-    const arr = songs[currentPage].map((ev) => ev.videoId);
+    const arr = songs[playingPage].map((ev) => ev.videoId);
     e.target.loadPlaylist(arr);
     const that = e.target;
     setTimeout(() => {
@@ -52,16 +49,15 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
     }, 1000);
   };
   const onPlayerStateChange = (e) => {
-    const arr = songs[currentPage].map((ev) => ev.videoId);
-    e.target.playerInfo.playlist = arr;
-    updateIndex(e.target.getPlaylistIndex());
-    swaptitle(true);
+    console.log(e.target.getPlayerState());
     if (e.target.getPlayerState() === 0) {
-      tryscroll(true);
+      updateIndex(e.target.getPlaylistIndex());
       e.target.getPlaylistIndex() === 199 && nextpage(true);
-    }
-    if (e.target.getPlayerState() === 1 || e.target.getPlayerState() === 2) {
-      updatePlayerState(e.target.getPlayerState());
+      swaptitle(true);
+      tryscroll(true);
+    } else if (e.target.getPlayerState() === -1) {
+      updateIndex(e.target.getPlaylistIndex());
+      swaptitle(true);
     }
   };
   if (!window.YT) {
@@ -89,40 +85,18 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
       })
     );
   };
-  const swapPage = (x) => {
-    if (songs[currentPage + x]) {
-      updatePage(currentPage + x);
-    }
-  };
-  const playNextPage = () => {
-    if (songs[playingPage + 1]) {
-      document.getElementById("songlist").scrollTop = 0;
-      updatePage(playingPage + 1);
-      playSong(0, playingPage + 1);
-      updateIndex(0);
-    }
-  };
-  const playPrevPage = () => {
-    if (songs[playingPage - 1]) {
-      const elmnt = document.getElementById("songlist");
-      elmnt.scrollTop = elmnt.scrollHeight;
-      updatePage(playingPage - 1);
-      playSong(199, playingPage - 1);
-      updateIndex(199);
-    }
-  };
   const playNextSong = () => {
     if (songs[playingPage][currentIndex + 1]) {
       playSong(currentIndex + 1, playingPage);
     } else if (songs[playingPage + 1]) {
-      playNextPage();
+      playSong(0, playingPage + 1);
     }
   };
   const playPrevSong = () => {
     if (songs[playingPage][currentIndex - 1]) {
       playSong(currentIndex - 1, playingPage);
     } else if (songs[playingPage - 1]) {
-      playPrevPage();
+      playSong(199, playingPage - 1);
     }
   };
   const playSong = (index, page) => {
@@ -158,37 +132,20 @@ const ResultsScreen = ({ randomizeP, songs, currentListID }) => {
             playPrev={playPrevSong}
             isPrevActive={songs[playingPage][currentIndex - 1] || (songs[playingPage - 1] && songs[playingPage - 1][199])}
             isNextActive={songs[playingPage][currentIndex + 1] || (songs[playingPage + 1] && songs[playingPage + 1][0])}
-            switchPlayerState={() => {
-              if (playerState === 2) {
-                updatePlayerState(1);
-                player.playVideo();
-              } else if (playerState === 1) {
-                player.pauseVideo();
-                updatePlayerState(2);
-              }
-            }}
-            playerState={playerState}
           />
         )}
       </S.PlayerContainer>
       {isPlayerLoaded && (
         <S.ResultsContainer>
           <S.ResultsGroupWrapper>
-            <ResultsGroup
-              songs={songs}
-              page={currentPage}
-              isHighlighted={playingPage === currentPage}
-              changeSong={playSong}
-              currentIndex={currentIndex}
-            />
-            {songs[1] && <ListControl swapPage={swapPage} isNextActive={songs[currentPage + 1]} isPrevActive={songs[currentPage - 1]} />}
+            <ResultsGroup songs={songs} playingPage={playingPage} changeSong={playSong} currentIndex={currentIndex} />
           </S.ResultsGroupWrapper>
         </S.ResultsContainer>
       )}
       {!isPlayerLoaded && <LoadingPanel />}
     </S.MainCont>
   );
-};
+});
 
 const mapSTP = (state) => ({
   songs: state.playlist.list,

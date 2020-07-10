@@ -12,11 +12,6 @@ const InfoPage = () => (
         YouTube page, because lists are stored locally in browser storage. If minimalistic style, multiple themes and high responsiveness is
         what You enjoy, then this page is perfect for You!
       </S.Answer>
-      <S.QHeader>Why is playlist cut into 200-songs segments?</S.QHeader>
-      <S.Answer>
-        YouTube video player is designed to accept max 200 songs per custom playlist. Don't worry though, the page will automatically switch
-        to next part after reaching 200.
-      </S.Answer>
       <S.QHeader>My playlist isn't refreshing after I update it on YouTube, why?</S.QHeader>
       <S.Answer>
         This page saves every playlist locally. This process is done automatically only once per playlist (right after searching it for the

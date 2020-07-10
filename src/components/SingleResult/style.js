@@ -22,6 +22,7 @@ export const StyledContainer = styled(Grid)`
   flex-direction: row;
   justify-content: flex-start;
   z-index: 3;
+  cursor: default;
   & > * {
     z-index: 5;
   }
