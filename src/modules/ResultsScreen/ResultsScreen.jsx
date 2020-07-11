@@ -13,8 +13,6 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   const [currentIndex, updateIndex] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
   const [isnextpage, nextpage] = React.useState(false);
-  const [titleswap, swaptitle] = React.useState(false);
-  const [listscroll, tryscroll] = React.useState(false);
   React.useEffect(() => {
     const arr = songs[0].map((ev) => ev.videoId);
     player && player.loadPlaylist(arr);
@@ -27,17 +25,12 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   }, [isnextpage]);
   React.useEffect(() => {
     document.title = songs[playingPage][currentIndex].title;
-    swaptitle(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titleswap]);
-  React.useEffect(() => {
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
     }
-    tryscroll(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listscroll]);
+  }, [currentIndex, playingPage]);
   const onPlayerReady = (e) => {
     loadPlayer(true);
     document.getElementById("youtube-player").style.visibility = "visible";
@@ -49,15 +42,9 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     }, 1000);
   };
   const onPlayerStateChange = (e) => {
-    console.log(e.target.getPlayerState());
-    if (e.target.getPlayerState() === 0) {
+    if (e.target.getPlayerState() === 0 || e.target.getPlayerState() === -1) {
       updateIndex(e.target.getPlaylistIndex());
       e.target.getPlaylistIndex() === 199 && nextpage(true);
-      swaptitle(true);
-      tryscroll(true);
-    } else if (e.target.getPlayerState() === -1) {
-      updateIndex(e.target.getPlaylistIndex());
-      swaptitle(true);
     }
   };
   if (!window.YT) {
