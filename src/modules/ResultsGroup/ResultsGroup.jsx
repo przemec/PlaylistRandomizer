@@ -1,11 +1,11 @@
 import React from "react";
 import * as S from "./style";
-import SingleResult from "../../components/SingleResult";
+import SongDisplay from "../../components/SongDisplay";
 
 const ResultsGroup = React.memo(({ songs, playingPage, changeSong, currentIndex }) => {
   const arr = songs.map((e, page) =>
     e.map((song, i) => (
-      <SingleResult
+      <SongDisplay
         key={i}
         song={song}
         index={i}

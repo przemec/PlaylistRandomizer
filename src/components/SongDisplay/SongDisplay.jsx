@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
 
-const SingleResult = ({ song, index, page, changeSong, isPlaying }) => {
+const SongDisplay = ({ song, index, page, changeSong, isPlaying }) => {
   const { thumbnail, title, videoId } = song;
   return (
     <S.StyledContainer onClick={() => changeSong(index, page)} id={`index${index + page * 200}`} isplaying={isPlaying ? 1 : 0}>
@@ -19,4 +19,4 @@ const SingleResult = ({ song, index, page, changeSong, isPlaying }) => {
   );
 };
 
-export default SingleResult;
+export default SongDisplay;

@@ -1,37 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as S from "./style";
-import M from "../../assets/apiYT";
+import PlaylistDisplay from "../../components/PlaylistDisplay";
 
-const PlaylistsShowcase = ({ type, playlists }) => {
-  let arr;
-  let title;
-  switch (type) {
-    case "saved":
-      title = "Saved Playlists";
-      arr = playlists.map((e, i) => (
-        <div key={i} onClick={() => M(e.id, "refresh")}>
-          {JSON.stringify(e.id)}
-        </div>
-      ));
-      break;
-    case "fav":
-      title = "Favourite Playlists";
-      arr = playlists.map((e, i) => <div key={i}>{JSON.stringify(e.id)}</div>);
-      break;
-    case "last":
-      title = "Last Played";
-      arr = playlists.map((e, i) => <div key={i}>{JSON.stringify(e.id)}</div>);
-      break;
-    default:
-      break;
-  }
-  return (
-    <S.MainWrapper id="songlist">
-      {title}
-      {arr}
-    </S.MainWrapper>
-  );
+const PlaylistsShowcase = ({ playlists }) => {
+  let arr = playlists.map((e, i) => <PlaylistDisplay key={i} listData={e.listData} listId={e.id} />);
+  return <S.MainWrapper id="playlists">{arr}</S.MainWrapper>;
 };
 
 const mapSTP = (state) => ({
