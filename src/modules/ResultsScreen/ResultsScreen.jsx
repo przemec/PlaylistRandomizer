@@ -14,6 +14,8 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   const [playingPage, playPage] = React.useState(0);
   const [isnextpage, nextpage] = React.useState(false);
   React.useEffect(() => {
+    updateIndex(0);
+    playPage(0);
     const arr = songs[0].map((ev) => ev.videoId);
     player && player.loadPlaylist(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,7 +29,11 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt) {
-      elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      // elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      elmnt.parentNode.scrollTo({
+        top: elmnt.offsetTop - elmnt.parentNode.offsetTop,
+        behavior: "smooth",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, playingPage]);
@@ -42,9 +48,12 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     }, 1000);
   };
   const onPlayerStateChange = (e) => {
-    if (e.target.getPlayerState() === 0 || e.target.getPlayerState() === -1) {
+    if (e.target.getPlayerState() === 0) {
       updateIndex(e.target.getPlaylistIndex());
       e.target.getPlaylistIndex() === 199 && nextpage(true);
+    }
+    if (e.target.getPlayerState() === -1) {
+      updateIndex(e.target.getPlaylistIndex());
     }
   };
   if (!window.YT) {
@@ -94,6 +103,7 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     } else {
       player.playVideoAt(index);
     }
+    updateIndex(index);
   };
   return (
     <S.MainCont>
