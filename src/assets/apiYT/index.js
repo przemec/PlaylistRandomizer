@@ -51,8 +51,10 @@ const downloadPlaylistData = (id, action) => {
               videoPublishedAt: e.contentDetails.videoPublishedAt,
               thumbnail: e.snippet.thumbnails && e.snippet.thumbnails.medium,
             };
-            listt = [...listt, item];
-            return item;
+            if (e.contentDetails.videoPublishedAt && e.snippet.thumbnails) {
+              listt = [...listt, item];
+              return item;
+            }
           });
           dsp(P.loadPart(items));
           if (res.result.nextPageToken) {
