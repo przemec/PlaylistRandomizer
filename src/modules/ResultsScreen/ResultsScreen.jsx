@@ -2,13 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
-import * as Y from "../../store/playerloadstate/actions";
 import ResultsGroup from "../../modules/ResultsGroup";
 import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
-const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, setPlayerState, playerload }) => {
+const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   const [player, setPlayer] = React.useState();
   const [isPlayerLoaded, loadPlayer] = React.useState(false);
   const [currentIndex, updateIndex] = React.useState(0);
@@ -34,29 +33,6 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, setPlayerS
     }
   };
   React.useEffect(() => {
-    console.log("BBBBBb");
-    // console.log("isPlayerLoaded", isPlayerLoaded);
-    // console.log("playerload", playerload);
-    // console.log("player", player);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerload]);
-  // console.log(songs);
-  React.useEffect(() => {
-    // console.log("DDDDDDdd", songs);
-    if (!playerload && window.YT) {
-      console.log("CCCCC");
-      console.log("songs", songs);
-      setPlayer(
-        new window.YT.Player("youtube-player", {
-          videoId: songs[0][0].videoId,
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        })
-      );
-      setPlayerState(true);
-    }
     updateIndex(0);
     playPage(0);
     const arr = songs[0].map((ev) => ev.videoId);
@@ -72,11 +48,11 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, setPlayerS
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt) {
-      // elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      elmnt.parentNode.scrollTo({
-        top: elmnt.offsetTop - elmnt.parentNode.offsetTop,
-        behavior: "smooth",
-      });
+      elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      // elmnt.parentNode.scrollTo({
+      //   top: elmnt.offsetTop - elmnt.parentNode.offsetTop,
+      //   behavior: "smooth",
+      // });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, playingPage]);
@@ -170,12 +146,10 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, setPlayerS
 
 const mapSTP = (state) => ({
   songs: state.playlist.list,
-  playerload: state.playerloadstate,
 });
 const mapDTP = (dispatch) => ({
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
   editPlaylist: (e, list) => dispatch(PS.editPlaylist(e, list)),
-  setPlayerState: (e) => dispatch(Y.setPlayer(e)),
 });
 
 export default connect(mapSTP, mapDTP)(ResultsScreen);

@@ -4,7 +4,6 @@ import playlists from "./playlists";
 import modal from "./modal";
 import listloadstate from "./listloadstate";
 import theme from "./theme";
-import playerloadstate from "./playerloadstate";
 
 const reducers = combineReducers({
   playlist,
@@ -12,7 +11,6 @@ const reducers = combineReducers({
   modal,
   listloadstate,
   theme,
-  playerloadstate,
 });
 
 export default reducers;

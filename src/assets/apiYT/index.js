@@ -43,6 +43,7 @@ const downloadPlaylistData = (id, action) => {
       })
       .then(
         async (res) => {
+          // eslint-disable-next-line array-callback-return
           const items = res.result.items.map((e) => {
             const item = {
               title: e.snippet.title,
