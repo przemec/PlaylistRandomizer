@@ -9,3 +9,15 @@ export const MainWrapper = styled(Grid)`
   max-width: 900px;
   padding: 5px;
 `;
+
+export const Title = styled(Grid)`
+  width: calc(100% - 30px);
+  height: 40px;
+  line-height: 40px;
+  font-size: 22px;
+  padding-left: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: ${({ theme }) => theme.defaultText};
+`;

@@ -13,7 +13,7 @@ const SearchPage = () => {
   };
   return (
     <Grid container direction="row" justify="center" alignItems="center" style={{ height: "calc(100vh - 40px)" }}>
-      <SearchBar search={search} />
+      {/* <SearchBar search={search} /> */}
       <PlaylistsShowcase />
     </Grid>
   );

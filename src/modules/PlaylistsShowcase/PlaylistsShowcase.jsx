@@ -5,7 +5,12 @@ import PlaylistDisplay from "../../components/PlaylistDisplay";
 
 const PlaylistsShowcase = ({ playlists }) => {
   let arr = playlists.map((e, i) => <PlaylistDisplay key={i} listData={e.listData} listId={e.id} />);
-  return <S.MainWrapper id="playlists">{arr}</S.MainWrapper>;
+  return (
+    <S.MainWrapper id="playlists">
+      <S.Title>Saved Playlists</S.Title>
+      {arr}
+    </S.MainWrapper>
+  );
 };
 
 const mapSTP = (state) => ({

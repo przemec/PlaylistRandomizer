@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./style";
 import { useHistory } from "react-router-dom";
 
-const SongDisplay = ({ listData, listId }) => {
+const PlaylistDisplay = ({ listData, listId }) => {
   const { thumbnail, title, author, publishedAt } = listData;
   const history = useHistory();
   return (
@@ -19,4 +19,4 @@ const SongDisplay = ({ listData, listId }) => {
   );
 };
 
-export default SongDisplay;
+export default PlaylistDisplay;
