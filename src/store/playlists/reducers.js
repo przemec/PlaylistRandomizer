@@ -4,7 +4,7 @@ import * as LS from "../localstorage";
 const playlists = (state = [], action) => {
   const d = new Date();
   const z = (number) => (number < 10 ? `0${number}` : number);
-  const time = `${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}, ${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}`;
+  const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}`;
   switch (action.type) {
     case PS.ADD:
       const listObj = {
