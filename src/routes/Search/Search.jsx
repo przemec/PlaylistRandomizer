@@ -25,7 +25,7 @@ const SearchPage = ({ updatePLstate }) => {
     history.push(`/list/${id[1]}`);
   };
   return (
-    <Grid container direction="row" justify="center" alignItems="center" style={{ height: "calc(100vh - 40px)" }}>
+    <Grid container direction="row" justify="space-around" alignItems="center" style={{ height: "calc(100vh - 40px)" }}>
       <SearchBar search={search} />
       <PlaylistsShowcase />
     </Grid>

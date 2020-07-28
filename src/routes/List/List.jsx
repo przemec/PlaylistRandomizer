@@ -9,14 +9,18 @@ import LoadingPanel from "../../components/LoadingPanel";
 const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoaded, loadingErr, updatePLstate }) => {
   React.useEffect(() => {
     const savedlist = playlists.filter((e) => e.id === match.params.id && e);
-    if (savedlist.length !== 0) {
-      const { list, id, updated, isFav } = savedlist[0];
-      loadPlaylist(list, id, updated, isFav);
-      sliceP();
-      randomizeP();
-      updatePLstate(true);
-    } else {
+    if (savedlist.length === 0) {
       match.params.id && !playlistLoaded && downloadPlaylistData(match.params.id, "add");
+    } else if (savedlist.length !== 0) {
+      if (savedlist[0].list) {
+        const { list, id, updated, isFav } = savedlist[0];
+        loadPlaylist(list, id, updated, isFav);
+        sliceP();
+        randomizeP();
+        updatePLstate(true);
+      } else {
+        downloadPlaylistData(match.params.id, "refresh");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

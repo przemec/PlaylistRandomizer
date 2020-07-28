@@ -1,14 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as S from "./style";
+import featuredlist from "../../assets/featuredPlaylists";
 import PlaylistDisplay from "../../components/PlaylistDisplay";
 
 const PlaylistsShowcase = ({ playlists }) => {
-  let arr = playlists.map((e, i) => <PlaylistDisplay key={i} listData={e.listData} listId={e.id} />);
+  const arr = playlists.map((e, i) => <PlaylistDisplay key={i} listData={e.listData} listId={e.id} />);
+  const featured = featuredlist.map((e, i) => <PlaylistDisplay key={i} listData={e.listData} listId={e.id} />);
+  console.log(arr);
   return (
     <S.MainWrapper id="playlists">
       <S.Title>Saved Playlists</S.Title>
-      {arr}
+      {arr.length > 0 ? arr : <S.Tip>Your playlists will be displayed here...</S.Tip>}
+      {playlists.length <= 2 && (
+        <>
+          <S.Title>Featured Playlists</S.Title>
+          {featured}
+        </>
+      )}
     </S.MainWrapper>
   );
 };

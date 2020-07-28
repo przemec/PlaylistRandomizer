@@ -9,9 +9,9 @@ const downloadPlaylistData = (id, action) => {
   let listData = {};
   let listt = [];
   const dsp = store.dispatch;
+  dsp(P.clearPlaylist());
   if (action === "refresh") {
     dsp(L.updatePLstate(false));
-    dsp(P.clearPlaylist());
   }
   const search = () => {
     !pageToken &&
