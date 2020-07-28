@@ -20,8 +20,7 @@ const playlists = (state = [], action) => {
       state.map((e) => {
         if (e.id === action.id) {
           e.updated = time;
-          e.listData.thumbnail = action.listData.thumbnail;
-          e.listData.title = action.listData.title;
+          e.listData = action.listData;
           e.list = action.list;
         }
         return e;

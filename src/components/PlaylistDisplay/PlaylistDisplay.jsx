@@ -13,7 +13,7 @@ const PlaylistDisplay = ({ listData, listId }) => {
           {title}
         </S.StyledTitle>
         <S.StyledData>Author: {author}</S.StyledData>
-        <S.StyledData>Created: {publishedAt.split("T")[0]}</S.StyledData>
+        <S.StyledData>Created: {publishedAt && publishedAt.split("T")[0]}</S.StyledData>
       </S.DataContainer>
     </S.MainContainer>
   );

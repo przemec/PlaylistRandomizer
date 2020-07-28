@@ -15,11 +15,9 @@ export const saveStateLocally = (key, state) => {
   }
 };
 
-export const clearState = () => {
+export const clearState = (key) => {
   try {
-    const lists = localStorage.getItem("playlists");
-    lists !== null && localStorage.removeItem("playlists");
-    const theme = localStorage.getItem("theme");
-    theme !== null && localStorage.removeItem("theme");
+    const lists = localStorage.getItem(key);
+    lists !== null && localStorage.removeItem(key);
   } catch (err) {}
 };

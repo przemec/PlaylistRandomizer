@@ -29,6 +29,24 @@ export const DataContainer = styled(Grid)`
   }
 `;
 
+export const StyledTitle = styled.a`
+  text-decoration: none;
+  font-size: 19px;
+  padding: 0 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 3px;
+  color: ${({ theme }) => theme.defaultText};
+  @media (max-width: 900px) and (min-height: 900px),
+    (max-width: 650px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px) {
+    font-size: 17px;
+    margin-bottom: 0px;
+  }
+`;
+
 export const StyledData = styled.div`
   text-decoration: none;
   font-size: 15px;
@@ -42,18 +60,6 @@ export const StyledData = styled.div`
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     font-size: 14px;
-  }
-`;
-
-export const StyledTitle = styled(StyledData)`
-  text-decoration: none;
-  font-size: 19px;
-  margin-bottom: 3px;
-  @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
-    font-size: 17px;
-    margin-bottom: 0px;
   }
 `;
 
