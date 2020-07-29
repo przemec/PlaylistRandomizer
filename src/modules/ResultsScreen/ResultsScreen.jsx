@@ -46,11 +46,8 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   React.useEffect(() => {
-    // console.log(player.getPlaylist().length, songs[playingPage].length);
-    console.log(playingPage, player);
     player &&
-      player.getPlaylist() &&
-      songs[playingPage].length !== player.getPlaylist().length &&
+      player.getVideoUrl().split("=")[1] !== songs[playingPage][currentIndex].videoId &&
       downloadPlaylistData(currentListID, "refresh");
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
@@ -98,15 +95,15 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
       playSong(199, playingPage - 1);
     }
   };
-  const playSong = (index, page) => {
+  const playSong = (index, page, interaction) => {
     if (page !== playingPage && songs[page]) {
       const arr = songs[page].map((ev) => ev.videoId);
       player.loadPlaylist(arr, index);
       playPage(page);
-      updateIndex(index);
+      interaction !== "click" && updateIndex(index);
     } else if (songs[page]) {
       player.playVideoAt(index);
-      updateIndex(index);
+      interaction !== "click" && updateIndex(index);
     }
   };
   return (
