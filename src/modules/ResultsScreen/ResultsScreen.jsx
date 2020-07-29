@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
+import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
@@ -26,7 +27,7 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   const onPlayerStateChange = (e) => {
     if (e.target.getPlayerState() === 0) {
       updateIndex(e.target.getPlaylistIndex());
-      e.target.getPlaylistIndex() === 199 && nextpage(true);
+      e.target.getPlaylistIndex() === e.target.getPlaylist().length - 1 && nextpage(true);
     }
     if (e.target.getPlayerState() === -1) {
       updateIndex(e.target.getPlaylistIndex());
@@ -45,14 +46,16 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   React.useEffect(() => {
+    // console.log(player.getPlaylist().length, songs[playingPage].length);
+    console.log(playingPage, player);
+    player &&
+      player.getPlaylist() &&
+      songs[playingPage].length !== player.getPlaylist().length &&
+      downloadPlaylistData(currentListID, "refresh");
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      // elmnt.parentNode.scrollTo({
-      //   top: elmnt.offsetTop - elmnt.parentNode.offsetTop,
-      //   behavior: "smooth",
-      // });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, playingPage]);
@@ -96,14 +99,15 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
     }
   };
   const playSong = (index, page) => {
-    if (page !== playingPage) {
+    if (page !== playingPage && songs[page]) {
       const arr = songs[page].map((ev) => ev.videoId);
       player.loadPlaylist(arr, index);
       playPage(page);
-    } else {
+      updateIndex(index);
+    } else if (songs[page]) {
       player.playVideoAt(index);
+      updateIndex(index);
     }
-    updateIndex(index);
   };
   return (
     <S.MainCont>
