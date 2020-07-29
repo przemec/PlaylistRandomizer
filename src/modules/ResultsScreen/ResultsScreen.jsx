@@ -47,6 +47,7 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   }, [isnextpage]);
   React.useEffect(() => {
     player &&
+      player.getVideoUrl() &&
       player.getVideoUrl().split("=")[1] !== songs[playingPage][currentIndex].videoId &&
       downloadPlaylistData(currentListID, "refresh");
     document.title = songs[playingPage][currentIndex].title;
