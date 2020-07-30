@@ -22,13 +22,15 @@ const downloadPlaylistData = (id, action) => {
         })
         .then(
           function (res) {
-            const { channelTitle, thumbnails, title, publishedAt } = res.result.items[0].snippet;
-            listData = {
-              author: channelTitle,
-              thumbnail: thumbnails.standard.url,
-              title,
-              publishedAt,
-            };
+            if (res.result.items[0]) {
+              const { channelTitle, thumbnails, title, publishedAt } = res.result.items[0].snippet;
+              listData = {
+                author: channelTitle,
+                thumbnail: thumbnails.standard.url,
+                title,
+                publishedAt,
+              };
+            }
           },
           function (err) {
             dsp(L.loadError(true));
