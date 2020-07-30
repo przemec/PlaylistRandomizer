@@ -3,11 +3,12 @@ import { Grid, TextField } from "@material-ui/core/";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 export const StyledPaper = styled(Grid)`
-  width: 90vw;
+  width: 90%;
   height: 25vh;
   min-width: 300px;
   max-width: 600px;
   max-height: 200px;
+  border-radius: 7px;
   background: ${({ theme }) => theme.backgroundAccent};
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 `;

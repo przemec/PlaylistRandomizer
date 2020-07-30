@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as L from "../../store/listloadstate/actions";
-import { Grid } from "@material-ui/core/";
-import SearchBar from "../../components/SearchBar";
-import PlaylistsShowcase from "../../modules/PlaylistsShowcase";
+import SearchScreen from "../../modules/SearchScreen";
 
 const SearchPage = ({ updatePLstate }) => {
   React.useEffect(() => {
@@ -24,12 +22,7 @@ const SearchPage = ({ updatePLstate }) => {
     const id = playlistLink.split("list=");
     history.push(`/list/${id[1]}`);
   };
-  return (
-    <Grid container direction="row" justify="space-around" alignItems="center" style={{ height: "calc(100vh - 40px)" }}>
-      <SearchBar search={search} />
-      <PlaylistsShowcase />
-    </Grid>
-  );
+  return <SearchScreen search={search} />;
 };
 
 const mapDTP = (dispatch) => ({
