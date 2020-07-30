@@ -3,13 +3,16 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   body {
     background: ${({ theme }) => theme.background};
+    scrollbar-color: ${({ theme }) => theme.primary} ${({ theme }) => theme.backgroundAccent};
   }
-  body::-webkit-scrollbar-track,
-  body::-webkit-scrollbar {
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar {
+    border-radius: 7px;
     width: 12px;
     background-color: ${({ theme }) => theme.backgroundAccent};
   }
-  body::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
+    border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
   }
 `;
