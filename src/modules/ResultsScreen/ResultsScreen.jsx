@@ -84,16 +84,16 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
   };
   const playNextSong = () => {
     if (songs[playingPage][currentIndex + 1]) {
-      playSong(currentIndex + 1, playingPage);
+      playSong(currentIndex + 1, playingPage, "click");
     } else if (songs[playingPage + 1]) {
-      playSong(0, playingPage + 1);
+      playSong(0, playingPage + 1, "click");
     }
   };
   const playPrevSong = () => {
     if (songs[playingPage][currentIndex - 1]) {
-      playSong(currentIndex - 1, playingPage);
+      playSong(currentIndex - 1, playingPage, "click");
     } else if (songs[playingPage - 1]) {
-      playSong(199, playingPage - 1);
+      playSong(199, playingPage - 1, "click");
     }
   };
   const playSong = (index, page, interaction) => {
