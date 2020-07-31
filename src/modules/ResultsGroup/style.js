@@ -9,15 +9,4 @@ export const StyledList = styled(Grid)`
   right: 0;
   overflow: auto;
   background: ${({ theme }) => theme.backgroundAccent};
-  & > *:last-child {
-    margin-bottom: 60px;
-  }
-  &::-webkit-scrollbar-track,
-  &::-webkit-scrollbar {
-    width: 12px;
-    background-color: ${({ theme }) => theme.backgroundAccent};
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.primary};
-  }
 `;

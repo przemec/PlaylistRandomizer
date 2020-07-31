@@ -6,7 +6,7 @@ export const MainCont = styled(Grid)`
   width: 100%;
   display: flex;
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     display: table;
   }
@@ -33,13 +33,14 @@ export const PlayerContainer = styled(Grid)`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 60%;
+  width: 55%;
+  width: calc(100% - min(45%, 800px));
   & > * {
     max-width: 100vw;
     width: 80%;
   }
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     display: table-row;
     height: auto;
@@ -66,10 +67,10 @@ export const ResultsContainer = styled(Grid)`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 40%;
+  width: 45%;
   max-width: 800px;
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     display: table-row;
     max-width: unset;
@@ -82,7 +83,7 @@ export const PlayerWrapper = styled(Grid)`
   padding-bottom: 45%;
   height: 0;
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     padding-bottom: 56.25%;
   }
