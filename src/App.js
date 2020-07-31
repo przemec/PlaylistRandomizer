@@ -1,10 +1,6 @@
 import React from "react";
 import { gapi } from "gapi-script";
-import {
-  Switch,
-  Route,
-  // useLocation, useHistory
-} from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import SearchScreen from "./routes/Search";
 import List from "./routes/List";
 import AppBar from "./components/AppBar";
@@ -21,13 +17,14 @@ const App = () => {
       });
     });
   };
-  // const location = useLocation();
-  // const history = useHistory();
+  const location = useLocation();
+  const history = useHistory();
   React.useEffect(() => {
     loadYoutubeApi();
-    // if (location.pathname !== "/list/:id" && location.pathname !== "/") {
-    //   history.push("/");
-    // }
+    console.log(location.pathname);
+    if (!/\/list\/\S+/.test(location.pathname) && location.pathname !== "/") {
+      history.push("/");
+    }
   });
   return (
     <Switch>
