@@ -17,7 +17,7 @@ const playlists = (state = [], action) => {
       LS.saveStateLocally("playlists", [...state, listObj]);
       return [...state, listObj];
     case PS.EDIT:
-      state.map((e) => {
+      const edited = state.map((e) => {
         if (e.id === action.id) {
           e.updated = time;
           e.listData = action.listData;
@@ -25,8 +25,23 @@ const playlists = (state = [], action) => {
         }
         return e;
       });
-      LS.saveStateLocally("playlists", state);
-      return state;
+      LS.saveStateLocally("playlists", edited);
+      return edited;
+    case PS.TOGGLE_FAV:
+      const toggled = state.map((e) => {
+        if (e.id === action.id) {
+          e.isFav = !e.isFav;
+        }
+        return e;
+      });
+      LS.saveStateLocally("playlists", toggled);
+      return toggled;
+    case PS.DELETE:
+      const filtered = state.filter((e) => {
+        return e.id !== action.id && e;
+      });
+      LS.saveStateLocally("playlists", filtered);
+      return filtered;
     case PS.CLEAR:
       state = [];
       return state;

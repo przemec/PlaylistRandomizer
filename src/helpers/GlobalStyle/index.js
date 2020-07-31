@@ -15,4 +15,13 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
   }
+  @media (max-width: 960px) {
+    :not(#songlist)::-webkit-scrollbar-track,
+    :not(#songlist)::-webkit-scrollbar {
+      border-radius: 0px;
+    }
+    :not(#songlist)::-webkit-scrollbar-thumb {
+      border-radius: 0px;
+    }
+  }
 `;

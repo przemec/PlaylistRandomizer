@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const MainWrapper = styled.div`
   width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
+  min-width: 300px;
+  max-width: ${({ ismobile }) => (ismobile ? "unset" : "900px")};
+  max-height: ${({ ismobile }) => (ismobile ? "unset" : "90vh")};
+  margin-top: ${({ ismobile }) => (ismobile ? "15px" : "0px")};
   border-radius: 7px;
   padding: 5px;
   overflow: auto;
@@ -16,7 +18,7 @@ export const Title = styled.div`
   height: 40px;
   line-height: 40px;
   font-size: 22px;
-  padding-left: 20px;
+  padding-left: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -26,9 +28,9 @@ export const Title = styled.div`
 export const Tip = styled.div`
   width: calc(100% - 30px);
   font-size: 16px;
-  padding-left: 14px;
-  margin-top: 4px;
-  margin-bottom: 10px;
+  padding-left: 9px;
+  margin-top: 5px;
+  margin-bottom: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
 
-const SearchBar = ({ search }) => {
+const SearchBar = ({ search, ismobile }) => {
   const [playlistLink, setLink] = React.useState("");
   const searchEnter = (event) => {
     if (event.key === "Enter") {
@@ -9,7 +9,7 @@ const SearchBar = ({ search }) => {
     }
   };
   return (
-    <S.StyledPaper>
+    <S.MainWrapper ismobile={ismobile ? 1 : 0}>
       <S.FullHeight container direction="row" justify="center" alignItems="center">
         <S.TextFieldCont item>
           <S.StyledTextField
@@ -24,7 +24,7 @@ const SearchBar = ({ search }) => {
           <S.StyledArrow onClick={() => playlistLink && search(playlistLink)} />
         </S.SearchCont>
       </S.FullHeight>
-    </S.StyledPaper>
+    </S.MainWrapper>
   );
 };
 

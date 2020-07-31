@@ -2,13 +2,16 @@ import styled from "styled-components";
 import { Grid, TextField } from "@material-ui/core/";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-export const StyledPaper = styled(Grid)`
+export const MainWrapper = styled(Grid)`
   width: 90%;
-  height: 25vh;
+  height: 25vmin;
   min-width: 300px;
-  max-width: 600px;
-  max-height: 200px;
+  min-height: 140px;
+  max-width: ${({ ismobile }) => (ismobile ? "unset" : "700px")};
+  max-height: ${({ ismobile }) => (ismobile ? "unset" : "200px")};
+  margin-top: ${({ ismobile }) => (ismobile ? "15px" : "0px")};
   border-radius: 7px;
+  padding: 5px;
   background: ${({ theme }) => theme.backgroundAccent};
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 `;

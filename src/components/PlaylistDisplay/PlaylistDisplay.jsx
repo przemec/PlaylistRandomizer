@@ -1,11 +1,14 @@
 import React from "react";
-import * as S from "./style";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import * as S from "./style";
+import * as PS from "../../store/playlists/actions";
 import Tooltip from "../../helpers/Tooltip";
+import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 
-const PlaylistDisplay = ({ listData, listId, type }) => {
+const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) => {
   const { thumbnail, title, author, publishedAt } = listData;
   const history = useHistory();
   return (
@@ -22,13 +25,24 @@ const PlaylistDisplay = ({ listData, listId, type }) => {
       </S.Cont>
       {type === "saved" && (
         <S.IconsContainer>
-          <Tooltip title="Toggle favourite">
-            <S.IconWrapper>
-              <StarBorderRoundedIcon />
+          <Tooltip title="Toggle favourite" placement="top">
+            <S.IconWrapper
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFav(listId);
+              }}
+            >
+              {isFav ? <StarRoundedIcon /> : <StarBorderRoundedIcon />}
             </S.IconWrapper>
           </Tooltip>
-          <Tooltip title="Delete from saved">
-            <S.IconWrapper>
+          <Tooltip title="Delete from saved" placement="top">
+            <S.IconWrapper
+              onClick={(e) => {
+                e.stopPropagation();
+                let confirm = window.confirm(`Delete ${title}?`);
+                confirm && deleteP(listId);
+              }}
+            >
               <DeleteRoundedIcon />
             </S.IconWrapper>
           </Tooltip>
@@ -38,4 +52,13 @@ const PlaylistDisplay = ({ listData, listId, type }) => {
   );
 };
 
-export default PlaylistDisplay;
+const mapDTP = (dispatch) => ({
+  toggleFav: (e) => {
+    dispatch(PS.toggleFavourite(e));
+  },
+  deleteP: (e) => {
+    dispatch(PS.deletePlaylist(e));
+  },
+});
+
+export default connect(null, mapDTP)(PlaylistDisplay);

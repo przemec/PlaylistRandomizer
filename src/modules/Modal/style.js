@@ -44,7 +44,7 @@ export const Title = styled(Grid)`
   height: 50px;
   line-height: 50px;
   font-size: 22px;
-  padding-left: 20px;
+  padding-left: 10px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
