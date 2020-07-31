@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 const Modal = ({ isvisible, type, title, hideM }) => {
   const CurrentScreen = pages[type];
+  document.body.style.position = isvisible ? "sticky" : "";
   return isvisible ? (
     <>
       <S.ModalBackground />

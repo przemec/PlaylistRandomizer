@@ -4,9 +4,10 @@ import { Grid } from "@material-ui/core/";
 export const ModalBackground = styled(Grid)`
   position: absolute;
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   z-index: 1000;
-  width: 100vw;
-  height: 100vh;
   background-color: #000;
   opacity: 0.7;
 `;
@@ -14,9 +15,10 @@ export const ModalBackground = styled(Grid)`
 export const ModalWrapper = styled(Grid)`
   position: absolute;
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   z-index: 1001;
-  width: 100vw;
-  height: 100vh;
   overflow: auto;
 `;
 

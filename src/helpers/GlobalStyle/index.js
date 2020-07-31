@@ -2,6 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body {
+    width: 100%;
+    min-height: 100%;
     background: ${({ theme }) => theme.background};
     scrollbar-color: ${({ theme }) => theme.primary} ${({ theme }) => theme.backgroundAccent};
   }
