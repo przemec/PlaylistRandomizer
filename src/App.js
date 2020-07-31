@@ -21,7 +21,6 @@ const App = () => {
   const history = useHistory();
   React.useEffect(() => {
     loadYoutubeApi();
-    console.log(location.pathname);
     if (!/\/list\/\S+/.test(location.pathname) && location.pathname !== "/") {
       history.push("/");
     }
