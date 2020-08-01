@@ -6,7 +6,7 @@ import * as PS from "../../store/playlists/actions";
 import Tooltip from "../../helpers/Tooltip";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
-import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
+import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 
 const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) => {
   const { thumbnail, title, author, publishedAt } = listData;
@@ -27,6 +27,7 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) 
         <S.IconsContainer>
           <Tooltip title="Toggle favourite" placement="top">
             <S.IconWrapper
+              isfav={isFav ? 1 : 0}
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFav(listId);
@@ -43,7 +44,7 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) 
                 confirm && deleteP(listId);
               }}
             >
-              <DeleteRoundedIcon />
+              <DeleteOutlineRoundedIcon />
             </S.IconWrapper>
           </Tooltip>
         </S.IconsContainer>

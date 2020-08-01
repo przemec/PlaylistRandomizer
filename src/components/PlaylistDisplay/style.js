@@ -100,7 +100,7 @@ export const IconWrapper = styled(Grid)`
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
-  opacity: 0.5;
+  opacity: ${({ isfav }) => (isfav ? 1 : 0.5)};
   &:not(:first-child) {
     margin-left: 5px;
   }
@@ -109,12 +109,12 @@ export const IconWrapper = styled(Grid)`
     height: 8vmin;
     max-width: 30px;
     max-height: 30px;
-    fill: ${({ theme }) => theme.defaultText};
+    fill: ${({ theme, isfav }) => (isfav ? theme.primary : theme.defaultText)};
   }
   &:hover {
     opacity: 1;
   }
   &:hover svg {
-    fill: ${({ theme }) => theme.primaryHover};
+    fill: ${({ theme, isfav }) => (isfav ? theme.primaryHover : theme.defaultText)};
   }
 `;
