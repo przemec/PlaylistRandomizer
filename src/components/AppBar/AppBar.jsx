@@ -5,6 +5,7 @@ import { showModal } from "../../store/modal/actions";
 import { swapTheme } from "../../store/theme/actions";
 import Tooltip from "../../helpers/Tooltip";
 import PaletteIcon from "@material-ui/icons/Palette";
+import SettingsIcon from "@material-ui/icons/Settings";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
@@ -21,6 +22,11 @@ const AppBar = ({ showM, swapT, themeType }) => (
       <Tooltip title="Themes">
         <S.IconWrapper onClick={() => showM("ThemePage", "Theme Settings")}>
           <PaletteIcon />
+        </S.IconWrapper>
+      </Tooltip>
+      <Tooltip title="Settings">
+        <S.IconWrapper onClick={() => showM("SettingsPage", "Page Settings")}>
+          <SettingsIcon />
         </S.IconWrapper>
       </Tooltip>
       <Tooltip title="About">

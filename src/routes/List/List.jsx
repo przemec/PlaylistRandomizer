@@ -6,7 +6,7 @@ import * as L from "../../store/listloadstate/actions";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 
-const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoaded, loadingErr, updatePLstate }) => {
+const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoaded, loadingErr, updatePLstate, autoshuffle }) => {
   React.useEffect(() => {
     const savedlist = playlists.filter((e) => e.id === match.params.id && e);
     if (savedlist.length === 0) {
@@ -16,7 +16,7 @@ const List = ({ match, sliceP, randomizeP, playlists, loadPlaylist, playlistLoad
         const { list, id, updated, isFav } = savedlist[0];
         loadPlaylist(list, id, updated, isFav);
         sliceP();
-        randomizeP();
+        autoshuffle && randomizeP();
         updatePLstate(true);
       } else {
         downloadPlaylistData(match.params.id, "refresh");
@@ -31,6 +31,7 @@ const mapSTP = (state) => ({
   playlists: state.playlists,
   playlistLoaded: state.listloadstate.isLoaded,
   loadingErr: state.listloadstate.isError,
+  autoshuffle: state.settings.autoshuffle,
 });
 
 const mapDTP = (dispatch) => ({

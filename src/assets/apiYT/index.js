@@ -67,7 +67,7 @@ const downloadPlaylistData = (id, action) => {
             if (action === "add") {
               await dsp(PS.addPlaylist(id, listt, listData));
               await dsp(P.slicePlaylist());
-              await dsp(P.randomizePlaylist());
+              (await store.getState().settings.autoshuffle) && dsp(P.randomizePlaylist());
               await dsp(L.updatePLstate(true));
             } else if (action === "refresh") {
               await dsp(PS.editPlaylist(id, listt, listData));

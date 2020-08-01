@@ -4,7 +4,7 @@ import * as S from "./style";
 import featuredlist from "../../assets/featuredPlaylists";
 import PlaylistDisplay from "../../components/PlaylistDisplay";
 
-const PlaylistsShowcase = ({ playlists, ismobile }) => {
+const PlaylistsShowcase = ({ playlists, ismobile, displayfeatured }) => {
   const favs = playlists.map(
     (e, i) => e.isFav && <PlaylistDisplay key={i} listData={e.listData} listId={e.id} isFav={e.isFav} type="saved" />
   );
@@ -25,14 +25,19 @@ const PlaylistsShowcase = ({ playlists, ismobile }) => {
       ) : (
         <S.Tip>Your playlists will be displayed here...</S.Tip>
       )}
-      <S.Title>Featured Playlists</S.Title>
-      {featured}
+      {displayfeatured && (
+        <>
+          <S.Title>Featured Playlists</S.Title>
+          {featured}
+        </>
+      )}
     </S.MainWrapper>
   );
 };
 
 const mapSTP = (state) => ({
   playlists: state.playlists,
+  displayfeatured: state.settings.displayfeatured,
 });
 
 export default connect(mapSTP)(PlaylistsShowcase);

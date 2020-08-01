@@ -8,7 +8,7 @@ import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
-const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
+const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll }) => {
   const [player, setPlayer] = React.useState();
   const [isPlayerLoaded, loadPlayer] = React.useState(false);
   const [currentIndex, updateIndex] = React.useState(0);
@@ -52,7 +52,7 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
       downloadPlaylistData(currentListID, "refresh");
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
-    if (elmnt) {
+    if (elmnt && autoscroll) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,6 +148,7 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID }) => {
 
 const mapSTP = (state) => ({
   songs: state.playlist.list,
+  autoscroll: state.settings.autoscroll,
 });
 const mapDTP = (dispatch) => ({
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
