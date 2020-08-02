@@ -5,7 +5,7 @@ export const MainWrapper = styled.div`
   min-width: 300px;
   max-width: ${({ ismobile }) => (ismobile ? "unset" : "900px")};
   max-height: ${({ ismobile }) => (ismobile ? "unset" : "90vh")};
-  margin-top: ${({ ismobile }) => (ismobile ? "15px" : "0px")};
+  margin: 15px 0;
   border-radius: 7px;
   padding: 5px;
   overflow: auto;

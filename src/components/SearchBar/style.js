@@ -8,8 +8,8 @@ export const MainWrapper = styled(Grid)`
   min-width: 300px;
   min-height: 140px;
   max-width: ${({ ismobile }) => (ismobile ? "unset" : "700px")};
-  max-height: ${({ ismobile }) => (ismobile ? "unset" : "200px")};
-  margin-top: ${({ ismobile }) => (ismobile ? "15px" : "0px")};
+  max-height: 180px;
+  margin-top: 15px;
   border-radius: 7px;
   padding: 5px;
   background: ${({ theme }) => theme.backgroundAccent};
