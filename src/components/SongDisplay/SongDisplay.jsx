@@ -6,7 +6,11 @@ const SongDisplay = ({ song, index, page, changeSong, isPlaying }) => {
   return (
     <S.StyledContainer onClick={() => changeSong(index, page, "click")} id={`index${index + page * 200}`} isplaying={isPlaying ? 1 : 0}>
       <S.StyledLp isplaying={isPlaying ? 1 : 0}>{index + 1 + page * 200}.</S.StyledLp>
-      {thumbnail && <S.Thumbnail src={thumbnail.url} loading="lazy" alt="..." />}
+      {thumbnail && thumbnail.url ? (
+        <S.Thumbnail src={thumbnail.url} loading="lazy" alt="..." />
+      ) : (
+        <S.Thumbnail src={thumbnail} loading="lazy" alt="..." />
+      )}
       <S.StyledTitle
         isplaying={isPlaying ? 1 : 0}
         className="title"

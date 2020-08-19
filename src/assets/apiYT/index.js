@@ -47,14 +47,17 @@ const downloadPlaylistData = (id, action) => {
         async (res) => {
           // eslint-disable-next-line array-callback-return
           const items = res.result.items.map((e) => {
+            const {
+              title,
+              resourceId: { videoId },
+              thumbnails,
+            } = e.snippet;
             const item = {
-              title: e.snippet.title,
-              videoId: e.snippet.resourceId.videoId,
-              addedToPlaylistAt: e.snippet.publishedAt,
-              videoPublishedAt: e.contentDetails.videoPublishedAt,
-              thumbnail: e.snippet.thumbnails && e.snippet.thumbnails.medium,
+              title,
+              videoId,
+              thumbnail: thumbnails && thumbnails.medium && thumbnails.medium.url,
             };
-            if (e.contentDetails.videoPublishedAt && e.snippet.thumbnails) {
+            if (e.contentDetails.videoPublishedAt && thumbnails) {
               listt = [...listt, item];
               return item;
             }
