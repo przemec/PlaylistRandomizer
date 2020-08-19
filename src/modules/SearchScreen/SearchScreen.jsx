@@ -25,7 +25,7 @@ const SearchPage = ({ search, playlists, displayfeatured }) => {
       <Hidden mdUp>
         <S.MainContainerMobile>
           <SearchBar search={search} ismobile={true} />
-          <PlaylistsShowcase ismobile={true} />
+          {isShowcaseVisible && <PlaylistsShowcase ismobile={true} />}
         </S.MainContainerMobile>
       </Hidden>
     </>
