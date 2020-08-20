@@ -25,6 +25,11 @@ export const SettingName = styled.div`
   color: ${({ theme }) => theme.defaultText};
 `;
 
+export const SettingTip = styled.div`
+  clear: both;
+  font-size: 13px;
+`;
+
 export const SwitchWrapper = styled.div`
   flex: 1;
   display: flex;

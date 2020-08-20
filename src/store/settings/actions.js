@@ -2,6 +2,7 @@ export const settingsOperations = {
   SHUFFLE: "SWITCH_AUTO_SHUFFLE",
   SCROLL: "SWITCH_AUTO_SCROLL",
   FEATURED: "SWITCH_FEATURED_DISPLAY",
+  RESUME: "SWITCH_AUTO_RESUME",
 };
 
 export function switchAutoShuffle() {
@@ -14,4 +15,8 @@ export function switchAutoScroll() {
 
 export function switchFeaturedDisplay() {
   return { type: settingsOperations.FEATURED };
+}
+
+export function switchAutoResume() {
+  return { type: settingsOperations.RESUME };
 }
