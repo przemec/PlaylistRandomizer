@@ -23,7 +23,7 @@ export const MainContainer = styled(Grid)`
 `;
 
 export const Cont = styled(Grid)`
-  width: calc(100% - 105px);
+  width: calc(100% - ${({ isresumable }) => (isresumable ? "100px" : "65px")});
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -87,7 +87,7 @@ export const StyledData = styled.div`
 `;
 
 export const IconsContainer = styled(Grid)`
-  width: 100px;
+  width: ${({ isresumable }) => (isresumable ? "100px" : "65px")};
   display: flex;
   flex-direction: row;
   align-items: center;

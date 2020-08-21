@@ -10,12 +10,13 @@ import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 import PlaylistPlayRoundedIcon from "@material-ui/icons/PlaylistPlayRounded";
 
-const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, deleteRP }) => {
+const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, deleteRP, resumableplaylists }) => {
   const { thumbnail, title, author, publishedAt } = listData;
   const history = useHistory();
+  const isresumable = resumableplaylists.map((e) => e.id).indexOf(listId) !== -1;
   return (
     <S.MainContainer onClick={() => history.push(`/list/${listId}`)}>
-      <S.Cont>
+      <S.Cont isresumable={isresumable ? 1 : 0}>
         <S.Thumbnail src={thumbnail} loading="lazy" alt="[Error loading thumbnail]" />
         <S.DataContainer>
           <S.StyledTitle href={`https://www.youtube.com/playlist?list=${listId}`} onClick={(e) => e.preventDefault()}>
@@ -26,17 +27,19 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, de
         </S.DataContainer>
       </S.Cont>
       {type === "saved" && (
-        <S.IconsContainer>
-          <Tooltip title="Resume playing" placement="top">
-            <S.IconWrapper
-              onClick={(e) => {
-                e.stopPropagation();
-                history.push(`/list/${listId}/continue`);
-              }}
-            >
-              <PlaylistPlayRoundedIcon />
-            </S.IconWrapper>
-          </Tooltip>
+        <S.IconsContainer isresumable={isresumable ? 1 : 0}>
+          {isresumable && (
+            <Tooltip title="Resume playing" placement="top">
+              <S.IconWrapper
+                onClick={(e) => {
+                  e.stopPropagation();
+                  history.push(`/list/${listId}/continue`);
+                }}
+              >
+                <PlaylistPlayRoundedIcon />
+              </S.IconWrapper>
+            </Tooltip>
+          )}
           <Tooltip title="Toggle favourite" placement="top">
             <S.IconWrapper
               isfav={isFav ? 1 : 0}
@@ -68,10 +71,14 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, de
   );
 };
 
+const mapSTP = (state) => ({
+  resumableplaylists: state.resumableplaylists,
+});
+
 const mapDTP = (dispatch) => ({
   toggleFav: (e) => dispatch(PS.toggleFavourite(e)),
   deleteP: (e) => dispatch(PS.deletePlaylist(e)),
   deleteRP: (e) => dispatch(RP.deletePlaylist(e)),
 });
 
-export default connect(null, mapDTP)(PlaylistDisplay);
+export default connect(mapSTP, mapDTP)(PlaylistDisplay);
