@@ -17,12 +17,13 @@ const List = ({
   updatePLstate,
   autoshuffle,
   resumableplaylists,
+  autoresume,
 }) => {
   const [isresumed, iscontinued] = React.useState(false);
   React.useEffect(() => {
     const savedlist = playlists.filter((e) => e.id === match.params.id && e);
     const savedresumablelist = resumableplaylists.filter((e) => e.id === match.params.id && e);
-    const isresumed = match.params.isresumed === "continue" && savedresumablelist[0];
+    const isresumed = (match.params.isresumed === "continue" && savedresumablelist[0]) || (autoresume && savedresumablelist[0]);
     if (!savedlist[0]) {
       //case: adding new list to saved
       match.params.id && !playlistLoaded && downloadPlaylistData(match.params.id, "add");
@@ -56,6 +57,7 @@ const mapSTP = (state) => ({
   playlistLoaded: state.listloadstate.isLoaded,
   loadingErr: state.listloadstate.isError,
   autoshuffle: state.settings.autoshuffle,
+  autoresume: state.settings.autoresume,
   resumableplaylists: state.resumableplaylists,
 });
 
