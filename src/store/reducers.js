@@ -5,6 +5,7 @@ import modal from "./modal";
 import listloadstate from "./listloadstate";
 import theme from "./theme";
 import settings from "./settings";
+import resumableplaylists from "./resumableplaylists";
 
 const reducers = combineReducers({
   playlist,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   listloadstate,
   theme,
   settings,
+  resumableplaylists,
 });
 
 export default reducers;

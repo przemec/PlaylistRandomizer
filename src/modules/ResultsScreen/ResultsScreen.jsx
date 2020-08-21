@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
+import * as RP from "../../store/resumableplaylists/actions";
 import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
-const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll }) => {
+const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll, savePlaylist, isresumed, resumableplaylists }) => {
   const [player, setPlayer] = React.useState();
   const [isPlayerLoaded, loadPlayer] = React.useState(false);
   const [currentIndex, updateIndex] = React.useState(0);
@@ -19,6 +20,14 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
     document.getElementById("youtube-player").style.visibility = "visible";
     const arr = songs[playingPage].map((ev) => ev.videoId);
     e.target.loadPlaylist(arr);
+    if (isresumed) {
+      const newdata = resumableplaylists.filter((e) => e.id === currentListID)[0];
+      updateIndex(newdata.index);
+      playPage(newdata.page);
+      const arr = songs[newdata.page].map((ev) => ev.videoId);
+      e.target.loadPlaylist(arr);
+      e.target.playVideoAt(newdata.index);
+    }
     const that = e.target;
     setTimeout(() => {
       that.stopVideo();
@@ -50,10 +59,15 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
       player.getVideoUrl() &&
       player.getVideoUrl().split("=")[1] !== songs[playingPage][currentIndex].videoId &&
       downloadPlaylistData(currentListID, "refresh");
+    //^if one of videos in currently played playlist is set to private, the page will refresh list
     document.title = songs[playingPage][currentIndex].title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt && autoscroll) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+    }
+    if (currentIndex || playingPage) {
+      //savePlaylist won't exec right after loading page
+      savePlaylist(currentListID, songs, currentIndex, playingPage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, playingPage]);
@@ -149,10 +163,12 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
 const mapSTP = (state) => ({
   songs: state.playlist.list,
   autoscroll: state.settings.autoscroll,
+  resumableplaylists: state.resumableplaylists,
 });
 const mapDTP = (dispatch) => ({
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
   editPlaylist: (e, list) => dispatch(PS.editPlaylist(e, list)),
+  savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
 });
 
 export default connect(mapSTP, mapDTP)(ResultsScreen);

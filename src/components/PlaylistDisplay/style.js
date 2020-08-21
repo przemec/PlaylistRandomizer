@@ -23,7 +23,7 @@ export const MainContainer = styled(Grid)`
 `;
 
 export const Cont = styled(Grid)`
-  width: calc(100% - 65px);
+  width: calc(100% - 105px);
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -87,10 +87,11 @@ export const StyledData = styled.div`
 `;
 
 export const IconsContainer = styled(Grid)`
-  width: 65px;
+  width: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 export const IconWrapper = styled(Grid)`

@@ -23,6 +23,15 @@ const App = () => {
     loadYoutubeApi();
     if (!/\/list\/\S+/.test(location.pathname) && location.pathname !== "/") {
       history.push("/");
+    } else if (/\/list\/\S+/.test(location.pathname) && location.pathname !== "/") {
+      const splitPathname = location.pathname.split("/");
+      if (!/\/list\/\S+\/continue/.test(location.pathname) && /\/list\/\S+\/\S+/.test(location.pathname)) {
+        const newLocation = `/list/${splitPathname[2]}`;
+        history.push(newLocation);
+      } else if (/\/list\/\S+\/continue/.test(location.pathname) && /\/list\/\S+\/continue\S+/.test(location.pathname)) {
+        const newLocation = `/list/${splitPathname[2]}/continue`;
+        history.push(newLocation);
+      }
     }
   });
   return (
@@ -31,7 +40,8 @@ const App = () => {
         <>
           <AppBar />
           <Modal />
-          <Route path="/list/:id" component={List} />
+          <Route exact path="/list/:id/:isresumed" component={List} />
+          <Route exact path="/list/:id" component={List} />
           <Route exact path="/" component={SearchScreen} />
         </>
       )}

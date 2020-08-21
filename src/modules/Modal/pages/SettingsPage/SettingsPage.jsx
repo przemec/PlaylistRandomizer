@@ -25,7 +25,7 @@ const SettingsPage = ({ autoshuffle, autoscroll, displayfeatured, autoresume, sw
     </S.SettingContainer>
     <S.SettingContainer>
       <S.SettingName>
-        Resume playing from the previous playlist state
+        Automatically resume playing from the previous playlist state (if possible)
         <S.SettingTip>*If this setting is turned on, auto-shuffle is disabled while loading previously played playlist</S.SettingTip>
       </S.SettingName>
       <S.SwitchWrapper>

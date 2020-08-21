@@ -3,12 +3,14 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import * as S from "./style";
 import * as PS from "../../store/playlists/actions";
+import * as RP from "../../store/resumableplaylists/actions";
 import Tooltip from "../../helpers/Tooltip";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
+import PlaylistPlayRoundedIcon from "@material-ui/icons/PlaylistPlayRounded";
 
-const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) => {
+const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, deleteRP }) => {
   const { thumbnail, title, author, publishedAt } = listData;
   const history = useHistory();
   return (
@@ -25,6 +27,16 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) 
       </S.Cont>
       {type === "saved" && (
         <S.IconsContainer>
+          <Tooltip title="Resume playing" placement="top">
+            <S.IconWrapper
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/list/${listId}/continue`);
+              }}
+            >
+              <PlaylistPlayRoundedIcon />
+            </S.IconWrapper>
+          </Tooltip>
           <Tooltip title="Toggle favourite" placement="top">
             <S.IconWrapper
               isfav={isFav ? 1 : 0}
@@ -41,7 +53,10 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) 
               onClick={(e) => {
                 e.stopPropagation();
                 let confirm = window.confirm(`Delete ${title}?`);
-                confirm && deleteP(listId);
+                if (confirm) {
+                  deleteP(listId);
+                  deleteRP(listId);
+                }
               }}
             >
               <DeleteOutlineRoundedIcon />
@@ -54,12 +69,9 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP }) 
 };
 
 const mapDTP = (dispatch) => ({
-  toggleFav: (e) => {
-    dispatch(PS.toggleFavourite(e));
-  },
-  deleteP: (e) => {
-    dispatch(PS.deletePlaylist(e));
-  },
+  toggleFav: (e) => dispatch(PS.toggleFavourite(e)),
+  deleteP: (e) => dispatch(PS.deletePlaylist(e)),
+  deleteRP: (e) => dispatch(RP.deletePlaylist(e)),
 });
 
 export default connect(null, mapDTP)(PlaylistDisplay);
