@@ -15,7 +15,7 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, de
   const history = useHistory();
   const isresumable = resumableplaylists.map((e) => e.id).indexOf(listId) !== -1;
   return (
-    <S.MainContainer onClick={() => history.push(`/list/${listId}`)}>
+    <S.MainContainer onClick={() => history.push(`/list/${listId}`)} isresumable={isresumable ? 1 : 0}>
       <S.Cont isresumable={isresumable ? 1 : 0}>
         <S.Thumbnail src={thumbnail} loading="lazy" alt="[Error loading thumbnail]" />
         <S.DataContainer>
