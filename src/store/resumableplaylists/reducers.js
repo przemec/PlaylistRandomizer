@@ -30,9 +30,7 @@ const resumableplaylists = (state = [], action) => {
       LS.saveStateLocally("resumableplaylists", newstate);
       return newstate;
     case PS.DELETE:
-      const filtered = state.filter((e) => {
-        return e.id !== action.id && e;
-      });
+      const filtered = state.filter((e) => e.id !== action.id);
       LS.saveStateLocally("resumableplaylists", filtered);
       return filtered;
     case PS.CLEAR:

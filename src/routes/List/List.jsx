@@ -21,8 +21,8 @@ const List = ({
 }) => {
   const [isresumed, iscontinued] = React.useState(false);
   React.useEffect(() => {
-    const savedlist = playlists.filter((e) => e.id === match.params.id && e);
-    const savedresumablelist = resumableplaylists.filter((e) => e.id === match.params.id && e);
+    const savedlist = playlists.filter((e) => e.id === match.params.id);
+    const savedresumablelist = resumableplaylists.filter((e) => e.id === match.params.id);
     const isresumed = (match.params.isresumed === "continue" && savedresumablelist[0]) || (autoresume && savedresumablelist[0]);
     if (!savedlist[0]) {
       //case: adding new list to saved
