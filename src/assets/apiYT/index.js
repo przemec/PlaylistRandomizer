@@ -46,7 +46,7 @@ const downloadPlaylistData = (id, action) => {
       .then(
         async (res) => {
           // eslint-disable-next-line array-callback-return
-          const items = res.result.items.map((e) => {
+          const items = res.result.items.reduce((result, e) => {
             const {
               title,
               resourceId: { videoId },
@@ -59,9 +59,10 @@ const downloadPlaylistData = (id, action) => {
             };
             if (e.contentDetails.videoPublishedAt && thumbnails) {
               listt = [...listt, item];
-              return item;
+              result.push(item);
             }
-          });
+            return result;
+          }, []);
           dsp(P.loadPart(items));
           if (res.result.nextPageToken) {
             pageToken = res.result.nextPageToken;

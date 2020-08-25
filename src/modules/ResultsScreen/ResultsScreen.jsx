@@ -111,27 +111,27 @@ const ResultsScreen = React.memo(
     };
     const playNextSong = () => {
       if (nextSong) {
-        playSong(currentIndex + 1, playingPage, "click");
+        playSong(currentIndex + 1, playingPage);
       } else if (nextPage) {
-        playSong(0, playingPage + 1, "click");
+        playSong(0, playingPage + 1);
       }
     };
     const playPrevSong = () => {
       if (prevSong) {
-        playSong(currentIndex - 1, playingPage, "click");
+        playSong(currentIndex - 1, playingPage);
       } else if (prevPage) {
-        playSong(prevPage.length - 1, playingPage - 1, "click");
+        playSong(prevPage.length - 1, playingPage - 1);
       }
     };
-    const playSong = (index, page, interaction) => {
+    const playSong = (index, page) => {
       if (page !== playingPage && songs[page]) {
         const arr = songs[page].map((ev) => ev.videoId);
         player.loadPlaylist(arr, index);
         playPage(page);
-        interaction !== "click" && updateIndex(index);
+        updateIndex(index);
       } else if (songs[page]) {
         player.playVideoAt(index);
-        interaction !== "click" && updateIndex(index);
+        updateIndex(index);
       }
     };
     const randomize = () => {
