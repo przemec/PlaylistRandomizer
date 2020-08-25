@@ -31,6 +31,10 @@ const playlist = (state = { list: [] }, action) => {
       allSongs.sort(() => Math.random() - 0.5);
       const slicedRandom = slice200(allSongs);
       return { ...state, list: slicedRandom };
+    case P.DELETE_VID:
+      const newlist = state.list[action.page].filter((e) => e.videoId !== action.vidID && e);
+      state.list[action.page] = newlist;
+      return state;
     case P.CLEAR:
       return { list: [] };
     default:

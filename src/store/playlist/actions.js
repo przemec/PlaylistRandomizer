@@ -4,6 +4,7 @@ export const playlistOperations = {
   SLICE: "SLICE_PLAYLIST",
   RANDOMIZE: "RANDOMIZE_PLAYLIST",
   CLEAR: "CLEAR_PLAYLIST",
+  DELETE_VID: "DELETE_PRIVATE_VID_FROM_LIST",
 };
 
 export function loadPart(list) {
@@ -12,6 +13,10 @@ export function loadPart(list) {
 
 export function loadPlaylist(list, id, updated, isFav) {
   return { type: playlistOperations.LOAD_PLAYLIST, list, id, updated, isFav };
+}
+
+export function deletePrivateVidFromPlaylist(vidID, page) {
+  return { type: playlistOperations.DELETE_VID, vidID, page };
 }
 
 export function slicePlaylist() {
