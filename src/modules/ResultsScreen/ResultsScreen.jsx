@@ -15,6 +15,11 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
   const [currentIndex, updateIndex] = React.useState(0);
   const [playingPage, playPage] = React.useState(0);
   const [isnextpage, nextpage] = React.useState(false);
+  const currentSong = songs[playingPage][currentIndex];
+  const nextSong = songs[playingPage][currentIndex + 1];
+  const prevSong = songs[playingPage][currentIndex - 1];
+  const nextPage = songs[playingPage + 1];
+  const prevPage = songs[playingPage - 1];
   const onPlayerReady = (e) => {
     loadPlayer(true);
     document.getElementById("youtube-player").style.visibility = "visible";
@@ -55,12 +60,13 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   React.useEffect(() => {
-    player &&
+    !isresumed &&
+      player &&
       player.getVideoUrl() &&
-      player.getVideoUrl().split("=")[1] !== songs[playingPage][currentIndex].videoId &&
+      player.getVideoUrl().split("=")[1] !== currentSong.videoId &&
       downloadPlaylistData(currentListID, "refresh");
     //^if one of videos in currently played playlist is set to private, the page will refresh list
-    document.title = songs[playingPage][currentIndex].title;
+    document.title = currentSong && currentSong.title;
     let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
     if (elmnt && autoscroll) {
       elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
@@ -97,16 +103,16 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
     );
   };
   const playNextSong = () => {
-    if (songs[playingPage][currentIndex + 1]) {
+    if (nextSong) {
       playSong(currentIndex + 1, playingPage, "click");
-    } else if (songs[playingPage + 1]) {
+    } else if (nextPage) {
       playSong(0, playingPage + 1, "click");
     }
   };
   const playPrevSong = () => {
-    if (songs[playingPage][currentIndex - 1]) {
+    if (prevSong) {
       playSong(currentIndex - 1, playingPage, "click");
-    } else if (songs[playingPage - 1]) {
+    } else if (prevPage) {
       playSong(199, playingPage - 1, "click");
     }
   };
@@ -126,12 +132,8 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
       <S.PlayerContainer>
         {isPlayerLoaded && (
           <>
-            <S.Title>{songs[playingPage][currentIndex].title}</S.Title>
-            <S.TitleNext>
-              {songs[playingPage][currentIndex + 1]
-                ? "Next: " + songs[playingPage][currentIndex + 1].title
-                : songs[playingPage + 1] && "Next: " + songs[playingPage + 1][0].title}
-            </S.TitleNext>
+            <S.Title>{currentSong && currentSong.title}</S.Title>
+            <S.TitleNext>{nextSong ? "Next: " + nextSong.title : nextPage && "Next: " + nextPage[0].title}</S.TitleNext>
           </>
         )}
         <S.PlayerWrapper>
@@ -143,8 +145,8 @@ const ResultsScreen = React.memo(({ randomizeP, songs, currentListID, autoscroll
             shuffle={randomizeP}
             playNext={playNextSong}
             playPrev={playPrevSong}
-            isPrevActive={songs[playingPage][currentIndex - 1] || (songs[playingPage - 1] && songs[playingPage - 1][199])}
-            isNextActive={songs[playingPage][currentIndex + 1] || (songs[playingPage + 1] && songs[playingPage + 1][0])}
+            isPrevActive={prevSong || (prevPage && prevPage[199])}
+            isNextActive={nextSong || (nextPage && nextPage[0])}
           />
         )}
       </S.PlayerContainer>
