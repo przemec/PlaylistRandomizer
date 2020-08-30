@@ -10,7 +10,13 @@ const ColorPalette = ({ theme, updateTheme, themeType }) => {
   const menu = themeList.map((el) => {
     const { color, secondary, key, type } = el;
     return (
-      <S.StyledField key={key} color={color} border={secondary} onClick={() => updateTheme(key, type)}>
+      <S.StyledField
+        key={key}
+        color={color}
+        ischecked={theme.key === key ? 1 : 0}
+        border={secondary}
+        onClick={() => updateTheme(key, type)}
+      >
         {theme.key === key && <CheckRoundedIcon />}
       </S.StyledField>
     );

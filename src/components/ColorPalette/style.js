@@ -12,7 +12,7 @@ export const StyledField = styled(Grid)`
   width: 8vh;
   height: 8vh;
   margin: 1vh;
-  border-radius: 2vh;
+  border-radius: ${({ ischecked }) => (ischecked ? "4vh" : "2vh")};
   border-width: 0.5vh;
   border-style: solid;
   border-color: ${({ border }) => border};
