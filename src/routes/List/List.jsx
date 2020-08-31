@@ -8,7 +8,6 @@ import LoadingPanel from "../../components/LoadingPanel";
 
 const List = ({
   match,
-  sliceP,
   randomizeP,
   playlists,
   loadPlaylist,
@@ -31,25 +30,28 @@ const List = ({
       if (!isresumed) {
         if (savedlist[0].list) {
           //case: list that user played before
-          const { list, id, updated, isFav } = savedlist[0];
-          loadPlaylist(list, id, updated, isFav);
-          sliceP();
+          const { list, id, updated } = savedlist[0];
+          loadPlaylist(list, id, updated);
           autoshuffle && randomizeP();
-          updatePLstate(true);
+          updatePLstate("loaded");
         } else {
           //case: user clicks featured list
           downloadPlaylistData(match.params.id, "refresh");
         }
       } else {
-        const { list, id, updated, isFav } = savedresumablelist[0];
-        loadPlaylist(list, id, updated, isFav);
+        const { list, id, updated } = savedresumablelist[0];
+        loadPlaylist(list, id, updated, "isbeingresumed");
         iscontinued(true);
-        updatePLstate(true);
+        updatePLstate("loaded");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return playlistLoaded ? <ResultsScreen currentListID={match.params.id} isresumed={isresumed} /> : <LoadingPanel err={loadingErr} />;
+  return playlistLoaded === "loaded" || playlistLoaded === "refreshing" ? (
+    <ResultsScreen currentListID={match.params.id} isresumed={isresumed} />
+  ) : (
+    <LoadingPanel err={loadingErr} />
+  );
 };
 
 const mapSTP = (state) => ({
@@ -63,8 +65,7 @@ const mapSTP = (state) => ({
 
 const mapDTP = (dispatch) => ({
   randomizeP: () => dispatch(P.randomizePlaylist()),
-  sliceP: () => dispatch(P.slicePlaylist()),
-  loadPlaylist: (list, id, updated, isFav) => dispatch(P.loadPlaylist(list, id, updated, isFav)),
+  loadPlaylist: (list, id, updated, isbeingresumed) => dispatch(P.loadPlaylist(list, id, updated, isbeingresumed)),
   updatePLstate: (e) => dispatch(L.updatePLstate(e)),
 });
 

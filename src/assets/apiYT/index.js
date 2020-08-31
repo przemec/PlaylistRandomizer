@@ -9,10 +9,7 @@ const downloadPlaylistData = (id, action) => {
   let listData = {};
   let listt = [];
   const dsp = store.dispatch;
-  dsp(P.clearPlaylist());
-  if (action === "refresh") {
-    dsp(L.updatePLstate(false));
-  }
+  action === "refresh" && dsp(L.updatePLstate("refreshing"));
   const search = () => {
     !pageToken &&
       gapi.client.youtube.playlists
@@ -44,9 +41,9 @@ const downloadPlaylistData = (id, action) => {
         pageToken: pageToken,
       })
       .then(
-        async (res) => {
+        (res) => {
           // eslint-disable-next-line array-callback-return
-          const items = res.result.items.reduce((result, e) => {
+          res.result.items.map((e) => {
             const {
               title,
               resourceId: { videoId },
@@ -59,25 +56,26 @@ const downloadPlaylistData = (id, action) => {
             };
             if (e.contentDetails.videoPublishedAt && thumbnails) {
               listt = [...listt, item];
-              result.push(item);
             }
-            return result;
-          }, []);
-          dsp(P.loadPart(items));
+          });
           if (res.result.nextPageToken) {
             pageToken = res.result.nextPageToken;
             search(id);
           } else {
+            const d = new Date();
+            const z = (number) => (number < 10 ? `0${number}` : number);
+            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(
+              d.getSeconds()
+            )}`;
+            dsp(P.loadPlaylist(listt, id, time));
             if (action === "add") {
-              await dsp(PS.addPlaylist(id, listt, listData));
-              await dsp(P.slicePlaylist());
-              (await store.getState().settings.autoshuffle) && dsp(P.randomizePlaylist());
-              await dsp(L.updatePLstate(true));
+              dsp(PS.addPlaylist(id, listt, listData));
             } else if (action === "refresh") {
-              await dsp(PS.editPlaylist(id, listt, listData));
-              //eslint-disable-next-line
-              location.reload();
+              dsp(P.resetToZero());
+              dsp(PS.editPlaylist(id, listt, listData));
             }
+            store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
+            dsp(L.updatePLstate("loaded"));
           }
         },
         function (err) {

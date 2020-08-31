@@ -6,6 +6,7 @@ import listloadstate from "./listloadstate";
 import theme from "./theme";
 import settings from "./settings";
 import resumableplaylists from "./resumableplaylists";
+import { lastAction } from "../helpers/LogLastReduxAction";
 
 const reducers = combineReducers({
   playlist,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   theme,
   settings,
   resumableplaylists,
+  lastAction,
 });
 
 export default reducers;

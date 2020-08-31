@@ -3,17 +3,31 @@ import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
 import * as RP from "../../store/resumableplaylists/actions";
+import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import PlayerControl from "../../components/PlayerControl";
 import LoadingPanel from "../../components/LoadingPanel";
 import * as S from "./style";
 
 const ResultsScreen = React.memo(
-  ({ randomizeP, songs, currentListID, autoscroll, savePlaylist, isresumed, resumableplaylists, delPrivVidFrList, delPrivVidFrLists }) => {
+  ({
+    currentIndex,
+    playingPage,
+    updateIndex,
+    playPage,
+    songs,
+    currentListID,
+    randomizeP,
+    autoscroll,
+    savePlaylist,
+    isresumed,
+    resumableplaylists,
+    delPrivVidFrList,
+    delPrivVidFrLists,
+    resetPageAndIndex,
+  }) => {
     const [player, setPlayer] = React.useState();
     const [isPlayerLoaded, loadPlayer] = React.useState(false);
-    const [currentIndex, updateIndex] = React.useState(0);
-    const [playingPage, playPage] = React.useState(0);
     const [isnextpage, nextpage] = React.useState(false);
     const currentSong = songs[playingPage][currentIndex];
     const nextSong = songs[playingPage][currentIndex + 1];
@@ -40,11 +54,10 @@ const ResultsScreen = React.memo(
     };
     const onPlayerStateChange = (e) => {
       if (e.target.getPlayerState() === 0) {
-        updateIndex(e.target.getPlaylistIndex());
+        e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
         e.target.getPlaylistIndex() === e.target.getPlaylist().length - 1 && nextpage(true);
-      }
-      if (e.target.getPlayerState() === -1) {
-        updateIndex(e.target.getPlaylistIndex());
+      } else if (e.target.getPlayerState() === -1) {
+        e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
       }
     };
     React.useEffect(() => {
@@ -135,8 +148,7 @@ const ResultsScreen = React.memo(
       }
     };
     const randomize = () => {
-      updateIndex(0);
-      playPage(0);
+      resetPageAndIndex();
       randomizeP();
     };
     return (
@@ -155,6 +167,7 @@ const ResultsScreen = React.memo(
             <PlayerControl
               currentListID={currentListID}
               shuffle={randomize}
+              refresh={() => downloadPlaylistData(currentListID, "refresh")}
               playNext={playNextSong}
               playPrev={playPrevSong}
               isPrevActive={prevSong || (prevPage && prevPage[prevPage.length - 1])}
@@ -179,6 +192,8 @@ const mapSTP = (state) => ({
   songs: state.playlist.list,
   autoscroll: state.settings.autoscroll,
   resumableplaylists: state.resumableplaylists,
+  currentIndex: state.playlist.index,
+  playingPage: state.playlist.page,
 });
 const mapDTP = (dispatch) => ({
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
@@ -186,6 +201,9 @@ const mapDTP = (dispatch) => ({
   delPrivVidFrLists: (id, vidID) => dispatch(PS.deletePrivateVidFromPlaylists(id, vidID)),
   delPrivVidFrList: (vidID, page) => dispatch(P.deletePrivateVidFromPlaylist(vidID, page)),
   savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
+  playPage: (e) => dispatch(P.switchPage(e)),
+  updateIndex: (e) => dispatch(P.switchIndex(e)),
+  resetPageAndIndex: () => dispatch(P.resetToZero()),
 });
 
 export default connect(mapSTP, mapDTP)(ResultsScreen);

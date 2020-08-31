@@ -26,9 +26,7 @@ const SearchPage = ({ updatePLstate }) => {
 };
 
 const mapDTP = (dispatch) => ({
-  updatePLstate: (e) => {
-    dispatch(L.updatePLstate(e));
-  },
+  updatePLstate: (e) => dispatch(L.updatePLstate(e)),
 });
 
 export default connect(null, mapDTP)(SearchPage);

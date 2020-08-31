@@ -10,5 +10,6 @@ const resumableplaylists = L.loadState("resumableplaylists");
 export const store = createStore(reducers, { playlists, theme, settings, resumableplaylists });
 
 store.subscribe(() => {
-  console.log("redux state: ", store.getState());
+  // console.log("redux state: ", store.getState());
+  // console.log("redux ACTION: ", store.getState().lastAction);
 });

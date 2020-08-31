@@ -10,16 +10,11 @@ const slice200 = (songs) => {
   return pages;
 };
 
-const playlist = (state = { list: [] }, action) => {
+const playlist = (state = { list: [], index: 0, page: 0 }, action) => {
   switch (action.type) {
-    case P.LOAD_PART:
-      action.list.map((e) => (state.list = [...state.list, e]));
-      return state;
     case P.LOAD_PLAYLIST:
-      return { ...state, list: action.list, id: action.id, updated: action.updated, isFav: action.isFav };
-    case P.SLICE:
-      const pages = slice200(state.list);
-      return { ...state, list: pages };
+      const pages = action.isbeingresumed ? action.list : slice200(action.list);
+      return { ...state, list: pages, id: action.id, updated: action.updated };
     case P.RANDOMIZE:
       let allSongs = [];
       for (let i = 0; i < state.list.length; i++) {
@@ -35,6 +30,12 @@ const playlist = (state = { list: [] }, action) => {
       const newlist = state.list[action.page].filter((e) => e.videoId !== action.vidID);
       state.list[action.page] = newlist;
       return state;
+    case P.PAGE:
+      return { ...state, page: action.page };
+    case P.INDEX:
+      return { ...state, index: action.index };
+    case P.RESET:
+      return { ...state, index: 0, page: 0 };
     case P.CLEAR:
       return { list: [] };
     default:

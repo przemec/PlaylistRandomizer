@@ -1,14 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as S from "./style";
-import downloadPlaylistData from "../../assets/apiYT";
 import Tooltip from "../../helpers/Tooltip";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 
-const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, updated, isPrevActive, isNextActive }) => (
+const PlayerControl = ({ shuffle, refresh, playNext, playPrev, updated, isPrevActive, isNextActive, playlistLoaded }) => (
   <S.Container>
     <S.ToolsCont>
       <Tooltip title="Play previous">
@@ -28,17 +27,24 @@ const PlayerControl = ({ currentListID, shuffle, playNext, playPrev, updated, is
           <ShuffleIcon />
         </S.IconWrapper>
       </Tooltip>
-      <Tooltip title={<>Refresh playlist data {updated && <div style={{ clear: "both" }}>Last update: {updated}</div>}</>}>
-        <S.IconWrapper onClick={() => downloadPlaylistData(currentListID, "refresh")}>
-          <CloudDownloadIcon />
+      {playlistLoaded !== "refreshing" ? (
+        <Tooltip title={<>Refresh playlist data {updated && <div style={{ clear: "both" }}>Last update: {updated}</div>}</>}>
+          <S.IconWrapper onClick={() => playlistLoaded !== "refreshing" && refresh()}>
+            <CloudDownloadIcon />
+          </S.IconWrapper>
+        </Tooltip>
+      ) : (
+        <S.IconWrapper>
+          <S.LoopIco />
         </S.IconWrapper>
-      </Tooltip>
+      )}
     </S.ToolsCont>
   </S.Container>
 );
 
 const mapSTP = (state) => ({
   updated: state.playlist.updated,
+  playlistLoaded: state.listloadstate.isLoaded,
 });
 
 export default connect(mapSTP)(PlayerControl);
