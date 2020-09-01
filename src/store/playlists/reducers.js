@@ -37,8 +37,10 @@ const playlists = (state = [], action) => {
       LS.saveStateLocally("playlists", toggled);
       return toggled;
     case PS.DELETE_VID:
-      const updated = state.filter((e) => {
-        return e.id !== action.id && e.list.filter((ex) => ex.videoId !== action.vidID);
+      const updated = state.map((e) => {
+        if (e.id !== action.id) return e;
+        else e.list.filter((ex) => ex.videoId !== action.vidID);
+        return e;
       });
       LS.saveStateLocally("playlists", updated);
       return updated;

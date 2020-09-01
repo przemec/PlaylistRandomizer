@@ -55,7 +55,7 @@ const ResultsScreen = React.memo(
     const onPlayerStateChange = (e) => {
       if (e.target.getPlayerState() === 0) {
         e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
-        e.target.getPlaylistIndex() === e.target.getPlaylist().length - 1 && nextpage(true);
+        e.target.getVideoUrl().split("=")[1].length < 8 && nextpage(true);
       } else if (e.target.getPlayerState() === -1) {
         e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
       }
@@ -66,6 +66,11 @@ const ResultsScreen = React.memo(
       player && player.s && player.playVideoAt(currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [songs]);
+    React.useEffect(() => {
+      const arr = songs[playingPage].map((ev) => ev.videoId);
+      player && player.s && arr && player.loadPlaylist(arr, currentIndex);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [playingPage]);
     React.useEffect(() => {
       isnextpage && playSong(0, playingPage + 1);
       nextpage(false);
@@ -138,10 +143,8 @@ const ResultsScreen = React.memo(
     };
     const playSong = (index, page) => {
       if (page !== playingPage && songs[page]) {
-        const arr = songs[page].map((ev) => ev.videoId);
-        player.loadPlaylist(arr, index);
-        playPage(page);
         updateIndex(index);
+        playPage(page);
       } else if (songs[page]) {
         player.playVideoAt(index);
         updateIndex(index);
