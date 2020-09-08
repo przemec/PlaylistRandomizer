@@ -25,6 +25,8 @@ const ResultsScreen = React.memo(
     delPrivVidFrList,
     delPrivVidFrLists,
     resetPageAndIndex,
+    loopplaylist,
+    autorefresh,
   }) => {
     const [player, setPlayer] = React.useState();
     const [isPlayerLoaded, loadPlayer] = React.useState(false);
@@ -148,6 +150,16 @@ const ResultsScreen = React.memo(
       } else if (songs[page]) {
         player.playVideoAt(index);
         updateIndex(index);
+      } else if (!songs[page] && loopplaylist) {
+        if (!autorefresh) {
+          console.log("loopplaylist && !autorefresh");
+          resetPageAndIndex();
+          const arr = songs[0].map((ev) => ev.videoId);
+          player && player.s && arr && player.loadPlaylist(arr);
+        } else if (autorefresh) {
+          console.log("autorefresh");
+          downloadPlaylistData(currentListID, "refresh");
+        }
       }
     };
     const randomize = () => {
@@ -194,6 +206,8 @@ const ResultsScreen = React.memo(
 const mapSTP = (state) => ({
   songs: state.playlist.list,
   autoscroll: state.settings.autoscroll,
+  loopplaylist: state.settings.loop,
+  autorefresh: state.settings.autorefresh,
   resumableplaylists: state.resumableplaylists,
   currentIndex: state.playlist.index,
   playingPage: state.playlist.page,

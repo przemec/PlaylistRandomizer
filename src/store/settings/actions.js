@@ -3,6 +3,8 @@ export const settingsOperations = {
   SCROLL: "SWITCH_AUTO_SCROLL",
   FEATURED: "SWITCH_FEATURED_DISPLAY",
   RESUME: "SWITCH_AUTO_RESUME",
+  LOOP: "SWITCH_AUTO_LOOP",
+  REFRESH: "SWITCH_REFRESH_ON_LOOP",
 };
 
 export function switchAutoShuffle() {
@@ -19,4 +21,12 @@ export function switchFeaturedDisplay() {
 
 export function switchAutoResume() {
   return { type: settingsOperations.RESUME };
+}
+
+export function switchAutoLoop() {
+  return { type: settingsOperations.LOOP };
+}
+
+export function switchAutoRefresh() {
+  return { type: settingsOperations.REFRESH };
 }
