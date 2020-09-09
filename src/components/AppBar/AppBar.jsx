@@ -20,7 +20,7 @@ const AppBar = ({ showM, swapT, themeType }) => (
         </S.IconWrapper>
       </Tooltip>
       <Tooltip title="Themes">
-        <S.IconWrapper onClick={() => showM("ThemePage", "Theme Settings")}>
+        <S.IconWrapper onClick={() => showM("ThemePage", "Theme Picker")}>
           <PaletteIcon />
         </S.IconWrapper>
       </Tooltip>

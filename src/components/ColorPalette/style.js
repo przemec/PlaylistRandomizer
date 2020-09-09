@@ -21,7 +21,7 @@ export const StyledField = styled(Grid)`
   line-height: 7.2vh;
   text-align: center;
   cursor: pointer;
-  opacity: 0.9;
+  opacity: ${({ ischecked }) => (ischecked ? "1" : "0.8")};
   & svg {
     transition: 0.2s all ease-in-out;
     fill: ${({ border }) => border};
@@ -31,9 +31,5 @@ export const StyledField = styled(Grid)`
   &:hover {
     opacity: 1;
     border-radius: 4vh;
-    transform: rotate(90deg);
-    & svg {
-      transform: rotate(-90deg);
-    }
   }
 `;
