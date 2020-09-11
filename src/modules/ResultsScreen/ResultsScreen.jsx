@@ -31,6 +31,7 @@ const ResultsScreen = React.memo(
     const [player, setPlayer] = React.useState();
     const [isPlayerLoaded, loadPlayer] = React.useState(false);
     const [isnextpage, nextpage] = React.useState(false);
+    const [isprivcheck, checkprivvids] = React.useState(false);
     const currentSong = songs[playingPage][currentIndex];
     const nextSong = songs[playingPage][currentIndex + 1];
     const prevSong = songs[playingPage][currentIndex - 1];
@@ -39,14 +40,15 @@ const ResultsScreen = React.memo(
     const onPlayerReady = (e) => {
       loadPlayer(true);
       document.getElementById("youtube-player").style.visibility = "visible";
-      const arr = songs[playingPage].map((ev) => ev.videoId);
-      e.target.loadPlaylist(arr);
-      if (isresumed) {
+      if (!isresumed) {
+        const arr = songs[playingPage].map((ev) => ev.videoId);
+        e.target.cuePlaylist(arr);
+      } else {
         const newdata = resumableplaylists.filter((e) => e.id === currentListID)[0];
         updateIndex(newdata.index);
         playPage(newdata.page);
         const arr = songs[newdata.page].map((ev) => ev.videoId);
-        e.target.loadPlaylist(arr);
+        e.target.cuePlaylist(arr);
         e.target.playVideoAt(newdata.index);
       }
       const that = e.target;
@@ -60,17 +62,20 @@ const ResultsScreen = React.memo(
         e.target.getVideoUrl().split("=")[1].length < 8 && nextpage(true);
       } else if (e.target.getPlayerState() === -1) {
         e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
+      } else if (e.target.getPlayerState() === 5) {
+        e.target.playVideo();
+        checkprivvids(true);
       }
     };
     React.useEffect(() => {
       const arr = songs[playingPage] && songs[playingPage].map((ev) => ev.videoId);
-      player && player.s && arr && player.loadPlaylist(arr);
-      player && player.s && player.playVideoAt(currentIndex);
+      player && arr && player.cuePlaylist(arr);
+      player && player.playVideoAt(currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [songs]);
     React.useEffect(() => {
       const arr = songs[playingPage].map((ev) => ev.videoId);
-      player && player.s && arr && player.loadPlaylist(arr, currentIndex);
+      player && arr && player.cuePlaylist(arr, currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playingPage]);
     React.useEffect(() => {
@@ -79,20 +84,26 @@ const ResultsScreen = React.memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isnextpage]);
     React.useEffect(() => {
-      const delPrivVid = (listId, vidIds) => {
-        vidIds.forEach((e) => {
-          delPrivVidFrLists(listId, e.videoId);
-          delPrivVidFrList(e.videoId, playingPage);
-        });
-      };
-      if (player) {
-        if (player.getPlaylist()) {
-          const playerlist = player.getPlaylist();
-          const privVids = songs[playingPage].filter((e) => playerlist.indexOf(e.videoId) === -1);
-          delPrivVid(currentListID, privVids);
+      if (isprivcheck) {
+        const delPrivVid = (listId, vidIds) => {
+          vidIds.forEach((e) => {
+            delPrivVidFrLists(listId, e.videoId);
+            delPrivVidFrList(e.videoId, playingPage);
+          });
+        };
+        if (player) {
+          if (player.getPlaylist()) {
+            const playerlist = player.getPlaylist();
+            const privVids = songs[playingPage].filter((e) => playerlist.indexOf(e.videoId) === -1);
+            delPrivVid(currentListID, privVids);
+          }
         }
+        //^if one of videos in currently played playlist is set to private, the page will refresh list
       }
-      //^if one of videos in currently played playlist is set to private, the page will refresh list
+      checkprivvids(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isprivcheck]);
+    React.useEffect(() => {
       document.title = currentSong && currentSong.title;
       let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
       if (elmnt && autoscroll) {
@@ -152,12 +163,10 @@ const ResultsScreen = React.memo(
         updateIndex(index);
       } else if (!songs[page] && loopplaylist) {
         if (!autorefresh) {
-          console.log("loopplaylist && !autorefresh");
           resetPageAndIndex();
           const arr = songs[0].map((ev) => ev.videoId);
-          player && player.s && arr && player.loadPlaylist(arr);
+          player && arr && player.cuePlaylist(arr);
         } else if (autorefresh) {
-          console.log("autorefresh");
           downloadPlaylistData(currentListID, "refresh");
         }
       }
