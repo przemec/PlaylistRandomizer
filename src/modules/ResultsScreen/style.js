@@ -82,6 +82,8 @@ export const PlayerWrapper = styled(Grid)`
   position: relative;
   padding-bottom: 45%;
   height: 0;
+  background: #000;
+  visibility: hidden;
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
@@ -95,5 +97,4 @@ export const Player = styled(Grid)`
   left: 0;
   width: 100%;
   height: 100%;
-  visibility: hidden;
 `;

@@ -4,7 +4,7 @@ import * as L from "../../store/listloadstate/actions";
 import { store } from "../../store";
 import { gapi } from "gapi-script";
 
-const downloadPlaylistData = (id, action) => {
+const downloadPlaylistData = (id, action, resetPlayer) => {
   let pageToken = undefined;
   let listData = {};
   let listt = [];
@@ -73,6 +73,7 @@ const downloadPlaylistData = (id, action) => {
             } else if (action === "refresh") {
               dsp(P.resetToZero());
               dsp(PS.editPlaylist(id, listt, listData));
+              resetPlayer();
             }
             store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
             dsp(L.updatePLstate("loaded"));

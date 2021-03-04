@@ -39,7 +39,7 @@ const ResultsScreen = React.memo(
     const prevPage = songs[playingPage - 1];
     const onPlayerReady = (e) => {
       loadPlayer(true);
-      document.getElementById("youtube-player").style.visibility = "visible";
+      document.getElementById("youtube-player-wrapper").style.visibility = "visible";
       if (!isresumed) {
         const arr = songs[playingPage].map((ev) => ev.videoId);
         e.target.cuePlaylist(arr);
@@ -69,8 +69,8 @@ const ResultsScreen = React.memo(
     };
     React.useEffect(() => {
       const arr = songs[playingPage] && songs[playingPage].map((ev) => ev.videoId);
-      player && arr && player.cuePlaylist(arr);
-      player && player.playVideoAt(currentIndex);
+      player && player.i && arr && player.cuePlaylist(arr);
+      player && player.i && player.playVideoAt(currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [songs]);
     React.useEffect(() => {
@@ -115,31 +115,44 @@ const ResultsScreen = React.memo(
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, playingPage]);
-    if (!window.YT) {
-      let c = document.getElementsByTagName("script").length;
-      let m = true;
-      for (let i = 0; i < c; i++) {
-        document.getElementsByTagName("script")[i].src === "https://www.youtube.com/iframe_api" && (m = false);
+    const resetPlayer = (create) => {
+      if (!create) {
+        player.destroy();
+        window.YT = undefined;
+        window.onYouTubeIframeAPIReady = undefined;
+        let c = [...document.getElementsByTagName("script")];
+        // eslint-disable-next-line array-callback-return
+        c.map((e) => {
+          e.src === "https://www.youtube.com/iframe_api" && e.remove();
+        });
       }
-      if (m) {
-        let tag = document.createElement("script");
-        tag.onload = () => console.log("YOUTUBE IFRAME API LOADED");
-        tag.src = "https://www.youtube.com/iframe_api";
-        let firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      if (!window.YT) {
+        let c = document.getElementsByTagName("script").length;
+        let m = true;
+        for (let i = 0; i < c; i++) {
+          document.getElementsByTagName("script")[i].src === "https://www.youtube.com/iframe_api" && (m = false);
+        }
+        if (m) {
+          let tag = document.createElement("script");
+          tag.onload = () => console.log("YOUTUBE IFRAME API LOADED");
+          tag.src = "https://www.youtube.com/iframe_api";
+          let firstScriptTag = document.getElementsByTagName("script")[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
       }
-    }
-    window.onYouTubeIframeAPIReady = () => {
-      setPlayer(
-        new window.YT.Player("youtube-player", {
-          videoId: songs[0][0].videoId,
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        })
-      );
+      window.onYouTubeIframeAPIReady = () => {
+        setPlayer(
+          new window.YT.Player("youtube-player", {
+            videoId: songs[0][0].videoId,
+            events: {
+              onReady: onPlayerReady,
+              onStateChange: onPlayerStateChange,
+            },
+          })
+        );
+      };
     };
+    resetPlayer("create");
     const playNextSong = () => {
       if (nextSong) {
         playSong(currentIndex + 1, playingPage);
@@ -167,13 +180,14 @@ const ResultsScreen = React.memo(
           const arr = songs[0].map((ev) => ev.videoId);
           player && arr && player.cuePlaylist(arr);
         } else if (autorefresh) {
-          downloadPlaylistData(currentListID, "refresh");
+          downloadPlaylistData(currentListID, "refresh", resetPlayer);
         }
       }
     };
     const randomize = () => {
       resetPageAndIndex();
       randomizeP();
+      resetPlayer();
     };
     return (
       <S.MainCont>
@@ -184,14 +198,14 @@ const ResultsScreen = React.memo(
               <S.TitleNext>{nextSong ? `Next: ${nextSong.title}` : nextPage && nextPage[0] && `Next: ${nextPage[0].title}`}</S.TitleNext>
             </>
           )}
-          <S.PlayerWrapper>
+          <S.PlayerWrapper id="youtube-player-wrapper">
             <S.Player id="youtube-player" wmode="transparent" />
           </S.PlayerWrapper>
           {isPlayerLoaded && (
             <PlayerControl
               currentListID={currentListID}
               shuffle={randomize}
-              refresh={() => downloadPlaylistData(currentListID, "refresh")}
+              refresh={() => downloadPlaylistData(currentListID, "refresh", resetPlayer)}
               playNext={playNextSong}
               playPrev={playPrevSong}
               isPrevActive={prevSong || (prevPage && prevPage[prevPage.length - 1])}
