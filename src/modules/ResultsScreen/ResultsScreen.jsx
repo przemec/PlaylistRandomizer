@@ -51,10 +51,10 @@ const ResultsScreen = React.memo(
         e.target.cuePlaylist(arr);
         e.target.playVideoAt(newdata.index);
       }
-      const that = e.target;
-      setTimeout(() => {
-        that.stopVideo();
-      }, 1000);
+      // const that = e.target;
+      // setTimeout(() => {
+      //   that.stopVideo();
+      // }, 1000);
     };
     const onPlayerStateChange = (e) => {
       if (e.target.getPlayerState() === 0) {
@@ -75,7 +75,7 @@ const ResultsScreen = React.memo(
     }, [songs]);
     React.useEffect(() => {
       const arr = songs[playingPage].map((ev) => ev.videoId);
-      player && arr && player.cuePlaylist(arr, currentIndex);
+      player && player.i && arr && player.cuePlaylist(arr, currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playingPage]);
     React.useEffect(() => {
@@ -111,10 +111,41 @@ const ResultsScreen = React.memo(
       }
       if (currentIndex || playingPage) {
         //savePlaylist won't exec right after loading page
-        savePlaylist(currentListID, songs, currentIndex, playingPage);
+        player && player.i && savePlaylist(currentListID, songs, currentIndex, playingPage);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, playingPage]);
+    const playNextSong = () => {
+      if (nextSong) {
+        playSong(currentIndex + 1, playingPage);
+      } else if (nextPage) {
+        playSong(0, playingPage + 1);
+      }
+    };
+    const playPrevSong = () => {
+      if (prevSong) {
+        playSong(currentIndex - 1, playingPage);
+      } else if (prevPage) {
+        playSong(prevPage.length - 1, playingPage - 1);
+      }
+    };
+    const playSong = (index, page) => {
+      if (page !== playingPage && songs[page]) {
+        updateIndex(index);
+        playPage(page);
+      } else if (songs[page]) {
+        player.playVideoAt(index);
+        updateIndex(index);
+      } else if (!songs[page] && loopplaylist) {
+        if (!autorefresh) {
+          resetPageAndIndex();
+          const arr = songs[0].map((ev) => ev.videoId);
+          player && arr && player.cuePlaylist(arr);
+        } else if (autorefresh) {
+          downloadPlaylistData(currentListID, "refresh", resetPlayer);
+        }
+      }
+    };
     const resetPlayer = (create) => {
       if (!create) {
         player.destroy();
@@ -153,37 +184,6 @@ const ResultsScreen = React.memo(
       };
     };
     resetPlayer("create");
-    const playNextSong = () => {
-      if (nextSong) {
-        playSong(currentIndex + 1, playingPage);
-      } else if (nextPage) {
-        playSong(0, playingPage + 1);
-      }
-    };
-    const playPrevSong = () => {
-      if (prevSong) {
-        playSong(currentIndex - 1, playingPage);
-      } else if (prevPage) {
-        playSong(prevPage.length - 1, playingPage - 1);
-      }
-    };
-    const playSong = (index, page) => {
-      if (page !== playingPage && songs[page]) {
-        updateIndex(index);
-        playPage(page);
-      } else if (songs[page]) {
-        player.playVideoAt(index);
-        updateIndex(index);
-      } else if (!songs[page] && loopplaylist) {
-        if (!autorefresh) {
-          resetPageAndIndex();
-          const arr = songs[0].map((ev) => ev.videoId);
-          player && arr && player.cuePlaylist(arr);
-        } else if (autorefresh) {
-          downloadPlaylistData(currentListID, "refresh", resetPlayer);
-        }
-      }
-    };
     const randomize = () => {
       resetPageAndIndex();
       randomizeP();
