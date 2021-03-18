@@ -45,11 +45,15 @@ const ResultsScreen = React.memo(
         e.target.cuePlaylist(arr);
       } else {
         const newdata = resumableplaylists.filter((e) => e.id === currentListID)[0];
-        updateIndex(newdata.index);
-        playPage(newdata.page);
         const arr = songs[newdata.page].map((ev) => ev.videoId);
         e.target.cuePlaylist(arr);
         e.target.playVideoAt(newdata.index);
+        updateIndex(newdata.index);
+        playPage(newdata.page);
+        let elmnt = document.getElementById(`index${newdata.index + newdata.page * 200}`);
+        if (elmnt && autoscroll) {
+          elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+        }
       }
       // const that = e.target;
       // setTimeout(() => {
