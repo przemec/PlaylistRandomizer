@@ -102,7 +102,6 @@ const ResultsScreen = React.memo(
             privVids.length < 20 && delPrivVid(currentListID, privVids);
           }
         }
-
         //^if one of videos in currently played playlist is set to private, the page will refresh list
       }
       checkprivvids(false);
@@ -114,10 +113,7 @@ const ResultsScreen = React.memo(
       if (elmnt && autoscroll) {
         elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
       }
-      if (currentIndex || playingPage) {
-        //savePlaylist won't exec right after loading page
-        player && player.i && savePlaylist(currentListID, songs, currentIndex, playingPage);
-      }
+      player && player.i && savePlaylist(currentListID, songs, currentIndex, playingPage);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, playingPage]);
     const playNextSong = () => {
@@ -154,6 +150,7 @@ const ResultsScreen = React.memo(
     const resetPlayer = (create) => {
       if (!create) {
         player.destroy();
+        savePlaylist(currentListID, songs, 0, 0);
         window.YT = undefined;
         window.onYouTubeIframeAPIReady = undefined;
         let c = [...document.getElementsByTagName("script")];
