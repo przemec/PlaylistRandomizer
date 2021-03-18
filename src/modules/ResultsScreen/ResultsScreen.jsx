@@ -95,9 +95,10 @@ const ResultsScreen = React.memo(
           if (player.getPlaylist()) {
             const playerlist = player.getPlaylist();
             const privVids = songs[playingPage].filter((e) => playerlist.indexOf(e.videoId) === -1);
-            delPrivVid(currentListID, privVids);
+            privVids.length < 20 && delPrivVid(currentListID, privVids);
           }
         }
+
         //^if one of videos in currently played playlist is set to private, the page will refresh list
       }
       checkprivvids(false);
