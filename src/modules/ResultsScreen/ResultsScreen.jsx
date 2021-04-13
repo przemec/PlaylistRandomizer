@@ -12,8 +12,8 @@ import * as S from "./style";
 const ResultsScreen = React.memo(
   ({
     currentIndex,
-    playingPage,
-    updateIndex,
+    playingPage = 0,
+    updateIndex = 0,
     playPage,
     songs,
     currentListID,
@@ -45,9 +45,6 @@ const ResultsScreen = React.memo(
         e.target.cuePlaylist(arr);
       } else {
         const newdata = resumableplaylists.filter((e) => e.id === currentListID)[0];
-        const arr = songs[newdata.page].map((ev) => ev.videoId);
-        e.target.cuePlaylist(arr);
-        e.target.playVideoAt(newdata.index);
         updateIndex(newdata.index);
         playPage(newdata.page);
         let elmnt = document.getElementById(`index${newdata.index + newdata.page * 200}`);
@@ -55,17 +52,13 @@ const ResultsScreen = React.memo(
           elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
         }
       }
-      // const that = e.target;
-      // setTimeout(() => {
-      //   that.stopVideo();
-      // }, 1000);
     };
     const onPlayerStateChange = (e) => {
       if (e.target.getPlayerState() === 0) {
-        e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
+        updateIndex(e.target.getPlaylistIndex());
         e.target.getVideoUrl().split("=")[1].length < 8 && nextpage(true);
       } else if (e.target.getPlayerState() === -1) {
-        e.target.getPlaylistIndex() !== currentIndex && updateIndex(e.target.getPlaylistIndex());
+        updateIndex(e.target.getPlaylistIndex());
       } else if (e.target.getPlayerState() === 5) {
         e.target.playVideo();
         checkprivvids(true);
@@ -135,7 +128,7 @@ const ResultsScreen = React.memo(
         updateIndex(index);
         playPage(page);
       } else if (songs[page]) {
-        player.playVideoAt(index);
+        player && player.playVideoAt(index);
         updateIndex(index);
       } else if (!songs[page] && loopplaylist) {
         if (!autorefresh) {
@@ -176,7 +169,6 @@ const ResultsScreen = React.memo(
       window.onYouTubeIframeAPIReady = () => {
         setPlayer(
           new window.YT.Player("youtube-player", {
-            videoId: songs[0][0].videoId,
             events: {
               onReady: onPlayerReady,
               onStateChange: onPlayerStateChange,

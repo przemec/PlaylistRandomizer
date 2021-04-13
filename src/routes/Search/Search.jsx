@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as L from "../../store/listloadstate/actions";
+import * as P from "../../store/playlist/actions";
 import SearchScreen from "../../modules/SearchScreen";
 
-const SearchPage = ({ updatePLstate }) => {
+const SearchPage = ({ updatePLstate, clearPlaylist }) => {
   React.useEffect(() => {
+    clearPlaylist();
     document.title = "YT Randomizer";
     window.YT = undefined;
     window.onYouTubeIframeAPIReady = undefined;
@@ -27,6 +29,7 @@ const SearchPage = ({ updatePLstate }) => {
 
 const mapDTP = (dispatch) => ({
   updatePLstate: (e) => dispatch(L.updatePLstate(e)),
+  clearPlaylist: () => dispatch(P.clearPlaylist()),
 });
 
 export default connect(null, mapDTP)(SearchPage);

@@ -37,7 +37,7 @@ const playlist = (state = { list: [], index: 0, page: 0 }, action) => {
     case P.RESET:
       return { ...state, index: 0, page: 0 };
     case P.CLEAR:
-      return { list: [] };
+      return {};
     default:
       return state;
   }
