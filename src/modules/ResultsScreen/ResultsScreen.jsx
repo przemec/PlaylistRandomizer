@@ -12,7 +12,7 @@ import * as S from "./style";
 const ResultsScreen = React.memo(
   ({
     currentIndex,
-    playingPage = 0,
+    playingPage,
     updateIndex = 0,
     playPage,
     songs,
@@ -32,21 +32,23 @@ const ResultsScreen = React.memo(
     const [isPlayerLoaded, loadPlayer] = React.useState(false);
     const [isnextpage, nextpage] = React.useState(false);
     const [isprivcheck, checkprivvids] = React.useState(false);
-    const currentSong = songs[playingPage][currentIndex];
-    const nextSong = songs[playingPage][currentIndex + 1];
-    const prevSong = songs[playingPage][currentIndex - 1];
-    const nextPage = songs[playingPage + 1];
-    const prevPage = songs[playingPage - 1];
+    const page = playingPage || 0;
+    const currentSong = songs[page][currentIndex];
+    const nextSong = songs[page][currentIndex + 1];
+    const prevSong = songs[page][currentIndex - 1];
+    const nextPage = songs[page + 1];
+    const prevPage = songs[page - 1];
     const onPlayerReady = (e) => {
       loadPlayer(true);
       document.getElementById("youtube-player-wrapper").style.visibility = "visible";
       if (!isresumed) {
-        const arr = songs[playingPage].map((ev) => ev.videoId);
-        e.target.cuePlaylist(arr);
+        playPage(0);
       } else {
         const newdata = resumableplaylists.filter((e) => e.id === currentListID)[0];
         updateIndex(newdata.index);
         playPage(newdata.page);
+        // const arr = songs[newdata.page].map((ev) => ev.videoId);
+        // e.target.cuePlaylist(arr, newdata.index);
         let elmnt = document.getElementById(`index${newdata.index + newdata.page * 200}`);
         if (elmnt && autoscroll) {
           elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
@@ -65,18 +67,18 @@ const ResultsScreen = React.memo(
       }
     };
     React.useEffect(() => {
-      const arr = songs[playingPage] && songs[playingPage].map((ev) => ev.videoId);
+      const arr = songs[page] && songs[page].map((ev) => ev.videoId);
       player && player.i && arr && player.cuePlaylist(arr);
       player && player.i && player.playVideoAt(currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [songs]);
     React.useEffect(() => {
-      const arr = songs[playingPage].map((ev) => ev.videoId);
+      const arr = songs[page].map((ev) => ev.videoId);
       player && player.i && arr && player.cuePlaylist(arr, currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playingPage]);
     React.useEffect(() => {
-      isnextpage && playSong(0, playingPage + 1);
+      isnextpage && playSong(0, page + 1);
       nextpage(false);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isnextpage]);
@@ -85,13 +87,13 @@ const ResultsScreen = React.memo(
         const delPrivVid = (listId, vidIds) => {
           vidIds.forEach((e) => {
             delPrivVidFrLists(listId, e.videoId);
-            delPrivVidFrList(e.videoId, playingPage);
+            delPrivVidFrList(e.videoId, page);
           });
         };
         if (player) {
           if (player.getPlaylist()) {
             const playerlist = player.getPlaylist();
-            const privVids = songs[playingPage].filter((e) => playerlist.indexOf(e.videoId) === -1);
+            const privVids = songs[page].filter((e) => playerlist.indexOf(e.videoId) === -1);
             privVids.length < 20 && delPrivVid(currentListID, privVids);
           }
         }
@@ -102,35 +104,35 @@ const ResultsScreen = React.memo(
     }, [isprivcheck]);
     React.useEffect(() => {
       document.title = currentSong && currentSong.title;
-      let elmnt = document.getElementById(`index${currentIndex + playingPage * 200}`);
+      let elmnt = document.getElementById(`index${currentIndex + page * 200}`);
       if (elmnt && autoscroll) {
         elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
       }
-      player && player.i && savePlaylist(currentListID, songs, currentIndex, playingPage);
+      player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, playingPage]);
     const playNextSong = () => {
       if (nextSong) {
-        playSong(currentIndex + 1, playingPage);
+        playSong(currentIndex + 1, page);
       } else if (nextPage) {
-        playSong(0, playingPage + 1);
+        playSong(0, page + 1);
       }
     };
     const playPrevSong = () => {
       if (prevSong) {
-        playSong(currentIndex - 1, playingPage);
+        playSong(currentIndex - 1, page);
       } else if (prevPage) {
-        playSong(prevPage.length - 1, playingPage - 1);
+        playSong(prevPage.length - 1, page - 1);
       }
     };
-    const playSong = (index, page) => {
-      if (page !== playingPage && songs[page]) {
+    const playSong = (index, newpage) => {
+      if (newpage !== page && songs[newpage]) {
         updateIndex(index);
-        playPage(page);
-      } else if (songs[page]) {
+        playPage(newpage);
+      } else if (songs[newpage]) {
         player && player.playVideoAt(index);
         updateIndex(index);
-      } else if (!songs[page] && loopplaylist) {
+      } else if (!songs[newpage] && loopplaylist) {
         if (!autorefresh) {
           resetPageAndIndex();
           const arr = songs[0].map((ev) => ev.videoId);
@@ -210,7 +212,7 @@ const ResultsScreen = React.memo(
         {isPlayerLoaded && (
           <S.ResultsContainer>
             <S.ResultsGroupWrapper>
-              <ResultsGroup songs={songs} playingPage={playingPage} changeSong={playSong} currentIndex={currentIndex} />
+              <ResultsGroup songs={songs} playingPage={page} changeSong={playSong} currentIndex={currentIndex} />
             </S.ResultsGroupWrapper>
           </S.ResultsContainer>
         )}

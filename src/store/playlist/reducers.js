@@ -10,7 +10,7 @@ const slice200 = (songs) => {
   return pages;
 };
 
-const playlist = (state = { list: [], index: 0, page: 0 }, action) => {
+const playlist = (state = { list: [], index: null, page: null }, action) => {
   switch (action.type) {
     case P.LOAD_PLAYLIST:
       const pages = action.isbeingresumed ? action.list : slice200(action.list);
