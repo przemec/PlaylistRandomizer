@@ -20,10 +20,11 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
         .then(
           function (res) {
             if (res.result.items[0]) {
-              const { channelTitle, thumbnails, title, publishedAt } = res.result.items[0].snippet;
+              const { channelTitle: author, thumbnails, title, publishedAt } = res.result.items[0].snippet;
+              const { url: thumbnail } = thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
               listData = {
-                author: channelTitle,
-                thumbnail: thumbnails.standard.url,
+                author,
+                thumbnail,
                 title,
                 publishedAt,
               };
@@ -64,9 +65,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
           } else {
             const d = new Date();
             const z = (number) => (number < 10 ? `0${number}` : number);
-            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(
-              d.getSeconds()
-            )}`;
+            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}`;
             dsp(P.loadPlaylist(listt, id, time));
             if (action === "add") {
               dsp(PS.addPlaylist(id, listt, listData));
