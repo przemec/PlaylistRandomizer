@@ -38,6 +38,12 @@ const ResultsScreen = React.memo(
     const prevSong = songs[page][currentIndex - 1];
     const nextPage = songs[page + 1];
     const prevPage = songs[page - 1];
+    const scrollToActive = (i, p) => {
+      let elmnt = document.getElementById(`index${(i || currentIndex) + (p || page) * 200}`);
+      if (elmnt && autoscroll) {
+        elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
+      }
+    };
     const onPlayerReady = (e) => {
       loadPlayer(true);
       document.getElementById("youtube-player-wrapper").style.visibility = "visible";
@@ -49,10 +55,7 @@ const ResultsScreen = React.memo(
         playPage(newdata.page);
         // const arr = songs[newdata.page].map((ev) => ev.videoId);
         // e.target.cuePlaylist(arr, newdata.index);
-        let elmnt = document.getElementById(`index${newdata.index + newdata.page * 200}`);
-        if (elmnt && autoscroll) {
-          elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-        }
+        scrollToActive(newdata.index, newdata.page);
       }
     };
     const onPlayerStateChange = (e) => {
@@ -104,10 +107,7 @@ const ResultsScreen = React.memo(
     }, [isprivcheck]);
     React.useEffect(() => {
       document.title = currentSong && currentSong.title;
-      let elmnt = document.getElementById(`index${currentIndex + page * 200}`);
-      if (elmnt && autoscroll) {
-        elmnt.parentNode.scrollTop = elmnt.offsetTop - elmnt.parentNode.offsetTop;
-      }
+      scrollToActive();
       player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, playingPage]);
@@ -190,7 +190,7 @@ const ResultsScreen = React.memo(
         <S.PlayerContainer>
           {isPlayerLoaded && (
             <>
-              <S.Title>{currentSong && currentSong.title}</S.Title>
+              <S.Title onClick={() => scrollToActive()}>{currentSong && currentSong.title}</S.Title>
               <S.TitleNext>{nextSong ? `Next: ${nextSong.title}` : nextPage && nextPage[0] && `Next: ${nextPage[0].title}`}</S.TitleNext>
             </>
           )}
