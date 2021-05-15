@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
@@ -32,7 +32,8 @@ const ResultsScreen = React.memo(
     const [isPlayerLoaded, loadPlayer] = React.useState(false);
     const [isnextpage, nextpage] = React.useState(false);
     const [isprivcheck, checkprivvids] = React.useState(false);
-    const page = playingPage || 0;
+    let page = playingPage || 0;
+    page = page == -1 ? 0 : page;
     const currentSong = songs[page][currentIndex];
     const nextSong = songs[page][currentIndex + 1];
     const prevSong = songs[page][currentIndex - 1];
@@ -69,23 +70,23 @@ const ResultsScreen = React.memo(
         checkprivvids(true);
       }
     };
-    React.useEffect(() => {
+    useEffect(() => {
       const arr = songs[page] && songs[page].map((ev) => ev.videoId);
       player && player.i && arr && player.cuePlaylist(arr);
       player && player.i && player.playVideoAt(currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [songs]);
-    React.useEffect(() => {
+    useEffect(() => {
       const arr = songs[page].map((ev) => ev.videoId);
       player && player.i && arr && player.cuePlaylist(arr, currentIndex);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playingPage]);
-    React.useEffect(() => {
+    useEffect(() => {
       isnextpage && playSong(0, page + 1);
       nextpage(false);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isnextpage]);
-    React.useEffect(() => {
+    useEffect(() => {
       if (isprivcheck) {
         const delPrivVid = (listId, vidIds) => {
           vidIds.forEach((e) => {
@@ -105,7 +106,7 @@ const ResultsScreen = React.memo(
       checkprivvids(false);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isprivcheck]);
-    React.useEffect(() => {
+    useEffect(() => {
       document.title = currentSong && currentSong.title;
       scrollToActive();
       player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
@@ -153,6 +154,7 @@ const ResultsScreen = React.memo(
         c.map((e) => {
           e.src === "https://www.youtube.com/iframe_api" && e.remove();
         });
+        playPage(-1);
       }
       if (!window.YT) {
         let c = document.getElementsByTagName("script").length;
@@ -179,11 +181,14 @@ const ResultsScreen = React.memo(
         );
       };
     };
-    resetPlayer("create");
+    useEffect(() => {
+      resetPlayer("create");
+    }, []);
     const randomize = () => {
       resetPageAndIndex();
       randomizeP();
       resetPlayer();
+      playPage(-1);
     };
     return (
       <S.MainCont>
