@@ -33,7 +33,7 @@ const ResultsScreen = React.memo(
     const [isnextpage, nextpage] = React.useState(false);
     const [isprivcheck, checkprivvids] = React.useState(false);
     let page = playingPage || 0;
-    page = page == -1 ? 0 : page;
+    page = page === -1 ? 0 : page;
     const currentSong = songs[page][currentIndex];
     const nextSong = songs[page][currentIndex + 1];
     const prevSong = songs[page][currentIndex - 1];
@@ -107,7 +107,7 @@ const ResultsScreen = React.memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isprivcheck]);
     useEffect(() => {
-      document.title = currentSong && currentSong.title;
+      document.title = (currentSong && currentSong.title) || "YT Randomizer";
       scrollToActive();
       player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,6 +183,7 @@ const ResultsScreen = React.memo(
     };
     useEffect(() => {
       resetPlayer("create");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const randomize = () => {
       resetPageAndIndex();
