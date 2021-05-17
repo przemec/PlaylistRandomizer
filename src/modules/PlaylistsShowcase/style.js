@@ -4,7 +4,7 @@ export const MainWrapper = styled.div`
   width: 90%;
   min-width: 300px;
   max-width: ${({ ismobile }) => (ismobile ? "unset" : "900px")};
-  max-height: ${({ ismobile }) => (ismobile ? "unset" : "90vh")};
+  max-height: ${({ ismobile }) => (ismobile ? "unset" : "85vh")};
   margin: 15px 0;
   border-radius: 7px;
   padding: 5px;
