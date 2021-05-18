@@ -5,6 +5,8 @@ import SearchScreen from "./routes/Search";
 import List from "./routes/List";
 import AppBar from "./components/AppBar";
 import Modal from "./modules/Modal";
+import Player from "./modules/Player";
+import * as S from "./style";
 const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 
 const App = () => {
@@ -33,15 +35,19 @@ const App = () => {
         history.push(newLocation);
       }
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Switch>
       {gapiReady && (
         <>
           <AppBar />
           <Modal />
-          <Route exact path="/list/:id/:isresumed" component={List} />
-          <Route exact path="/list/:id" component={List} />
+          <S.ListContainer id="list-container">
+            <Player />
+            <Route exact path="/list/:id/:isresumed" component={List} />
+            <Route exact path="/list/:id" component={List} />
+          </S.ListContainer>
           <Route exact path="/" component={SearchScreen} />
         </>
       )}

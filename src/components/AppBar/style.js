@@ -16,7 +16,7 @@ export const StyledAppBar = styled(Grid)`
   justify-content: space-between;
 `;
 
-export const Title = styled(Link)`
+export const HomepageLink = styled(Link)`
   margin: 0 10px 0 15px;
   text-overflow: ellipsis;
   white-space: nowrap;

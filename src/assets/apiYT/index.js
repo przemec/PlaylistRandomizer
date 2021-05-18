@@ -1,6 +1,6 @@
 import * as PS from "../../store/playlists/actions";
 import * as P from "../../store/playlist/actions";
-import * as L from "../../store/listloadstate/actions";
+import * as L from "../../store/loadstate/actions";
 import { store } from "../../store";
 import { gapi } from "gapi-script";
 
@@ -9,7 +9,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
   let listData = {};
   let listt = [];
   const dsp = store.dispatch;
-  action === "refresh" && dsp(L.updatePLstate("refreshing"));
+  action === "refresh" && dsp(L.setPlaylistState("refreshing"));
   const search = () => {
     !pageToken &&
       gapi.client.youtube.playlists
@@ -75,7 +75,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
               resetPlayer();
             }
             store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
-            dsp(L.updatePLstate("loaded"));
+            dsp(L.setPlaylistState("loaded"));
           }
         },
         function (err) {

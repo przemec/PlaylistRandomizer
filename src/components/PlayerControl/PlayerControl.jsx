@@ -44,7 +44,7 @@ const PlayerControl = ({ shuffle, refresh, playNext, playPrev, updated, isPrevAc
 
 const mapSTP = (state) => ({
   updated: state.playlist.updated,
-  playlistLoaded: state.listloadstate.isLoaded,
+  playlistLoaded: state.loadstate.isPlaylistLoaded,
 });
 
 export default connect(mapSTP)(PlayerControl);

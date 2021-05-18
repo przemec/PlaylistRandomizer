@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import downloadPlaylistData from "../../assets/apiYT";
 import * as P from "../../store/playlist/actions";
-import * as L from "../../store/listloadstate/actions";
+import * as L from "../../store/loadstate/actions";
 import ResultsScreen from "../../modules/ResultsScreen";
 import LoadingPanel from "../../components/LoadingPanel";
 
@@ -13,7 +13,7 @@ const List = ({
   loadPlaylist,
   playlistLoaded,
   loadingErr,
-  updatePLstate,
+  setPlaylistState,
   autoshuffle,
   resumableplaylists,
   autoresume,
@@ -33,7 +33,7 @@ const List = ({
           const { list, id, updated } = savedlist[0];
           loadPlaylist(list, id, updated);
           autoshuffle && randomizeP();
-          updatePLstate("loaded");
+          setPlaylistState("loaded");
         } else {
           //case: user clicks featured list
           downloadPlaylistData(match.params.id, "refresh");
@@ -42,7 +42,7 @@ const List = ({
         const { list, id, updated } = savedresumablelist[0];
         loadPlaylist(list, id, updated, "isbeingresumed");
         iscontinued(true);
-        updatePLstate("loaded");
+        setPlaylistState("loaded");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,8 +56,8 @@ const List = ({
 
 const mapSTP = (state) => ({
   playlists: state.playlists,
-  playlistLoaded: state.listloadstate.isLoaded,
-  loadingErr: state.listloadstate.isError,
+  playlistLoaded: state.loadstate.isPlaylistLoaded,
+  loadingErr: state.loadstate.isPlaylistError,
   autoshuffle: state.settings.autoshuffle,
   autoresume: state.settings.autoresume,
   resumableplaylists: state.resumableplaylists,
@@ -66,7 +66,7 @@ const mapSTP = (state) => ({
 const mapDTP = (dispatch) => ({
   randomizeP: () => dispatch(P.randomizePlaylist()),
   loadPlaylist: (list, id, updated, isbeingresumed) => dispatch(P.loadPlaylist(list, id, updated, isbeingresumed)),
-  updatePLstate: (e) => dispatch(L.updatePLstate(e)),
+  setPlaylistState: (e) => dispatch(L.setPlaylistState(e)),
 });
 
 export default connect(mapSTP, mapDTP)(List);
