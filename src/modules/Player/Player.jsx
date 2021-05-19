@@ -42,11 +42,11 @@ const Player = ({
   let nextSong, prevSong, nextPage, prevPage, currentSong;
   if (songs) {
     if (songs[page]) {
+      currentSong = songs[page][currentIndex];
       nextSong = songs[page][currentIndex + 1];
       prevSong = songs[page][currentIndex - 1];
       nextPage = songs[page + 1];
       prevPage = songs[page - 1];
-      currentSong = songs[page][currentIndex];
     }
   }
 
@@ -82,11 +82,11 @@ const Player = ({
   };
   const playSong = (index, newpage) => {
     if (newpage !== page && songs[newpage]) {
-      updateIndex(index);
-      playPage(newpage);
+      index !== currentIndex && updateIndex(index);
+      newpage !== playingPage && playPage(newpage);
     } else if (songs[newpage]) {
       player && player.playVideoAt(index);
-      updateIndex(index);
+      index !== currentIndex && updateIndex(index);
     } else if (!songs[newpage] && loopplaylist) {
       if (!autorefresh) {
         resetPageAndIndex();
@@ -121,8 +121,8 @@ const Player = ({
     <S.PlayerContainer>
       {isPlayerLoaded && (
         <>
-          <S.Title onClick={() => scrollToActive()}>{currentSong && currentSong.title}</S.Title>
-          <S.TitleNext>{nextSong ? `Next: ${nextSong.title}` : nextPage && nextPage[0] && `Next: ${nextPage[0].title}`}</S.TitleNext>
+          <S.Title onClick={() => scrollToActive()}>{currentSong ? currentSong.title : "..."}</S.Title>
+          <S.TitleNext>{currentSong ? (nextSong ? `Next: ${nextSong.title}` : nextPage && nextPage[0] && `Next: ${nextPage[0].title}`) : "..."}</S.TitleNext>
         </>
       )}
       <S.PlayerWrapper id="youtube-player-wrapper">

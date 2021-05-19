@@ -43,7 +43,7 @@ const ResultsScreen = React.memo(
     useEffect(() => {
       if (songs) {
         isnextpage && playSong(0, page + 1);
-        nextpage(false);
+        isnextpage && nextpage(false);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isnextpage]);
@@ -66,16 +66,16 @@ const ResultsScreen = React.memo(
           //^if one of videos in currently played playlist is set to private, the page will refresh list
         }
       }
-      checkprivvids(false);
+      isprivcheck && checkprivvids(false);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isprivcheck]);
     const playSong = (index, newpage) => {
       if (newpage !== page && songs[newpage]) {
-        updateIndex(index);
-        playPage(newpage);
+        index !== currentIndex && updateIndex(index);
+        newpage !== playingPage && playPage(newpage);
       } else if (songs[newpage]) {
-        player && player.playVideoAt(index);
-        updateIndex(index);
+        player && player.playVideoAt && player.playVideoAt(index);
+        index !== currentIndex && updateIndex(index);
       } else if (!songs[newpage] && loopplaylist) {
         if (!autorefresh) {
           resetPageAndIndex();
@@ -88,6 +88,7 @@ const ResultsScreen = React.memo(
     };
     useEffect(() => {
       resetPlayer("create", isresumed, nextpage, checkprivvids);
+      document.getElementById("list-container").style.removeProperty("display");
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (

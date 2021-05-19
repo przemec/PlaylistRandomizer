@@ -20,7 +20,6 @@ export const onPlayerReady = (isresumed) => {
   } = state;
   const dispatch = store.dispatch;
   dispatch(L.setPlayerState(true));
-  document.getElementById("list-container").style.removeProperty("display");
   document.getElementById("youtube-player-wrapper").style.visibility = "visible";
   if (!isresumed) {
     dispatch(P.switchPage(0));
@@ -36,6 +35,7 @@ export const onPlayerReady = (isresumed) => {
 
 export const onPlayerStateChange = (e, nextpage, checkprivvids) => {
   const dispatch = store.dispatch;
+  console.log(e.target.getPlayerState())
   if (e.target.getPlayerState() === 0) {
     dispatch(P.switchIndex(e.target.getPlaylistIndex()));
     e.target.getVideoUrl().split("=")[1].length < 8 && nextpage && nextpage(true);
