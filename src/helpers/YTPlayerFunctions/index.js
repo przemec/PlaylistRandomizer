@@ -35,7 +35,6 @@ export const onPlayerReady = (isresumed) => {
 
 export const onPlayerStateChange = (e, nextpage, checkprivvids) => {
   const dispatch = store.dispatch;
-  console.log(e.target.getPlayerState())
   if (e.target.getPlayerState() === 0) {
     dispatch(P.switchIndex(e.target.getPlaylistIndex()));
     e.target.getVideoUrl().split("=")[1].length < 8 && nextpage && nextpage(true);
