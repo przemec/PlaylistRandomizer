@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as PS from "../../store/playlists/actions";
-import * as RP from "../../store/resumableplaylists/actions";
-import * as PL from "../../store/player/actions";
 import * as PV from "../../store/player_validators/actions";
-import * as L from "../../store/loadstate/actions";
 import downloadPlaylistData from "../../assets/apiYT";
 import ResultsGroup from "../../modules/ResultsGroup";
 import LoadingPanel from "../../components/LoadingPanel";
@@ -15,28 +12,23 @@ import * as S from "./style";
 const ResultsScreen = React.memo(
   ({
     player,
-    setPlayer,
-    currentIndex,
-    playingPage,
-    updateIndex = 0,
-    playPage,
-    songs,
+    isPlayerLoaded,
     currentListID,
-    autoscroll,
-    savePlaylist,
+    songs,
     isresumed,
-    resumableplaylists,
-    delPrivVidFrList,
-    delPrivVidFrLists,
-    resetPageAndIndex,
+    currentIndex = 0,
+    playingPage,
     loopplaylist,
     autorefresh,
-    setIsPlayerLoaded,
-    isPlayerLoaded,
-    nextpage,
-    checkprivvids,
     isnextpage,
     isprivcheck,
+    updateIndex,
+    playPage,
+    resetPageAndIndex,
+    nextpage,
+    checkprivvids,
+    delPrivVidFrList,
+    delPrivVidFrLists,
   }) => {
     let page = playingPage || 0;
     page = page === -1 ? 0 : page;
@@ -110,23 +102,17 @@ const mapSTP = (state) => ({
   player: state.player,
   isPlayerLoaded: state.loadstate.isPlayerLoaded,
   songs: state.playlist.list,
-  autoscroll: state.settings.autoscroll,
   loopplaylist: state.settings.loop,
   autorefresh: state.settings.autorefresh,
   resumableplaylists: state.resumableplaylists,
   currentIndex: state.playlist.index,
   playingPage: state.playlist.page,
   isnextpage: state.player_validators.nextpage,
-  ischeckprivvids: state.player_validators.checkprivvids,
+  isprivcheck: state.player_validators.checkprivvids,
 });
 const mapDTP = (dispatch) => ({
-  setPlayer: (e) => dispatch(PL.setPlayer(e)),
-  setIsPlayerLoaded: (e) => dispatch(L.setPlayerState(e)),
-  randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
-  editPlaylist: (e, list) => dispatch(PS.editPlaylist(e, list)),
   delPrivVidFrLists: (id, vidID) => dispatch(PS.deletePrivateVidFromPlaylists(id, vidID)),
   delPrivVidFrList: (vidID, page) => dispatch(P.deletePrivateVidFromPlaylist(vidID, page)),
-  savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
   playPage: (e) => dispatch(P.switchPage(e)),
   updateIndex: (e) => dispatch(P.switchIndex(e)),
   resetPageAndIndex: () => dispatch(P.resetToZero()),

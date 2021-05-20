@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
-import * as PS from "../../store/playlists/actions";
 import * as RP from "../../store/resumableplaylists/actions";
-import * as PL from "../../store/player/actions";
-import * as L from "../../store/loadstate/actions";
 import * as PV from "../../store/player_validators/actions";
 import downloadPlaylistData from "../../assets/apiYT";
 import PlayerControl from "../../components/PlayerControl";
@@ -13,29 +10,21 @@ import * as S from "./style";
 
 const Player = ({
   player,
+  isPlayerLoaded,
+  currentListID,
+  songs,
   currentIndex,
   playingPage,
-  playPage,
-  songs,
-  currentListID,
   autoscroll,
   loopplaylist,
   autorefresh,
-  setPlayer,
-  randomizeP,
-  editPlaylist,
-  delPrivVidFrLists,
-  delPrivVidFrList,
-  resumableplaylists,
-  savePlaylist,
   updateIndex,
+  playPage,
+  savePlaylist,
+  randomizeP,
   resetPageAndIndex,
-  setIsPlayerLoaded,
-  isPlayerLoaded,
   nextpage,
   checkprivvids,
-  isnextpage,
-  isprivcheck,
 }) => {
   let page = playingPage || 0;
   page = page === -1 ? 0 : page;
@@ -153,21 +142,13 @@ const mapSTP = (state) => ({
   autoscroll: state.settings.autoscroll,
   loopplaylist: state.settings.loop,
   autorefresh: state.settings.autorefresh,
-  resumableplaylists: state.resumableplaylists,
-  isnextpage: state.player_validators.nextpage,
-  ischeckprivvids: state.player_validators.checkprivvids,
 });
 const mapDTP = (dispatch) => ({
-  setPlayer: (e) => dispatch(PL.setPlayer(e)),
-  setIsPlayerLoaded: (e) => dispatch(L.setPlayerState(e)),
-  randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
-  editPlaylist: (e, list) => dispatch(PS.editPlaylist(e, list)),
-  delPrivVidFrLists: (id, vidID) => dispatch(PS.deletePrivateVidFromPlaylists(id, vidID)),
-  delPrivVidFrList: (vidID, page) => dispatch(P.deletePrivateVidFromPlaylist(vidID, page)),
-  savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
-  playPage: (e) => dispatch(P.switchPage(e)),
   updateIndex: (e) => dispatch(P.switchIndex(e)),
-  resetPageAndIndex: () => dispatch(P.resetToZero()),
+  playPage: (e) => dispatch(P.switchPage(e)),
+  randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
+  savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
+  resetPageAndIndex: () => dispatch(P.resetToZero()),  
   nextpage: (e) => dispatch(PV.setIsNextPage(e)),
   checkprivvids: (e) => dispatch(PV.setIsPrivCheck(e)),
 });
