@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core/";
 
 export const StyledContainer = styled(Grid)`
   margin: 5px 0;
-  background: ${({ isplaying, theme }) => isplaying && theme.primary};
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -11,6 +10,13 @@ export const StyledContainer = styled(Grid)`
   cursor: default;
   & > * {
     z-index: 5;
+  }
+  &.isplaying {
+    background: ${({ theme }) => theme.primary};
+  }
+  &.isplaying > * {
+    color: ${({ theme }) =>  theme.colorText};
+    font-style: italic;
   }
 `;
 
@@ -20,8 +26,7 @@ export const StyledLp = styled(Grid)`
   width: 4vmin;
   min-width: 28px;
   padding: 0 1vmin;
-  font-style: ${({ isplaying }) => isplaying && "italic"};
-  color: ${({ isplaying, theme }) => (isplaying ? theme.colorText : theme.defaultText)};
+  color: ${({  theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
@@ -37,8 +42,7 @@ export const StyledTitle = styled.a`
   text-overflow: ellipsis;
   overflow: hidden;
   width: calc(100% - 21vmin);
-  font-style: ${({ isplaying }) => isplaying && "italic"};
-  color: ${({ isplaying, theme }) => (isplaying ? theme.colorText : theme.defaultText)};
+  color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {

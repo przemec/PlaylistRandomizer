@@ -3,14 +3,17 @@ import { connect } from "react-redux";
 import * as P from "../../store/playlist/actions";
 import * as RP from "../../store/resumableplaylists/actions";
 import * as PV from "../../store/player_validators/actions";
+import * as L from "../../store/loadstate/actions";
 import downloadPlaylistData from "../../assets/apiYT";
 import PlayerControl from "../../components/PlayerControl";
 import { resetPlayer } from "../../helpers/YTPlayerFunctions";
+import { usePrevious } from "../../helpers/PreviousState";
 import * as S from "./style";
 
 const Player = ({
   player,
   isPlayerLoaded,
+  isPlaylistLoaded,
   currentListID,
   songs,
   currentIndex,
@@ -20,6 +23,7 @@ const Player = ({
   autorefresh,
   updateIndex,
   playPage,
+  setPlaylistState,
   savePlaylist,
   randomizeP,
   resetPageAndIndex,
@@ -38,7 +42,18 @@ const Player = ({
       prevPage = songs[page - 1];
     }
   }
-
+  const previousIndex = usePrevious(currentIndex);
+  const previousPage = usePrevious(playingPage);
+  const colorizeActive = () => {
+    let previous = document.getElementById(`index${previousIndex + previousPage * 200}`);
+    let current = document.getElementById(`index${currentIndex + playingPage * 200}`);
+    if (previous) {
+      previous.classList.remove("isplaying");
+    }
+    if (current) {
+      current.classList.add("isplaying");
+    }
+  };
   useEffect(() => {
     if (songs) {
       const arr = songs[page] && songs[page].map((ev) => ev.videoId);
@@ -49,16 +64,34 @@ const Player = ({
   }, [songs]);
   useEffect(() => {
     if (songs) {
-      const arr = songs[page].map((ev) => ev.videoId);
-      player && player.i && arr && player.cuePlaylist(arr, currentIndex);
+      if (songs[page]) {
+        const arr = songs[page].map((ev) => ev.videoId);
+        player && player.i && arr && player.cuePlaylist(arr, currentIndex);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playingPage]);
   useEffect(() => {
+    isPlaylistLoaded === "randomizing" && setPlaylistState("loaded");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaylistLoaded]);
+  useEffect(() => {
     if (songs) {
       document.title = (currentSong && currentSong.title) || "YT Randomizer";
       scrollToActive();
-      player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
+      colorizeActive();
+      if (songs[page]) {
+        player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
+        player && player.playVideoAt && player.playVideoAt(currentIndex);
+      } else if (!songs[page] && loopplaylist) {
+        if (!autorefresh) {
+          // const arr = songs[0].map((ev) => ev.videoId);
+          // player && arr && player.cuePlaylist(arr);
+          resetPageAndIndex();
+        } else if (autorefresh) {
+          downloadPlaylistData(currentListID, "refresh", () => resetPlayer(null, null, nextpage, checkprivvids));
+        }
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, playingPage]);
@@ -70,21 +103,8 @@ const Player = ({
     }
   };
   const playSong = (index, newpage) => {
-    if (newpage !== page && songs[newpage]) {
-      index !== currentIndex && updateIndex(index);
-      newpage !== playingPage && playPage(newpage);
-    } else if (songs[newpage]) {
-      player && player.playVideoAt(index);
-      index !== currentIndex && updateIndex(index);
-    } else if (!songs[newpage] && loopplaylist) {
-      if (!autorefresh) {
-        resetPageAndIndex();
-        const arr = songs[0].map((ev) => ev.videoId);
-        player && arr && player.cuePlaylist(arr);
-      } else if (autorefresh) {
-        downloadPlaylistData(currentListID, "refresh", () => resetPlayer(null, null, nextpage, checkprivvids));
-      }
-    }
+    updateIndex(index);
+    playPage(newpage);
   };
   const playNextSong = () => {
     if (nextSong) {
@@ -105,6 +125,7 @@ const Player = ({
     randomizeP();
     resetPlayer(null, null, nextpage, checkprivvids);
     playPage(-1);
+    setPlaylistState("randomizing");
   };
   return (
     <S.PlayerContainer>
@@ -135,6 +156,7 @@ const Player = ({
 const mapSTP = (state) => ({
   player: state.player,
   isPlayerLoaded: state.loadstate.isPlayerLoaded,
+  isPlaylistLoaded: state.loadstate.isPlaylistLoaded,
   currentListID: state.playlist.id,
   songs: state.playlist.list,
   currentIndex: state.playlist.index,
@@ -146,9 +168,10 @@ const mapSTP = (state) => ({
 const mapDTP = (dispatch) => ({
   updateIndex: (e) => dispatch(P.switchIndex(e)),
   playPage: (e) => dispatch(P.switchPage(e)),
+  setPlaylistState: (e) => dispatch(L.setPlaylistState(e)),
   randomizeP: (e) => dispatch(P.randomizePlaylist(e)),
   savePlaylist: (id, list, index, page) => dispatch(RP.savePlaylist(id, list, index, page)),
-  resetPageAndIndex: () => dispatch(P.resetToZero()),  
+  resetPageAndIndex: () => dispatch(P.resetToZero()),
   nextpage: (e) => dispatch(PV.setIsNextPage(e)),
   checkprivvids: (e) => dispatch(PV.setIsPrivCheck(e)),
 });

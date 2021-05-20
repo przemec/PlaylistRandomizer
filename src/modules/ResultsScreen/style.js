@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Grid } from "@material-ui/core/";
+import LoopIcon from "@material-ui/icons/Autorenew";
 
 export const ResultsGroupWrapper = styled(Grid)`
   width: 100%;
@@ -23,4 +24,34 @@ export const ResultsContainer = styled(Grid)`
     max-width: unset;
     width: 100%;
   }
+`;
+
+export const IconWrapper = styled(Grid)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ theme }) => theme.backgroundAccent};
+  & svg {
+    width: 5vmin;
+    height: 5vmin;
+    fill: ${({ theme }) => theme.primary};
+  }
+  &:hover svg {
+    fill: ${({ theme }) => theme.primaryHover};
+  }
+`;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoopIco = styled(LoopIcon)`
+  animation: ${rotate} 2s linear infinite;
 `;
