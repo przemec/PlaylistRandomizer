@@ -81,6 +81,7 @@ const Player = ({
       scrollToActive();
       colorizeActive();
       if (songs[page]) {
+        player && player.i && checkprivvids && checkprivvids(true);
         player && player.i && savePlaylist(currentListID, songs, currentIndex, page);
         player && player.playVideoAt && player.playVideoAt(currentIndex);
       } else if (!songs[page] && loopplaylist) {

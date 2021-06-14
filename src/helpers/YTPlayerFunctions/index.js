@@ -42,7 +42,6 @@ export const onPlayerStateChange = (e, nextpage, checkprivvids) => {
     dispatch(P.switchIndex(e.target.getPlaylistIndex()));
   } else if (e.target.getPlayerState() === 5) {
     e.target.playVideo();
-    checkprivvids && checkprivvids(true);
   }
 };
 

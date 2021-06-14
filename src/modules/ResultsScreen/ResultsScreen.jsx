@@ -28,6 +28,7 @@ const ResultsScreen = ({
 }) => {
   let page = playingPage || 0;
   page = page === -1 ? 0 : page;
+  const [lastCheckedPage, setCheckedPage] = React.useState(null);
   useEffect(() => {
     if (songs) {
       isnextpage && playSong(0, page + 1);
@@ -36,25 +37,30 @@ const ResultsScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isnextpage]);
   useEffect(() => {
-    if (songs) {
-      if (isprivcheck) {
-        const delPrivVid = (listId, vidIds) => {
-          vidIds.forEach((e) => {
-            delPrivVidFrLists(listId, e.videoId);
-            delPrivVidFrList(e.videoId, page);
-          });
-        };
-        if (player) {
-          if (player.getPlaylist()) {
-            const playerlist = player.getPlaylist();
-            const privVids = songs[page].filter((e) => playerlist.indexOf(e.videoId) === -1);
-            privVids.length < 20 && delPrivVid(currentListID, privVids);
+    if (isprivcheck) {
+      if (lastCheckedPage !== page) {
+        if (songs) {
+          const delPrivVid = (listId, vidIds) => {
+            vidIds.forEach((e) => {
+              delPrivVidFrLists(listId, e.videoId);
+              delPrivVidFrList(e.videoId, page);
+            });
+          };
+          if (player) {
+            if (player.getPlaylist) {
+              if (player.getPlaylist()) {
+                const playerlist = player.getPlaylist();
+                const privVids = songs[page].filter((e) => playerlist.indexOf(e.videoId) === -1);
+                privVids.length < 20 && delPrivVid(currentListID, privVids);
+                setCheckedPage(page);
+              }
+            }
           }
         }
         //^if one of videos in currently played playlist is set to private, the page will refresh list
       }
+      checkprivvids(false);
     }
-    isprivcheck && checkprivvids(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isprivcheck]);
   const playSong = (index, newpage) => {
@@ -69,10 +75,9 @@ const ResultsScreen = ({
   return (
     <>
       {isPlayerLoaded && (
-        
         <S.ResultsContainer>
           <S.ResultsGroupWrapper>
-            {(isPlaylistLoaded !== "refreshing" && isPlaylistLoaded !== "randomizing" )? (
+            {isPlaylistLoaded !== "refreshing" && isPlaylistLoaded !== "randomizing" ? (
               <ResultsGroup songs={songs} playingPage={page} changeSong={playSong} currentIndex={currentIndex} />
             ) : (
               <S.IconWrapper>
