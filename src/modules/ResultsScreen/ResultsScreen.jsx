@@ -78,7 +78,7 @@ const ResultsScreen = ({
         <S.ResultsContainer>
           <S.ResultsGroupWrapper>
             {isPlaylistLoaded !== "refreshing" && isPlaylistLoaded !== "randomizing" ? (
-              <ResultsGroup songs={songs} playingPage={page} changeSong={playSong} currentIndex={currentIndex} />
+              <ResultsGroup songs={songs} changeSong={playSong} />
             ) : (
               <S.IconWrapper>
                 <S.LoopIco />

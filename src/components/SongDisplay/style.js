@@ -23,7 +23,7 @@ export const StyledContainer = styled(Grid)`
 export const StyledLp = styled(Grid)`
   font-size: 18px;
   text-align: center;
-  width: 4vmin;
+  width:  ${({ lpwidth }) =>  `${lpwidth*10}px`};
   min-width: 28px;
   padding: 0 1vmin;
   color: ${({  theme }) => theme.defaultText};
@@ -41,7 +41,7 @@ export const StyledTitle = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - 21vmin);
+  width: calc(100% - 17vmin - ${({ lpwidth }) =>  `${lpwidth*10}px`});
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),

@@ -20,17 +20,17 @@ const List = ({
 }) => {
   const [isresumed, iscontinued] = React.useState(false);
   React.useEffect(() => {
-    const savedlist = playlists.filter((e) => e.id === match.params.id);
-    const savedresumablelist = resumableplaylists.filter((e) => e.id === match.params.id);
-    const isresumed = (match.params.isresumed === "continue" && savedresumablelist[0]) || (autoresume && savedresumablelist[0]);
-    if (!savedlist[0]) {
+    const savedlist = playlists.find((e) => e.id === match.params.id);
+    const savedresumablelist = resumableplaylists.find((e) => e.id === match.params.id);
+    const isresumed = (match.params.isresumed === "continue" && savedresumablelist) || (autoresume && savedresumablelist);
+    if (!savedlist) {
       //case: adding new list to saved
       match.params.id && !playlistLoaded && downloadPlaylistData(match.params.id, "add");
     } else {
       if (!isresumed) {
-        if (savedlist[0].list) {
+        if (savedlist.list) {
           //case: list that user played before
-          const { list, id, updated } = savedlist[0];
+          const { list, id, updated } = savedlist;
           loadPlaylist(list, id, updated);
           autoshuffle && randomizeP();
           setPlaylistState("loaded");
@@ -39,7 +39,7 @@ const List = ({
           downloadPlaylistData(match.params.id, "refresh");
         }
       } else {
-        const { list, id, updated } = savedresumablelist[0];
+        const { list, id, updated } = savedresumablelist;
         loadPlaylist(list, id, updated, "isbeingresumed");
         iscontinued(true);
         setPlaylistState("loaded");

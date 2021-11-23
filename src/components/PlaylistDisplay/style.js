@@ -29,7 +29,7 @@ export const IconWrapper = styled(Grid)`
 `;
 
 export const IconsContainer = styled(Grid)`
-  width: ${({ isresumable }) => (isresumable ? "100px" : "65px")};
+  width: ${({ isresumable }) => (isresumable ? "135px" : "100px")};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -41,9 +41,12 @@ export const IconsContainer = styled(Grid)`
             opacity: 0;
           }
           & ${IconWrapper}:nth-child(1) {
+            transform: scale(0.5) translateX(80px);
+          }
+          & ${IconWrapper}:nth-child(2) {
             transform: scale(0.5) translateX(40px);
           }
-          & ${IconWrapper}:nth-child(3) {
+          & ${IconWrapper}:nth-child(4) {
             transform: scale(0.5) translateX(-40px);
           }
         `
@@ -51,7 +54,7 @@ export const IconsContainer = styled(Grid)`
           & ${IconWrapper} {
             opacity: 0;
           }
-          & ${IconWrapper}:nth-child(2) {
+          & ${IconWrapper}:nth-child(3) {
             transform: scale(0.5) translateX(-40px);
           }
         `}
@@ -93,7 +96,7 @@ export const MainContainer = styled(Grid)`
             opacity: 0.5;
             transform: scale(1) translateX(0px);
           }
-          &:hover ${IconWrapper}:nth-child(2) {
+          &:hover ${IconWrapper}:nth-child(3) {
             transform: rotate(360deg);
           }
         `
@@ -103,14 +106,14 @@ export const MainContainer = styled(Grid)`
             opacity: 0.5;
             transform: scale(1) translateX(0px);
           }
-          &:hover ${IconWrapper}:nth-child(1) {
+          &:hover ${IconWrapper}:nth-child(2) {
             transform: rotate(360deg);
           }
         `}
 `;
 
 export const Cont = styled(Grid)`
-  width: calc(100% - ${({ isresumable }) => (isresumable ? "100px" : "65px")});
+  width: calc(100% - ${({ isresumable }) => (isresumable ? "135px" : "100px")});
   display: flex;
   align-items: center;
   flex-direction: row;
