@@ -29,7 +29,7 @@ export const IconWrapper = styled(Grid)`
 `;
 
 export const IconsContainer = styled(Grid)`
-  width: ${({ isresumable }) => (isresumable ? "135px" : "100px")};
+  width: ${({ isresumable }) => (isresumable ? "130px" : "100px")};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -113,7 +113,7 @@ export const MainContainer = styled(Grid)`
 `;
 
 export const Cont = styled(Grid)`
-  width: calc(100% - ${({ isresumable }) => (isresumable ? "135px" : "100px")});
+  width: calc(100% - ${({ isresumable }) => (isresumable ? "130px" : "100px")});
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -124,8 +124,8 @@ export const Thumbnail = styled.img`
   width: 16vmin;
   height: 9vmin;
   background-size: cover;
-  min-height: 60px;
-  min-width: 105px;
+  min-height: 45px;
+  min-width: 75px;
   max-height: 90px;
   max-width: 160px;
   color: ${({ theme }) => theme.defaultText};
@@ -156,13 +156,14 @@ export const DataContainer = styled(Grid)`
   justify-content: center;
   max-width: calc(100% - 160px);
   @media (max-width: 650px) and (max-height: 899px) {
-    max-width: calc(100% - 110px);
+    max-width: calc(100% - 17vmin);
+    max-width: calc(100% - max(16vmin, 75px));
   }
 `;
 
 export const StyledData = styled.div`
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -172,6 +173,6 @@ export const StyledData = styled.div`
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `;

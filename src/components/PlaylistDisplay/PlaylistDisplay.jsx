@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { setPlaylistID, showModal } from "../../store/modal/actions";
-import { Hidden } from "@material-ui/core";
 import * as S from "./style";
 import * as PS from "../../store/playlists/actions";
 import * as RP from "../../store/resumableplaylists/actions";
@@ -25,8 +24,8 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, de
           <S.StyledTitle href={`https://www.youtube.com/playlist?list=${listId}`} onClick={(e) => e.preventDefault()}>
             {title}
           </S.StyledTitle>
-          <S.StyledData><Hidden xsDown>Author: </Hidden>{author}</S.StyledData>
-          <S.StyledData><Hidden xsDown>Created: </Hidden>{publishedAt && publishedAt.split("T")[0]}</S.StyledData>
+          <S.StyledData>{publishedAt && `${publishedAt.split("-")[0]}, `}{author}</S.StyledData>
+          <S.StyledData></S.StyledData>
         </S.DataContainer>
       </S.Cont>
       {type === "saved" && (
