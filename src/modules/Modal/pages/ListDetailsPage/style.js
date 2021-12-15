@@ -14,27 +14,30 @@ export const Container = styled(Grid)`
 `;
 
 export const InfoWrapper = styled(Grid)`
-  width: 100%;
+  max-width: 100%;
   margin: 15px auto;
+  display: flex;
+  flex-flow: row wrap;
 `;
 
 export const ListInfo = styled(Grid)`
+  flex: 1 1 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 5px;
 `;
 
 export const Thumbnail = styled.img`
   width: 16vmin;
   height: 9vmin;
   background-size: cover;
-  min-height: 60px;
-  min-width: 105px;
+  min-height: 75px;
+  min-width: 135px;
   max-height: 90px;
   max-width: 160px;
   color: ${({ theme }) => theme.defaultText};
-  float: left;
   margin: auto;
 `;
 
@@ -45,19 +48,21 @@ export const Info = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 100%;
   color: ${({ theme }) => theme.defaultText};
-  @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
-    font-size: 13px;
+`;
+
+export const IconsContainer = styled.div`
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+  @media  (max-height: 380px){
+    display: none;
   }
 `;
 
 export const IconWrapper = styled(Grid)`
-  width: 30px;
-  height: 30px;
-  margin-right: 15px;
+  width: 100%;
+  height: 100%;
   display: flex;
   cursor: pointer;
   flex-direction: row;
@@ -74,8 +79,12 @@ export const IconWrapper = styled(Grid)`
 
 export const SongsWrapper = styled(Grid)`
   position: relative;
-  width: 100%;
+  width: 0;
+  max-width: 100%;
   height: 0;
   overflow: hidden;
-  transition: height 0.2s ease-in-out;
+  transition: width, height 0.2s ease-in-out;
+  @media  (max-height: 380px){
+    display: none;
+  }
 `;

@@ -15,6 +15,7 @@ const ListDetailsPage = ({ playlistId, playlists }) => {
   const creationDate = publishedAt.split("T")[0].split("-");
   const creationDateFormatted = `${creationDate[2]}/${creationDate[1]}/${creationDate[0]}`;
   const refreshFormatted = refresh.split(",")[0];
+  let getElementStyleById = (id) => document.getElementById(id).style;
   return (
     <S.Container>
       <S.InfoWrapper>
@@ -26,32 +27,34 @@ const ListDetailsPage = ({ playlistId, playlists }) => {
           <S.Info>Creation date: {creationDateFormatted}</S.Info>
           <S.Info>Last refresh: {refreshFormatted}</S.Info>
         </S.ListInfo>
-        <Tooltip title="Toggle songs display" placement="top">
-          <>
-            <S.IconWrapper
-              onClick={() => {
-                document.getElementById("turnOffSongs").style.display = "block";
-                document.getElementById("songs-time-wrapper").style.height = "60vh";
-                document.getElementById("turnOnSongs").style.display = "none";
-              }}
-              id={"turnOnSongs"}
-            >
-              <QueueMusic />
-            </S.IconWrapper>
-            <S.IconWrapper
-              onClick={() => {
-                document.getElementById("turnOnSongs").style.display = "block";
-                document.getElementById("songs-time-wrapper").style.height = "0";
-                document.getElementById("turnOffSongs").style.display = "none";
-              }}
-              id={"turnOffSongs"}
-              style={{ display: "none" }}
-            >
-              <MusicOff />
-            </S.IconWrapper>
-          </>
-        </Tooltip>
       </S.InfoWrapper>
+      <Tooltip title="Toggle songs display" placement="top">
+        <S.IconsContainer>
+          <S.IconWrapper
+            onClick={() => {
+              getElementStyleById("turnOffSongs").display = "block";
+              getElementStyleById("songs-time-wrapper").height = "60vh";
+              getElementStyleById("songs-time-wrapper").width = "90vw";
+              getElementStyleById("turnOnSongs").display = "none";
+            }}
+            id={"turnOnSongs"}
+          >
+            <QueueMusic />
+          </S.IconWrapper>
+          <S.IconWrapper
+            onClick={() => {
+              getElementStyleById("turnOnSongs").display = "block";
+              getElementStyleById("songs-time-wrapper").height = "0";
+              getElementStyleById("songs-time-wrapper").width = "0";
+              getElementStyleById("turnOffSongs").display = "none";
+            }}
+            id={"turnOffSongs"}
+            style={{ display: "none" }}
+          >
+            <MusicOff />
+          </S.IconWrapper>
+        </S.IconsContainer>
+      </Tooltip>
       <S.SongsWrapper id={"songs-time-wrapper"}>
         <Songs songs={listdetails.list} displayType={"details"} />
       </S.SongsWrapper>

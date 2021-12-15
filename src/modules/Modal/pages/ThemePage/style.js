@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { Grid } from "@material-ui/core/";
+import { Grid, Container } from "@material-ui/core/";
+
+export const Cont = styled(Container)`
+  max-width: 600px;
+`;
 
 export const ThemeTypeCont = styled(Grid)`
   padding-top: 3%;
