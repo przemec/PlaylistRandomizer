@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as L from "../../store/loadstate/actions";
 import * as P from "../../store/playlist/actions";
+import { clearPlayer } from "../../store/player/actions";
 import SearchScreen from "../../modules/SearchScreen";
 
-const SearchPage = ({ setPlaylistState, clearPlaylist }) => {
+const SearchPage = ({ setPlaylistState, clearPlaylist, destroyPlayer }) => {
   React.useEffect(() => {
+    destroyPlayer();
     clearPlaylist();
     document.title = "YT Randomizer";
     window.YT = undefined;
@@ -31,6 +33,7 @@ const SearchPage = ({ setPlaylistState, clearPlaylist }) => {
 const mapDTP = (dispatch) => ({
   setPlaylistState: (e) => dispatch(L.setPlaylistState(e)),
   clearPlaylist: () => dispatch(P.clearPlaylist()),
+  destroyPlayer: () => dispatch(clearPlayer()),
 });
 
 export default connect(null, mapDTP)(SearchPage);
