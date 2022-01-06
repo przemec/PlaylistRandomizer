@@ -4,7 +4,7 @@ import * as S from "./style";
 const SongDisplay =  React.memo(
   ({ song, index, page, changeSong, displayType }) => {
     const { thumbnail, title, videoId } = song;
-    let lpwidth = displayType === "details" ? (index + 1 + page * 200).toString().length + 1 : index.toString().length + 1
+    let lpwidth = displayType === "details" ? (index + 1).toString().length + 1 : (index + 1 + page * 200).toString().length + 1
     
     return displayType === "details" ? (
       <S.StyledContainer>
