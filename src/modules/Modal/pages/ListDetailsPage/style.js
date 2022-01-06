@@ -3,18 +3,18 @@ import { Grid } from "@material-ui/core/";
 
 export const Container = styled(Grid)`
   position: relative;
-  width: 90%;
-  max-height: 80vh;
+  max-height: calc(100vh - 50px - 42px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 15px auto;
+  margin: 0 auto;
   margin-bottom: 0;
+  width: auto;
 `;
 
 export const InfoWrapper = styled(Grid)`
-  max-width: 100%;
+  width: auto;
   margin: 15px auto;
   display: flex;
   flex-flow: row wrap;
@@ -55,7 +55,7 @@ export const IconsContainer = styled.div`
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
-  @media  (max-height: 380px){
+  @media  (max-height: 450px){
     display: none;
   }
 `;
@@ -84,7 +84,7 @@ export const SongsWrapper = styled(Grid)`
   height: 0;
   overflow: hidden;
   transition: width, height 0.2s ease-in-out;
-  @media  (max-height: 380px){
+  @media  (max-height: 450px){
     display: none;
   }
 `;

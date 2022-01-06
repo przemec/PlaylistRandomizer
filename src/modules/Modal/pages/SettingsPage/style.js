@@ -2,11 +2,14 @@ import styled from "styled-components";
 import Switch from "@material-ui/core/Switch";
 
 export const MainWrapper = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 15px 0;
+  padding: 0 5%;
 `;
 
 export const SettingContainer = styled.div`
@@ -15,8 +18,13 @@ export const SettingContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 5px;
-  margin: 5px 0;
-  width: 90%;
+  width: 100%;
+  &:first-child {
+    margin-top: 15px;    
+  }
+  &:last-child {
+    margin-bottom: 20px;    
+  }
 `;
 
 export const SettingName = styled.div`

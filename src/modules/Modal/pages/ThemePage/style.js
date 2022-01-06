@@ -16,9 +16,11 @@ export const StyledField = styled(Grid)`
   justify-content: center;
   width: 8vh;
   height: 8vh;
+  min-width: 45px;
+  min-height: 45px;
   margin: 1vh;
-  border-radius: 2vh;
-  border-width: 0.5vh;
+  border-radius: 15px;
+  border-width: 3px;
   border-style: solid;
   border-color: ${({ theme }) => theme.defaultText};
   transition: 0.2s all ease-in-out;
@@ -30,6 +32,8 @@ export const StyledField = styled(Grid)`
     fill: ${({ theme, isactive }) => (isactive ? theme.primary : theme.defaultText)};
     height: 5vh;
     width: 5vh;
+    min-width: 30px;
+    min-height: 30px;
   }
   &:hover {
     opacity: 1;

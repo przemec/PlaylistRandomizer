@@ -60,7 +60,8 @@ export const IconsContainer = styled(Grid)`
         `}
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
     & ${IconWrapper} {
       visibility: visible;
       opacity: 0.5;
@@ -143,7 +144,8 @@ export const StyledTitle = styled.a`
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
     font-size: 17px;
     margin-bottom: 0px;
   }
@@ -172,7 +174,8 @@ export const StyledData = styled.div`
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
     font-size: 13px;
   }
 `;

@@ -8,8 +8,8 @@ import Brightness2Icon from "@material-ui/icons/Brightness2";
 import Brightness2OutlinedIcon from "@material-ui/icons/Brightness2Outlined";
 import { swapTheme } from "../../../../store/theme/actions";
 
-const ThemePage = ({ themeType, swapTheme }) => (
-  <S.Cont justify="center" alignItems="center">
+const ThemePage = ({ themeType, swapTheme, resizeref }) => (
+  <S.Cont justify="center" alignItems="center" ref={resizeref()}>
     <S.ThemeTypeCont container justify="center" alignItems="center">
       <S.StyledField isactive={themeType === "light" ? 1 : 0} onClick={() => swapTheme("light")}>
         {themeType === "light" ? <WbSunnyIcon /> : <WbSunnyOutlinedIcon />}
