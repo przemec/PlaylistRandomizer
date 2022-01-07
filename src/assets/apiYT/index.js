@@ -8,9 +8,12 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
   let pageToken = undefined;
   let listData = {};
   let songsArray = [];
+  let savedlist;
   const dsp = store.dispatch;
-  const savedlist = store.getState().playlists.find((e) => e.id === id).list;
-  action === "refresh" && dsp(L.setPlaylistState("refreshing"));
+  if (action === "refresh") {
+    savedlist = store.getState().playlists.find((e) => e.id === id).list;
+    dsp(L.setPlaylistState("refreshing"));
+  }
   const search = () => {
     !pageToken &&
       gapi.client.youtube.playlists
