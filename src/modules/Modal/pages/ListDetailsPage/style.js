@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Grid } from "@material-ui/core/";
 
-export const Container = styled(Grid)`
+export const Container = styled.div`
   position: relative;
   max-height: calc(100vh - 50px - 42px);
   display: flex;
@@ -13,20 +12,62 @@ export const Container = styled(Grid)`
   width: auto;
 `;
 
-export const InfoWrapper = styled(Grid)`
+export const InfoWrapper = styled.div`
   width: auto;
   margin: 15px auto;
   display: flex;
   flex-flow: row wrap;
+  @media (min-width: 600px) {
+    position: relative;
+    width: 100%;
+    min-height: max(15vmin, 120px);
+
+    & > div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 `;
 
-export const ListInfo = styled(Grid)`
+export const ListInfo = styled.div`
   flex: 1 1 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 5px;
+  @media (min-width: 600px) {
+    display: inherit;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    & > div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    & > div:nth-child(1) {
+      transform: translate(calc(-50% - 170px), calc(-50% - 30px));
+    }
+    & > div:nth-child(2) {
+      transform: translate(calc(-50% + 170px), calc(-50% - 30px));
+    }
+    & > div:nth-child(3) {
+      transform: translate(calc(-50% - 170px), calc(-50%));
+    }
+    & > div:nth-child(4) {
+      transform: translate(calc(-50% + 170px), calc(-50%));
+    }
+    & > div:nth-child(5) {
+      transform: translate(calc(-50% - 170px), calc(-50% + 30px));
+    }
+    & > div:nth-child(6) {
+      transform: translate(calc(-50% + 170px), calc(-50% + 30px));
+    }
+  }
 `;
 
 export const Thumbnail = styled.img`
@@ -42,9 +83,10 @@ export const Thumbnail = styled.img`
 `;
 
 export const Info = styled.div`
+  width: 195px;
+  text-align: center;
   text-decoration: none;
   font-size: 15px;
-  padding: 0 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -55,12 +97,12 @@ export const IconsContainer = styled.div`
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
-  @media  (max-height: 450px){
+  @media (max-height: 450px) {
     display: none;
   }
 `;
 
-export const IconWrapper = styled(Grid)`
+export const IconWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -70,21 +112,21 @@ export const IconWrapper = styled(Grid)`
   justify-content: center;
   transition: all 0.2s ease-in-out;
   & svg {
-    fill: ${({ theme }) => theme.appbarText};
+    fill: ${({ theme }) => theme.defaultText};
   }
   &:hover svg {
-    fill: ${({ theme }) => theme.appbarTextHover};
+    fill: ${({ theme }) => theme.defaultTextHover};
   }
 `;
 
-export const SongsWrapper = styled(Grid)`
+export const SongsWrapper = styled.div`
   position: relative;
   width: 0;
   max-width: 100%;
   height: 0;
   overflow: hidden;
   transition: width, height 0.2s ease-in-out;
-  @media  (max-height: 450px){
+  @media (max-height: 450px) {
     display: none;
   }
 `;

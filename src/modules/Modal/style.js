@@ -16,7 +16,7 @@ export const ResizableWrap = styled.div`
   height: 90vh;
   width: 90vw;
   max-height: calc(100vh - 90px);
-  @media (min-width: 850px) {
+  @media (min-width: 900px) {
     width: 60vw;
     max-width: 900px;
   }
