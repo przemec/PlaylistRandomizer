@@ -10,12 +10,18 @@ const ListDetailsPage = ({ playlistId, playlists, resizeref }) => {
   const listdetails = playlists.find((e) => e.id === playlistId);
   const {
     updated: refresh,
-    listData: { author, thumbnail, title, publishedAt },
+    listData: { author, thumbnail, title, publishedAt, length },
     list,
   } = listdetails;
   const creationDate = publishedAt.split("T")[0].split("-");
   const creationDateFormatted = `${creationDate[2]}/${creationDate[1]}/${creationDate[0]}`;
   const refreshFormatted = refresh.split(",")[0];
+  const formatLength = (l) => {
+    let zero = (int) => (int.toString().length === 1 ? `0${int}` : int);
+    if(!l) return "000:00:00"
+    return `${Math.floor(l / 60 / 60)}:${zero(Math.floor(l / 60) - Math.floor(l / 60 / 60) * 60)}:${zero(l - Math.floor(l / 60) * 60)}`;
+  };
+
   let getElementStyleById = (id) => document.getElementById(id).style;
   return (
     <S.Container ref={resizeref()}>
@@ -24,7 +30,7 @@ const ListDetailsPage = ({ playlistId, playlists, resizeref }) => {
         <S.ListInfo>
           <S.Info>{title}</S.Info>
           <S.Info>Author: {author}</S.Info>
-          <S.Info>Playlist length: {"000:00:00"}</S.Info>
+          <S.Info>Playlist length: {formatLength(length)}</S.Info>
           <S.Info>Number of videos: {list.length}</S.Info>
           <S.Info>Creation date: {creationDateFormatted}</S.Info>
           <S.Info>Last refresh: {refreshFormatted}</S.Info>

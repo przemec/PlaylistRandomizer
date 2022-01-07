@@ -24,7 +24,7 @@ const ResultsGroup = ({ songs, changeSong, displayType }) => {
         /> 
       ))
     )
-  return <S.StyledList id="songlist">{results}</S.StyledList>;
+  return <S.StyledList id="songlist" displayType={displayType}>{results}</S.StyledList>;
 };
 
 export default ResultsGroup;
