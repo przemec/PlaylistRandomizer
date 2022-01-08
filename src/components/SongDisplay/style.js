@@ -15,23 +15,30 @@ export const StyledContainer = styled(Grid)`
     background: ${({ theme }) => theme.primary};
   }
   &.isplaying > * {
-    color: ${({ theme }) =>  theme.colorText};
+    color: ${({ theme }) => theme.colorText};
     font-style: italic;
   }
 `;
 
 export const StyledLp = styled(Grid)`
+  box-sizing: border-box;
   font-size: 18px;
   text-align: center;
-  width:  ${({ lpwidth }) =>  `${lpwidth*10}px`};
+  width: ${({ lpwidth }) => `${lpwidth * 10}px`};
   min-width: 28px;
   padding: 0 1vmin;
-  color: ${({  theme }) => theme.defaultText};
+  color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     font-size: 15px;
   }
+`;
+
+export const StyledTime = styled(StyledLp)`
+  width: unset;
+  min-width: 70px;
+  padding: 0 1vmin 0 0;
 `;
 
 export const StyledTitle = styled.a`
@@ -41,7 +48,7 @@ export const StyledTitle = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - 17vmin - ${({ lpwidth }) =>  `${lpwidth*10}px`});
+  width: calc(100% - 20vmin - ${({ lpwidth }) => `${lpwidth * 10}px`} - 70px);
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),
