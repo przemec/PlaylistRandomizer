@@ -6,6 +6,8 @@ import { default as Songs } from "../../../../modules/ResultsGroup";
 import Tooltip from "../../../../helpers/Tooltip";
 import MusicOff from "@material-ui/icons/MusicOff";
 import QueueMusic from "@material-ui/icons/QueueMusic";
+import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
+import AccessTimeRoundedIcon from "@material-ui/icons/AccessTimeRounded";
 
 const ListDetailsPage = ({ playlistId, playlists, resizeref }) => {
   const listdetails = playlists.find((e) => e.id === playlistId);
@@ -32,6 +34,37 @@ const ListDetailsPage = ({ playlistId, playlists, resizeref }) => {
           <S.Info>Number of videos: {list.length}</S.Info>
         </S.ListInfo>
       </S.InfoWrapper>
+      <Tooltip title="Toggle times display" placement="top">
+        <S.IconsContainer>
+          <S.IconWrapper
+            onClick={() => {
+              var timeDivs = document.querySelectorAll(".time");
+              timeDivs.forEach((e) => {
+                e.style.display = "";
+              });
+              getElementStyleById("turnOffTimes").display = "block";
+              getElementStyleById("turnOnTimes").display = "none";
+            }}
+            id={"turnOnTimes"}
+            style={{ display: "none" }}
+          >
+            <AccessTimeRoundedIcon />
+          </S.IconWrapper>
+          <S.IconWrapper
+            onClick={() => {
+              var timeDivs = document.querySelectorAll(".time");
+              timeDivs.forEach((e) => {
+                e.style.display = "none";
+              });
+              getElementStyleById("turnOnTimes").display = "block";
+              getElementStyleById("turnOffTimes").display = "none";
+            }}
+            id={"turnOffTimes"}
+          >
+            <HighlightOffRoundedIcon />
+          </S.IconWrapper>
+        </S.IconsContainer>
+      </Tooltip>
       <Tooltip title="Toggle songs display" placement="top">
         <S.IconsContainer>
           <S.IconWrapper

@@ -24,7 +24,7 @@ export const StyledLp = styled(Grid)`
   box-sizing: border-box;
   font-size: 18px;
   text-align: center;
-  width: ${({ lpwidth }) => `${lpwidth * 10}px`};
+  width: ${({ lpwidth }) => `${lpwidth * 10 + 15}px`};
   min-width: 28px;
   padding: 0 1vmin;
   color: ${({ theme }) => theme.defaultText};
@@ -48,7 +48,7 @@ export const StyledTitle = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - 20vmin - ${({ lpwidth }) => `${lpwidth * 10}px`} - 70px);
+  width: calc(100% - 16vmin - ${({ lpwidth }) => `${lpwidth * 10 + 15}px`}${({ displayType }) => displayType === "details" && " - 70px"});
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
     (max-width: 650px) and (max-height: 899px),

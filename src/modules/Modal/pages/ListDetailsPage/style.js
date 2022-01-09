@@ -112,6 +112,7 @@ export const IconWrapper = styled.div`
   justify-content: center;
   transition: all 0.2s ease-in-out;
   & svg {
+    margin: 0 auto;
     fill: ${({ theme }) => theme.defaultText};
   }
   &:hover svg {

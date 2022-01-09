@@ -10,7 +10,7 @@ const SongDisplay = React.memo(
     return displayType === "details" ? (
       <S.StyledContainer>
         <S.StyledLp lpwidth={lpwidth}>{index + 1}.</S.StyledLp>
-        <S.StyledTime>{formatTime(curr_dur)}</S.StyledTime>
+        <S.StyledTime className="time">{formatTime(curr_dur)}</S.StyledTime>
         {thumbnail && thumbnail.url ? (
           <S.Thumbnail src={thumbnail.url} loading="lazy" alt="..." />
         ) : (
@@ -21,6 +21,7 @@ const SongDisplay = React.memo(
           href={`https://youtu.be/${videoId}`}
           onClick={(e) => e.preventDefault()}
           lpwidth={lpwidth}
+          displayType={displayType}
         >
           {title}
         </S.StyledTitle>
@@ -38,6 +39,7 @@ const SongDisplay = React.memo(
           href={`https://youtu.be/${videoId}`}
           onClick={(e) => e.preventDefault()}
           lpwidth={lpwidth}
+          displayType={displayType}
         >
           {title}
         </S.StyledTitle>
