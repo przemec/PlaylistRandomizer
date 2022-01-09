@@ -39,6 +39,7 @@ export const StyledTime = styled(StyledLp)`
   width: unset;
   min-width: 70px;
   padding: 0 1vmin 0 0;
+  display: none;
 `;
 
 export const StyledTitle = styled.a`

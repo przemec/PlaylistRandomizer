@@ -94,17 +94,18 @@ export const Info = styled.div`
 `;
 
 export const IconsContainer = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 100%;
   margin-bottom: 10px;
-  @media (max-height: 450px) {
-    display: none;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const IconWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
   display: flex;
   cursor: pointer;
   flex-direction: row;
@@ -117,6 +118,9 @@ export const IconWrapper = styled.div`
   }
   &:hover svg {
     fill: ${({ theme }) => theme.defaultTextHover};
+  }
+  @media (max-height: 450px) {
+    display: none;
   }
 `;
 
