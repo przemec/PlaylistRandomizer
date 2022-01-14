@@ -47,7 +47,7 @@ const List = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return playlistLoaded === "loaded" || playlistLoaded === "refreshing" || playlistLoaded === "randomizing"? (
+  return playlistLoaded ? (
     <ResultsScreen currentListID={match.params.id} isresumed={isresumed} />
   ) : (
     <LoadingPanel err={loadingErr} />

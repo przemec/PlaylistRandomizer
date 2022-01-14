@@ -13,16 +13,19 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
   if (action === "refresh") {
     savedlist = store.getState().playlists.find((e) => e.id === id).list;
     dsp(L.setPlaylistState("refreshing"));
+  } else if (action === "refresh_details") {
+    savedlist = store.getState().playlists.find((e) => e.id === id).list;
+    dsp(L.setPlaylistState("refreshing_details"));
   }
-  const search = () => {
+  const search = async () => {
     !pageToken &&
-      gapi.client.youtube.playlists
+      await gapi.client.youtube.playlists
         .list({
           part: "snippet",
           id: id,
         })
         .then(
-          function (res) {
+          (res) => {
             if (res.result.items[0]) {
               const { channelTitle: author, thumbnails, title, publishedAt } = res.result.items[0].snippet;
               const { url: thumbnail } = thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
@@ -35,7 +38,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
               };
             }
           },
-          function (err) {
+          (err) => {
             dsp(L.loadError(true));
           }
         );
@@ -63,7 +66,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
             };
             if (e.contentDetails.videoPublishedAt && thumbnails) {
               if (action === "add") videosToCheckLength = [...videosToCheckLength, videoId];
-              else if (action === "refresh") {
+              else if (action === "refresh" || action === "refresh_details") {
                 const savedtime = savedlist.find((e) => e.videoId === videoId)?.duration;
                 if (!savedtime) videosToCheckLength = [...videosToCheckLength, videoId];
                 else {
@@ -102,20 +105,24 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
           } else {
             const d = new Date();
             const z = (number) => (number < 10 ? `0${number}` : number);
-            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}`;
-            dsp(P.loadPlaylist(songsArray, id, time));
+            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(
+              d.getMinutes()
+            )}:${z(d.getSeconds())}`;
+            if (action !== "refresh_details") dsp(P.loadPlaylist(songsArray, id, time));
             if (action === "add") {
               dsp(PS.addPlaylist(id, songsArray, listData));
             } else if (action === "refresh") {
               dsp(P.resetToZero());
               dsp(PS.editPlaylist(id, songsArray, listData));
               resetPlayer();
+            } else if (action === "refresh_details") {
+              dsp(PS.editPlaylist(id, songsArray, listData));
             }
             store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
             dsp(L.setPlaylistState("loaded"));
           }
         },
-        function (err) {
+        (err) => {
           dsp(L.loadError(true));
         }
       );

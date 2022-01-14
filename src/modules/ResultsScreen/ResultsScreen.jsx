@@ -15,7 +15,6 @@ const ResultsScreen = ({
   currentListID,
   songs,
   isresumed,
-  currentIndex,
   playingPage,
   isnextpage,
   isprivcheck,

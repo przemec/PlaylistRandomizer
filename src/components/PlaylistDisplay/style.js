@@ -59,7 +59,7 @@ export const IconsContainer = styled(Grid)`
           }
         `}
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 700px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px), 
     (max-height: 500px) {
     & ${IconWrapper} {
@@ -143,7 +143,7 @@ export const StyledTitle = styled.a`
   margin-bottom: 3px;
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 700px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px), 
     (max-height: 500px) {
     font-size: 17px;
@@ -157,7 +157,7 @@ export const DataContainer = styled(Grid)`
   align-items: flex-start;
   justify-content: center;
   max-width: calc(100% - 160px);
-  @media (max-width: 650px) and (max-height: 899px) {
+  @media (max-width: 700px) and (max-height: 899px) {
     max-width: calc(100% - 17vmin);
     max-width: calc(100% - max(16vmin, 75px));
   }
@@ -173,7 +173,7 @@ export const StyledData = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 700px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px), 
     (max-height: 500px) {
     font-size: 13px;

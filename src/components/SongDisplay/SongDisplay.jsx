@@ -3,11 +3,11 @@ import formatTime from "../../helpers/TimeFormat";
 import * as S from "./style";
 
 const SongDisplay = React.memo(
-  ({ song, index, page, changeSong, displayType, curr_dur }) => {
+  ({ song, index, page, changeSong, displaytype, curr_dur }) => {
     const { thumbnail, title, videoId } = song;
-    let lpwidth = displayType === "details" ? (index + 1).toString().length + 1 : (index + 1 + page * 200).toString().length + 1;
+    let lpwidth = displaytype === "details" ? (index + 1).toString().length + 1 : (index + 1 + page * 200).toString().length + 1;
 
-    return displayType === "details" ? (
+    return displaytype === "details" ? (
       <S.StyledContainer>
         <S.StyledLp lpwidth={lpwidth}>{index + 1}.</S.StyledLp>
         <S.StyledTime className="time">{formatTime(curr_dur)}</S.StyledTime>
@@ -21,7 +21,6 @@ const SongDisplay = React.memo(
           href={`https://youtu.be/${videoId}`}
           onClick={(e) => e.preventDefault()}
           lpwidth={lpwidth}
-          displayType={displayType}
         >
           {title}
         </S.StyledTitle>
@@ -39,7 +38,6 @@ const SongDisplay = React.memo(
           href={`https://youtu.be/${videoId}`}
           onClick={(e) => e.preventDefault()}
           lpwidth={lpwidth}
-          displayType={displayType}
         >
           {title}
         </S.StyledTitle>

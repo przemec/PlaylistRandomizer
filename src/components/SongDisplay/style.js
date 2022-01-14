@@ -29,7 +29,7 @@ export const StyledLp = styled(Grid)`
   padding: 0 1vmin;
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 700px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     font-size: 15px;
   }
@@ -49,10 +49,10 @@ export const StyledTitle = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: calc(100% - 16vmin - ${({ lpwidth }) => `${lpwidth * 10 + 15}px`}${({ displayType }) => displayType === "details" && " - 70px"});
+  width: calc(100% - 16vmin - ${({ lpwidth }) => `${lpwidth * 10 + 15}px`});
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
+    (max-width: 700px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     font-size: 15px;
   }

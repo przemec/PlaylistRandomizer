@@ -18,7 +18,7 @@ export const ResultsContainer = styled(Grid)`
   width: 45%;
   max-width: 800px;
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (min-height: 451px) and (max-height: 899px),
+    (max-width: 700px) and (min-height: 451px) and (max-height: 899px),
     (max-width: 1000px) and (min-height: 1200px) {
     display: table-row;
     max-width: unset;
