@@ -19,7 +19,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
   }
   const search = async () => {
     !pageToken &&
-      await gapi.client.youtube.playlists
+      (await gapi.client.youtube.playlists
         .list({
           part: "snippet",
           id: id,
@@ -41,7 +41,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
           (err) => {
             dsp(L.loadError(true));
           }
-        );
+        ));
     gapi.client.youtube.playlistItems
       .list({
         part: "snippet,contentDetails",
@@ -108,17 +108,17 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
             const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(
               d.getMinutes()
             )}:${z(d.getSeconds())}`;
-            if (action !== "refresh_details") dsp(P.loadPlaylist(songsArray, id, time));
+            if (action !== "refresh_details") await dsp(P.loadPlaylist(songsArray, id, time));
             if (action === "add") {
-              dsp(PS.addPlaylist(id, songsArray, listData));
+              await dsp(PS.addPlaylist(id, songsArray, listData));
             } else if (action === "refresh") {
-              dsp(P.resetToZero());
-              dsp(PS.editPlaylist(id, songsArray, listData));
-              resetPlayer();
+              await dsp(P.resetToZero());
+              await dsp(PS.editPlaylist(id, songsArray, listData));
+              await resetPlayer();
             } else if (action === "refresh_details") {
-              dsp(PS.editPlaylist(id, songsArray, listData));
+              await dsp(PS.editPlaylist(id, songsArray, listData));
             }
-            store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
+            store.getState().settings.autoshuffle && (await dsp(P.randomizePlaylist()));
             dsp(L.setPlaylistState("loaded"));
           }
         },

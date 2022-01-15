@@ -11,7 +11,7 @@ import * as S from "./style";
 const ResultsScreen = ({
   player,
   isPlayerLoaded,
-  isPlaylistLoaded,
+  playlistLoadState,
   currentListID,
   songs,
   isresumed,
@@ -73,10 +73,10 @@ const ResultsScreen = ({
   }, []);
   return (
     <>
-      {isPlayerLoaded && (
+      {isPlayerLoaded && playlistLoadState ? (
         <S.ResultsContainer>
           <S.ResultsGroupWrapper>
-            {isPlaylistLoaded !== "refreshing" && isPlaylistLoaded !== "randomizing" ? (
+            {playlistLoadState !== "refreshing" && playlistLoadState !== "randomizing" ? (
               <ResultsGroup songs={songs} changeSong={playSong} />
             ) : (
               <S.IconWrapper>
@@ -85,8 +85,9 @@ const ResultsScreen = ({
             )}
           </S.ResultsGroupWrapper>
         </S.ResultsContainer>
+      ) : (
+        <LoadingPanel />
       )}
-      {!isPlayerLoaded && <LoadingPanel />}
     </>
   );
 };
@@ -94,7 +95,7 @@ const ResultsScreen = ({
 const mapSTP = (state) => ({
   player: state.player,
   isPlayerLoaded: state.loadstate.isPlayerLoaded,
-  isPlaylistLoaded: state.loadstate.isPlaylistLoaded,
+  playlistLoadState: state.loadstate.isPlaylistLoaded,
   songs: state.playlist.list,
   resumableplaylists: state.resumableplaylists,
   currentIndex: state.playlist.index,

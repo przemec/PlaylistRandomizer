@@ -13,7 +13,7 @@ import * as S from "./style";
 const Player = ({
   player,
   isPlayerLoaded,
-  isPlaylistLoaded,
+  playlistLoadState,
   currentListID,
   songs,
   currentIndex,
@@ -72,9 +72,9 @@ const Player = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playingPage]);
   useEffect(() => {
-    isPlaylistLoaded === "randomizing" && setPlaylistState("loaded");
+    playlistLoadState === "randomizing" && setPlaylistState("loaded");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaylistLoaded]);
+  }, [playlistLoadState]);
   useEffect(() => {
     if (songs) {
       document.title = (currentSong && currentSong.title) || "YT Randomizer";
@@ -157,7 +157,7 @@ const Player = ({
 const mapSTP = (state) => ({
   player: state.player,
   isPlayerLoaded: state.loadstate.isPlayerLoaded,
-  isPlaylistLoaded: state.loadstate.isPlaylistLoaded,
+  playlistLoadState: state.loadstate.isPlaylistLoaded,
   currentListID: state.playlist.id,
   songs: state.playlist.list,
   currentIndex: state.playlist.index,

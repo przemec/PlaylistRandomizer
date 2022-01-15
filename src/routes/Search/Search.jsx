@@ -6,7 +6,7 @@ import * as P from "../../store/playlist/actions";
 import { clearPlayer } from "../../store/player/actions";
 import SearchScreen from "../../modules/SearchScreen";
 
-const SearchPage = ({ setPlaylistState, clearPlaylist, destroyPlayer }) => {
+const SearchPage = ({ destroyPlayer, clearPlaylist, setPlaylistState, setPlayerState }) => {
   React.useEffect(() => {
     destroyPlayer();
     clearPlaylist();
@@ -14,7 +14,9 @@ const SearchPage = ({ setPlaylistState, clearPlaylist, destroyPlayer }) => {
     window.YT = undefined;
     window.onYouTubeIframeAPIReady = undefined;
     setPlaylistState(false);
+    setPlayerState(false);
     document.getElementById("list-container").style.display = "none";
+    document.getElementById("youtube-player-wrapper").style.visibility = "hidden";
     let c = [...document.getElementsByTagName("script")];
     // eslint-disable-next-line array-callback-return
     c.map((e) => {
@@ -32,6 +34,7 @@ const SearchPage = ({ setPlaylistState, clearPlaylist, destroyPlayer }) => {
 
 const mapDTP = (dispatch) => ({
   setPlaylistState: (e) => dispatch(L.setPlaylistState(e)),
+  setPlayerState: (e) => dispatch(L.setPlayerState(e)),
   clearPlaylist: () => dispatch(P.clearPlaylist()),
   destroyPlayer: () => dispatch(clearPlayer()),
 });

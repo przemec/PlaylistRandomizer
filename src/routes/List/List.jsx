@@ -11,7 +11,7 @@ const List = ({
   randomizeP,
   playlists,
   loadPlaylist,
-  playlistLoaded,
+  playlistLoadState,
   loadingErr,
   setPlaylistState,
   autoshuffle,
@@ -25,7 +25,7 @@ const List = ({
     const isresumed = (match.params.isresumed === "continue" && savedresumablelist) || (autoresume && savedresumablelist);
     if (!savedlist) {
       //case: adding new list to saved
-      match.params.id && !playlistLoaded && downloadPlaylistData(match.params.id, "add");
+      match.params.id && !playlistLoadState && downloadPlaylistData(match.params.id, "add");
     } else {
       if (!isresumed) {
         if (savedlist.list) {
@@ -47,7 +47,7 @@ const List = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return playlistLoaded ? (
+  return playlistLoadState ? (
     <ResultsScreen currentListID={match.params.id} isresumed={isresumed} />
   ) : (
     <LoadingPanel err={loadingErr} />
@@ -56,7 +56,7 @@ const List = ({
 
 const mapSTP = (state) => ({
   playlists: state.playlists,
-  playlistLoaded: state.loadstate.isPlaylistLoaded,
+  playlistLoadState: state.loadstate.isPlaylistLoaded,
   loadingErr: state.loadstate.isPlaylistError,
   autoshuffle: state.settings.autoshuffle,
   autoresume: state.settings.autoresume,
