@@ -51,22 +51,22 @@ export const ListInfo = styled.div`
       transform: translate(-50%, -50%);
     }
     & > div:nth-child(1) {
-      transform: translate(calc(-50% - 170px), calc(-50% - 30px));
-    }
-    & > div:nth-child(2) {
       transform: translate(calc(-50% + 170px), calc(-50% - 30px));
     }
+    & > div:nth-child(2) {
+      transform: translate(calc(-50% - 170px), calc(-50% - 30px));
+    }
     & > div:nth-child(3) {
-      transform: translate(calc(-50% - 170px), calc(-50%));
+      transform: translate(calc(-50% + 170px), calc(-50% + 30px));
     }
     & > div:nth-child(4) {
       transform: translate(calc(-50% + 170px), calc(-50%));
     }
     & > div:nth-child(5) {
-      transform: translate(calc(-50% - 170px), calc(-50% + 30px));
+      transform: translate(calc(-50% - 170px), calc(-50%));
     }
     & > div:nth-child(6) {
-      transform: translate(calc(-50% + 170px), calc(-50% + 30px));
+      transform: translate(calc(-50% - 170px), calc(-50% + 30px));
     }
   }
 `;

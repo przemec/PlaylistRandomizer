@@ -36,12 +36,12 @@ const ListDetailsPage = ({ playlistId, playlists, resizeref, playlistLoadState }
           <S.InfoWrapper>
             <S.Thumbnail src={thumbnail} loading="lazy" alt="[Error loading thumbnail]" />
             <S.ListInfo>
-              <S.Info>Author: {author}</S.Info>
               <S.Info>{title}</S.Info>
-              <S.Info>Creation date: {creationDateFormatted}</S.Info>
-              <S.Info>Playlist length: {formatTime(length)}</S.Info>
-              <S.Info>Last refresh: {refreshFormatted}</S.Info>
+              <S.Info>Author: {author}</S.Info>
               <S.Info>Number of videos: {list.length}</S.Info>
+              <S.Info>Playlist length: {formatTime(length)}</S.Info>
+              <S.Info>Creation date: {creationDateFormatted}</S.Info>
+              <S.Info>Last refresh: {refreshFormatted}</S.Info>
             </S.ListInfo>
           </S.InfoWrapper>
           <S.IconsContainer>
