@@ -143,7 +143,6 @@ export const LoopIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.backgroundAccent};
   & svg {
     width: 40px;
     height: 40px;

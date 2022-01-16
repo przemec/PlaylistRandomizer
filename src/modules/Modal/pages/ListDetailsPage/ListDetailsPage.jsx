@@ -14,8 +14,14 @@ import AccessTimeRoundedIcon from "@material-ui/icons/AccessTimeRounded";
 const ListDetailsPage = ({ playlistId, playlists, resizeref, playlistLoadState }) => {
   let [timeDisplay, setTimeDisplay] = React.useState(false);
   let [songsDisplay, setSongsDisplay] = React.useState(false);
+  let [firstRender, setFirstRender] = React.useState(true);
   React.useEffect(() => {
-    getElementStyleById("songs-time-wrapper").height = playlistLoadState === "loaded" && songsDisplay && "60vh";
+    setFirstRender(false);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  React.useEffect(() => {
+    if (getElementStyleById("songs-time-wrapper"))
+      getElementStyleById("songs-time-wrapper").height = playlistLoadState === "loaded" && songsDisplay && "60vh";
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlistLoadState]);
   const listdetails = playlists.find((e) => e.id === playlistId);
@@ -28,76 +34,84 @@ const ListDetailsPage = ({ playlistId, playlists, resizeref, playlistLoadState }
   const creationDateFormatted = `${creationDate?.[2]}/${creationDate?.[1]}/${creationDate?.[0]}`;
   const refreshFormatted = refresh.split(",")[0];
 
-  let getElementStyleById = (id) => document.getElementById(id).style;
+  let getElementStyleById = (id) => document.getElementById(id)?.style;
   return (
     <S.Container ref={resizeref()}>
-      {playlistLoadState !== "refreshing_details" ? (
+      {!firstRender ? (
         <>
-          <S.InfoWrapper>
-            <S.Thumbnail src={thumbnail} loading="lazy" alt="[Error loading thumbnail]" />
-            <S.ListInfo>
-              <S.Info>{title}</S.Info>
-              <S.Info>Author: {author}</S.Info>
-              <S.Info>Number of videos: {list.length}</S.Info>
-              <S.Info>Playlist length: {formatTime(length)}</S.Info>
-              <S.Info>Creation date: {creationDateFormatted}</S.Info>
-              <S.Info>Last refresh: {refreshFormatted}</S.Info>
-            </S.ListInfo>
-          </S.InfoWrapper>
-          <S.IconsContainer>
-            {songsDisplay && (
-              <Tooltip title={`${timeDisplay ? "Hide" : "Show"} times for each video`} placement="top">
-                <S.IconWrapper
-                  onClick={() => {
-                    var timeDivs = document.querySelectorAll(".time");
-                    timeDivs.forEach((e) => {
-                      e.style.display = timeDisplay ? "none" : "block";
-                    });
-                    setTimeDisplay(!timeDisplay);
-                  }}
-                >
-                  {timeDisplay ? <HighlightOffRoundedIcon /> : <AccessTimeRoundedIcon />}
-                </S.IconWrapper>
-              </Tooltip>
-            )}
-            <Tooltip title={`${songsDisplay ? "Hide" : "Show"} full list of videos`} placement="top">
-              <S.IconWrapper
-                onClick={() => {
-                  if (songsDisplay) {
-                    getElementStyleById("songs-time-wrapper").height = "0";
-                    getElementStyleById("resizable-wrap").width = "";
-                    getElementStyleById("songs-time-wrapper").width = "0";
-                  } else {
-                    getElementStyleById("songs-time-wrapper").height = "60vh";
-                    getElementStyleById("resizable-wrap").width = "90vw";
-                    getElementStyleById("songs-time-wrapper").width = "90vw";
-                  }
-                  setSongsDisplay(!songsDisplay);
-                }}
-              >
-                {songsDisplay ? <MusicOff /> : <QueueMusic />}
-              </S.IconWrapper>
-            </Tooltip>
-            <Tooltip title={"Refresh playlist details"} placement="top">
-              <S.IconWrapper
-                onClick={() => {
-                  getElementStyleById("songs-time-wrapper").height = "0";
-                  playlistLoadState !== "refreshing" && downloadPlaylistData(playlistId, "refresh_details");
-                }}
-              >
-                <CloudDownloadIcon />
-              </S.IconWrapper>
-            </Tooltip>
-          </S.IconsContainer>
+          {playlistLoadState !== "refreshing_details" ? (
+            <>
+              <S.InfoWrapper>
+                <S.Thumbnail src={thumbnail} loading="lazy" alt="[Error loading thumbnail]" />
+                <S.ListInfo>
+                  <S.Info>{title}</S.Info>
+                  <S.Info>Author: {author}</S.Info>
+                  <S.Info>Number of videos: {list.length}</S.Info>
+                  <S.Info>Playlist length: {formatTime(length)}</S.Info>
+                  <S.Info>Creation date: {creationDateFormatted}</S.Info>
+                  <S.Info>Last refresh: {refreshFormatted}</S.Info>
+                </S.ListInfo>
+              </S.InfoWrapper>
+              <S.IconsContainer>
+                {songsDisplay && (
+                  <Tooltip title={`${timeDisplay ? "Hide" : "Show"} times for each video`} placement="top">
+                    <S.IconWrapper
+                      onClick={() => {
+                        var timeDivs = document.querySelectorAll(".time");
+                        timeDivs.forEach((e) => {
+                          e.style.display = timeDisplay ? "none" : "block";
+                        });
+                        setTimeDisplay(!timeDisplay);
+                      }}
+                    >
+                      {timeDisplay ? <HighlightOffRoundedIcon /> : <AccessTimeRoundedIcon />}
+                    </S.IconWrapper>
+                  </Tooltip>
+                )}
+                <Tooltip title={`${songsDisplay ? "Hide" : "Show"} full list of videos`} placement="top">
+                  <S.IconWrapper
+                    onClick={() => {
+                      if (songsDisplay) {
+                        getElementStyleById("songs-time-wrapper").height = "0";
+                        getElementStyleById("resizable-wrap").width = "";
+                        getElementStyleById("songs-time-wrapper").width = "0";
+                      } else {
+                        getElementStyleById("songs-time-wrapper").height = "60vh";
+                        getElementStyleById("resizable-wrap").width = "90vw";
+                        getElementStyleById("songs-time-wrapper").width = "90vw";
+                      }
+                      setSongsDisplay(!songsDisplay);
+                    }}
+                  >
+                    {songsDisplay ? <MusicOff /> : <QueueMusic />}
+                  </S.IconWrapper>
+                </Tooltip>
+                <Tooltip title={"Refresh playlist details"} placement="top">
+                  <S.IconWrapper
+                    onClick={() => {
+                      getElementStyleById("songs-time-wrapper").height = "0";
+                      playlistLoadState !== "refreshing" && downloadPlaylistData(playlistId, "refresh_details");
+                    }}
+                  >
+                    <CloudDownloadIcon />
+                  </S.IconWrapper>
+                </Tooltip>
+              </S.IconsContainer>
+            </>
+          ) : (
+            <S.LoopIconWrapper>
+              <S.LoopIco />
+            </S.LoopIconWrapper>
+          )}
+          <S.SongsWrapper id={"songs-time-wrapper"}>
+            <Songs songs={list} displaytype={"details"} />
+          </S.SongsWrapper>
         </>
       ) : (
         <S.LoopIconWrapper>
           <S.LoopIco />
         </S.LoopIconWrapper>
       )}
-      <S.SongsWrapper id={"songs-time-wrapper"}>
-        <Songs songs={list} displaytype={"details"} />
-      </S.SongsWrapper>
     </S.Container>
   );
 };
