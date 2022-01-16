@@ -9,4 +9,5 @@ export const StyledList = styled(Grid)`
   right: 0;
   overflow: auto;
   background: ${({ theme }) => theme.backgroundAccent};
+  border-radius: ${({ displaytype }) => displaytype === "details" && "8px"};
 `;

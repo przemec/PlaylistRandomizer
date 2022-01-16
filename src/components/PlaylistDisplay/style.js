@@ -29,7 +29,7 @@ export const IconWrapper = styled(Grid)`
 `;
 
 export const IconsContainer = styled(Grid)`
-  width: ${({ isresumable }) => (isresumable ? "100px" : "65px")};
+  width: ${({ isresumable }) => (isresumable ? "130px" : "100px")};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -41,9 +41,12 @@ export const IconsContainer = styled(Grid)`
             opacity: 0;
           }
           & ${IconWrapper}:nth-child(1) {
+            transform: scale(0.5) translateX(80px);
+          }
+          & ${IconWrapper}:nth-child(2) {
             transform: scale(0.5) translateX(40px);
           }
-          & ${IconWrapper}:nth-child(3) {
+          & ${IconWrapper}:nth-child(4) {
             transform: scale(0.5) translateX(-40px);
           }
         `
@@ -51,13 +54,14 @@ export const IconsContainer = styled(Grid)`
           & ${IconWrapper} {
             opacity: 0;
           }
-          & ${IconWrapper}:nth-child(2) {
+          & ${IconWrapper}:nth-child(3) {
             transform: scale(0.5) translateX(-40px);
           }
         `}
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
+    (max-width: 700px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
     & ${IconWrapper} {
       visibility: visible;
       opacity: 0.5;
@@ -93,7 +97,7 @@ export const MainContainer = styled(Grid)`
             opacity: 0.5;
             transform: scale(1) translateX(0px);
           }
-          &:hover ${IconWrapper}:nth-child(2) {
+          &:hover ${IconWrapper}:nth-child(3) {
             transform: rotate(360deg);
           }
         `
@@ -103,14 +107,14 @@ export const MainContainer = styled(Grid)`
             opacity: 0.5;
             transform: scale(1) translateX(0px);
           }
-          &:hover ${IconWrapper}:nth-child(1) {
+          &:hover ${IconWrapper}:nth-child(2) {
             transform: rotate(360deg);
           }
         `}
 `;
 
 export const Cont = styled(Grid)`
-  width: calc(100% - ${({ isresumable }) => (isresumable ? "100px" : "65px")});
+  width: calc(100% - ${({ isresumable }) => (isresumable ? "130px" : "100px")});
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -121,8 +125,8 @@ export const Thumbnail = styled.img`
   width: 16vmin;
   height: 9vmin;
   background-size: cover;
-  min-height: 60px;
-  min-width: 105px;
+  min-height: 45px;
+  min-width: 75px;
   max-height: 90px;
   max-width: 160px;
   color: ${({ theme }) => theme.defaultText};
@@ -139,8 +143,9 @@ export const StyledTitle = styled.a`
   margin-bottom: 3px;
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
+    (max-width: 700px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
     font-size: 17px;
     margin-bottom: 0px;
   }
@@ -152,14 +157,15 @@ export const DataContainer = styled(Grid)`
   align-items: flex-start;
   justify-content: center;
   max-width: calc(100% - 160px);
-  @media (max-width: 650px) and (max-height: 899px) {
-    max-width: calc(100% - 110px);
+  @media (max-width: 700px) and (max-height: 899px) {
+    max-width: calc(100% - 17vmin);
+    max-width: calc(100% - max(16vmin, 75px));
   }
 `;
 
 export const StyledData = styled.div`
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -167,8 +173,9 @@ export const StyledData = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.defaultText};
   @media (max-width: 900px) and (min-height: 900px),
-    (max-width: 650px) and (max-height: 899px),
-    (max-width: 1000px) and (min-height: 1200px) {
-    font-size: 14px;
+    (max-width: 700px) and (max-height: 899px),
+    (max-width: 1000px) and (min-height: 1200px), 
+    (max-height: 500px) {
+    font-size: 13px;
   }
 `;

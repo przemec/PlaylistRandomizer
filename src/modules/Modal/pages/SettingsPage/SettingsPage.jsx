@@ -16,8 +16,9 @@ const SettingsPage = ({
   swLoop,
   swRefresh,
   swResume,
+  resizeref,
 }) => (
-  <S.MainWrapper>
+  <S.MainWrapper ref={resizeref()}>
     <S.SettingContainer>
       <S.SettingName>Auto-shuffle playlist while loading page</S.SettingName>
       <S.SwitchWrapper>

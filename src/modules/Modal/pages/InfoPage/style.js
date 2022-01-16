@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { Grid } from "@material-ui/core/";
 
-export const StyledContainer = styled(Grid)`
-  padding: 0 20px;
-  margin: 0 5%;
-  width: 90%;
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 5%;
 `;
 
-export const QHeader = styled(Grid)`
+export const QHeader = styled.div`
   width: 100%;
   margin-top: 15px;
   font-size: 18px;
@@ -18,7 +19,7 @@ export const QHeader = styled(Grid)`
   }
 `;
 
-export const Answer = styled(Grid)`
+export const Answer = styled.div`
   line-height: 26px;
   width: 100%;
   margin: 10px 0;

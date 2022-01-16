@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 
 export const StyledContainer = styled(Grid)`
-  padding: 3%;
+  padding: 3% 0;
 `;
 
 export const StyledField = styled(Grid)`
@@ -11,9 +11,11 @@ export const StyledField = styled(Grid)`
   justify-content: center;
   width: 8vh;
   height: 8vh;
+  min-width: 45px;
+  min-height: 45px;
   margin: 1vh;
-  border-radius: ${({ ischecked }) => (ischecked ? "4vh" : "2vh")};
-  border-width: 0.5vh;
+  border-radius: ${({ ischecked }) => (ischecked ? "30px" : "15px")};
+  border-width: 3px;
   border-style: solid;
   border-color: ${({ border }) => border};
   background: ${({ color }) => color};
@@ -27,9 +29,11 @@ export const StyledField = styled(Grid)`
     fill: ${({ border }) => border};
     height: 5vh;
     width: 5vh;
+    min-width: 30px;
+    min-height: 30px;
   }
   &:hover {
     opacity: 1;
-    border-radius: 4vh;
+    border-radius: 30px;
   }
 `;

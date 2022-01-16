@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core/";
 import LoopIcon from "@material-ui/icons/Autorenew";
 
 export const Container = styled(Grid)`
+  position: relative;
   width: 100%;
   height: 10vmin;
   max-height: 60px;
@@ -38,6 +39,10 @@ export const IconWrapper = styled(Grid)`
   &:hover svg {
     fill: ${({ theme }) => theme.primaryHover};
   }
+`;
+export const IconWrapperAlignToRight = styled(IconWrapper)`
+  position: absolute;
+  right: 0;
 `;
 
 const rotate = keyframes`

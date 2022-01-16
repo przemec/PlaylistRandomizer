@@ -7,18 +7,25 @@ import { gapi } from "gapi-script";
 const downloadPlaylistData = (id, action, resetPlayer) => {
   let pageToken = undefined;
   let listData = {};
-  let listt = [];
+  let songsArray = [];
+  let savedlist;
   const dsp = store.dispatch;
-  action === "refresh" && dsp(L.setPlaylistState("refreshing"));
-  const search = () => {
+  if (action === "refresh") {
+    savedlist = store.getState().playlists.find((e) => e.id === id).list;
+    dsp(L.setPlaylistState("refreshing"));
+  } else if (action === "refresh_details") {
+    savedlist = store.getState().playlists.find((e) => e.id === id).list;
+    dsp(L.setPlaylistState("refreshing_details"));
+  }
+  const search = async () => {
     !pageToken &&
-      gapi.client.youtube.playlists
+      (await gapi.client.youtube.playlists
         .list({
           part: "snippet",
           id: id,
         })
         .then(
-          function (res) {
+          (res) => {
             if (res.result.items[0]) {
               const { channelTitle: author, thumbnails, title, publishedAt } = res.result.items[0].snippet;
               const { url: thumbnail } = thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
@@ -27,13 +34,14 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
                 thumbnail,
                 title,
                 publishedAt,
+                length: 0,
               };
             }
           },
-          function (err) {
+          (err) => {
             dsp(L.loadError(true));
           }
-        );
+        ));
     gapi.client.youtube.playlistItems
       .list({
         part: "snippet,contentDetails",
@@ -42,7 +50,8 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
         pageToken: pageToken,
       })
       .then(
-        (res) => {
+        async (res) => {
+          let videosToCheckLength = [];
           // eslint-disable-next-line array-callback-return
           res.result.items.map((e) => {
             const {
@@ -50,35 +59,70 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
               resourceId: { videoId },
               thumbnails,
             } = e.snippet;
-            const item = {
+            let item = {
               title,
               videoId,
               thumbnail: thumbnails && thumbnails.medium && thumbnails.medium.url,
             };
             if (e.contentDetails.videoPublishedAt && thumbnails) {
-              listt = [...listt, item];
+              if (action === "add") videosToCheckLength = [...videosToCheckLength, videoId];
+              else if (action === "refresh" || action === "refresh_details") {
+                const savedtime = savedlist.find((e) => e.videoId === videoId)?.duration;
+                if (!savedtime) videosToCheckLength = [...videosToCheckLength, videoId];
+                else {
+                  item = { ...item, duration: savedtime };
+                  listData.length += savedtime;
+                }
+              }
+              songsArray = [...songsArray, item];
             }
           });
+          videosToCheckLength.length !== 0 &&
+            (await gapi.client.youtube.videos
+              .list({
+                part: "contentDetails",
+                id: videosToCheckLength,
+              })
+              .then(
+                (res) => {
+                  // eslint-disable-next-line array-callback-return
+                  res.result.items.map((e) => {
+                    const { duration } = e.contentDetails;
+                    const { id } = e;
+                    const dur_tab = duration.slice(2, duration.length - 1).split("M");
+                    const time = dur_tab[1] ? 60 * parseInt(dur_tab[0]) + parseInt(dur_tab[1]) : parseInt(dur_tab[0]);
+                    listData.length += time;
+                    songsArray = songsArray.map((item) => (item.videoId === id ? { ...item, duration: time } : item));
+                  });
+                },
+                function (err) {
+                  dsp(L.loadError(true));
+                }
+              ));
           if (res.result.nextPageToken) {
             pageToken = res.result.nextPageToken;
             search(id);
           } else {
             const d = new Date();
             const z = (number) => (number < 10 ? `0${number}` : number);
-            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(d.getMinutes())}:${z(d.getSeconds())}`;
-            dsp(P.loadPlaylist(listt, id, time));
+            const time = `${z(d.getDate())}/${z(d.getMonth() + 1)}/${d.getFullYear()}, ${z(d.getHours())}:${z(
+              d.getMinutes()
+            )}:${z(d.getSeconds())}`;
+            if (action !== "refresh_details") await dsp(P.loadPlaylist(songsArray, id, time));
             if (action === "add") {
-              dsp(PS.addPlaylist(id, listt, listData));
+              await dsp(PS.addPlaylist(id, songsArray, listData));
             } else if (action === "refresh") {
-              dsp(P.resetToZero());
-              dsp(PS.editPlaylist(id, listt, listData));
-              resetPlayer();
+              await dsp(P.resetToZero());
+              await dsp(PS.editPlaylist(id, songsArray, listData));
+              await resetPlayer();
+            } else if (action === "refresh_details") {
+              await dsp(PS.editPlaylist(id, songsArray, listData));
             }
-            store.getState().settings.autoshuffle && dsp(P.randomizePlaylist());
+            store.getState().settings.autoshuffle && (await dsp(P.randomizePlaylist()));
             dsp(L.setPlaylistState("loaded"));
           }
         },
-        function (err) {
+        (err) => {
           dsp(L.loadError(true));
         }
       );

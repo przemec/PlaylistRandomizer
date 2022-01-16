@@ -5,11 +5,36 @@ export const ModalBackground = styled(Grid)`
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
   background-color: #000;
   opacity: 0.7;
+`;
+
+export const ResizableWrap = styled.div`
+  height: 90vh;
+  width: 90vw;
+  max-height: calc(100vh - 90px);
+  @media (min-width: 900px) {
+    width: 60vw;
+    max-width: 900px;
+  }
+`;
+
+export const ContainerRel = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
+
+export const ContainerAbs = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
 `;
 
 export const ModalWrapper = styled(Grid)`
@@ -26,9 +51,10 @@ export const ComponentWrapper = styled(Grid)`
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   background: ${({ theme }) => theme.backgroundAccent};
-  width: 90vw;
   max-width: 900px;
-  margin: 20px 0;
+  max-width: min(900px, calc(100% - 10px));
+  max-height: calc(100vh - 20px);
+  margin: 10px 0;
 `;
 
 export const Header = styled(Grid)`

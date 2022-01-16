@@ -9,12 +9,12 @@ export default [
     },
   },
   {
-    id: "PLkcsM8kKgr7ZKMqurXpG-Lk1yPfEn-YMX",
+    id: "PLkcsM8kKgr7ad1O9F4F-BxQTLQXmY_TMA",
     listData: {
       author: "Przemec",
-      thumbnail: "https://i.ytimg.com/vi/wycjnCCgUes/mqdefault.jpg",
-      title: "jeez",
-      publishedAt: "2019-07-24T01:20:47Z",
+      thumbnail: "https://i.ytimg.com/vi/1ZrmNPw8beI/mqdefault.jpg",
+      title: "chill",
+      publishedAt: "2020-07-23T01:20:47",
     },
   },
   {
