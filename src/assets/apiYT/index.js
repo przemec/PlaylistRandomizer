@@ -118,7 +118,7 @@ const downloadPlaylistData = (id, action, resetPlayer) => {
             } else if (action === "refresh_details") {
               await dsp(PS.editPlaylist(id, songsArray, listData));
             }
-            store.getState().settings.autoshuffle && (await dsp(P.randomizePlaylist()));
+            action !== "refresh_details" && store.getState().settings.autoshuffle && (await dsp(P.randomizePlaylist()));
             dsp(L.setPlaylistState("loaded"));
           }
         },
