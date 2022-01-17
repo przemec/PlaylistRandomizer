@@ -10,7 +10,7 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
 import AccessTimeRoundedIcon from "@material-ui/icons/AccessTimeRounded";
 
-const PlaylistInfo = ({  playlistId, playlistLoadState, listdetails }) => {
+const PlaylistInfo = ({ playlistId, playlistLoadState, listdetails }) => {
   let [timeDisplay, setTimeDisplay] = React.useState(false);
   let [songsDisplay, setSongsDisplay] = React.useState(false);
   const {
@@ -60,6 +60,8 @@ const PlaylistInfo = ({  playlistId, playlistLoadState, listdetails }) => {
         <Tooltip title={`${songsDisplay ? "Hide" : "Show"} full list of videos`} placement="top">
           <S.IconWrapper
             onClick={() => {
+              //force hide tooltip
+              document.getElementsByClassName("MuiTooltip-popper")[0].style.display = "none";
               if (songsDisplay) {
                 getElementStyleById("songs-time-wrapper").height = "0";
                 getElementStyleById("resizable-wrap").width = "";

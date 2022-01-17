@@ -148,9 +148,6 @@ export const LoopIconWrapper = styled.div`
     height: 40px;
     fill: ${({ theme }) => theme.primary};
   }
-  &:hover svg {
-    fill: ${({ theme }) => theme.primaryHover};
-  }
 `;
 
 const rotate = keyframes`

@@ -42,6 +42,8 @@ const PlayerControl = ({
         <Tooltip title="Playlist details">
           <S.IconWrapper
             onClick={() => {
+              //force hide tooltip
+              document.getElementsByClassName("MuiTooltip-popper")[0].style.display = "none";
               setModalPlaylist(playlistId);
               showModal("ListDetailsPage", "Playlist Details");
             }}
