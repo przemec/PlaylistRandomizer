@@ -1,5 +1,4 @@
-import styled, { keyframes } from "styled-components";
-import LoopIcon from "@material-ui/icons/Autorenew";
+import styled from "styled-components";
 
 export const Container = styled.div`
   position: relative;
@@ -123,42 +122,4 @@ export const IconWrapper = styled.div`
   @media (max-height: 450px) {
     display: none;
   }
-`;
-
-export const SongsWrapper = styled.div`
-  position: relative;
-  width: 0;
-  max-width: 100%;
-  height: 0;
-  overflow: hidden;
-  transition: width, height 0.2s ease-in-out;
-  @media (max-height: 450px) {
-    display: none;
-  }
-`;
-
-export const LoopIconWrapper = styled.div`
-  width: 100%;
-  height: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & svg {
-    width: 40px;
-    height: 40px;
-    fill: ${({ theme }) => theme.primary};
-  }
-`;
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export const LoopIco = styled(LoopIcon)`
-  animation: ${rotate} 2s linear infinite;
 `;

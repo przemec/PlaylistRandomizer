@@ -38,9 +38,6 @@ export const IconWrapper = styled(Grid)`
     height: 5vmin;
     fill: ${({ theme }) => theme.primary};
   }
-  &:hover svg {
-    fill: ${({ theme }) => theme.primaryHover};
-  }
 `;
 
 const rotate = keyframes`
