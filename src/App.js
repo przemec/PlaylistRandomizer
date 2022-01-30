@@ -7,13 +7,12 @@ import AppBar from "./components/AppBar";
 import Modal from "./modules/Modal";
 import Player from "./modules/Player";
 import * as S from "./style";
-const API_KEY = "AIzaSyBv9CFoSRPpUK11uwbfZLtu9pGDh91Ugaw";
 
 const App = () => {
   const [gapiReady, updateGapiState] = React.useState(false);
   const loadYoutubeApi = () => {
     gapi.load("client", () => {
-      gapi.client.setApiKey(API_KEY);
+      gapi.client.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
       gapi.client.load("youtube", "v3", () => {
         updateGapiState(true);
       });
