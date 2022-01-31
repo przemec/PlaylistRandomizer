@@ -34,8 +34,6 @@ const PlaylistDisplay = ({ listData, listId, type, isFav, toggleFav, deleteP, de
             <S.IconWrapper
               onClick={(e) => {
                 e.stopPropagation();
-                //force hide tooltip
-                document.getElementsByClassName("MuiTooltip-popper")[0].style.display = "none";
                 setModalPlaylist(listId);
                 showM("ListDetailsPage", "Playlist Details");
               }}

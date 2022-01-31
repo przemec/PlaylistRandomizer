@@ -60,8 +60,6 @@ const PlaylistInfo = ({ playlistId, playlistLoadState, listdetails }) => {
         <Tooltip title={`${songsDisplay ? "Hide" : "Show"} full list of videos`} placement="top">
           <S.IconWrapper
             onClick={() => {
-              //force hide tooltip
-              document.getElementsByClassName("MuiTooltip-popper")[0].style.display = "none";
               if (songsDisplay) {
                 getElementStyleById("songs-time-wrapper").height = "0";
                 getElementStyleById("resizable-wrap").width = "";

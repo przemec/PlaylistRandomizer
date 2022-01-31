@@ -75,7 +75,6 @@ export const MainContainer = styled(Grid)`
   min-height: 60px;
   max-height: 90px;
   position: relative;
-  margin: 10px 0;
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -89,6 +88,10 @@ export const MainContainer = styled(Grid)`
     box-shadow: 0px -3px 4px -1px ${({ theme }) => (theme.type === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)")},
       0px 3px 4px -1px ${({ theme }) => (theme.type === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)")};
   }
+  @media (min-width: 700px) {
+    margin: 10px 0;
+  }
+
   ${({ isresumable }) =>
     isresumable
       ? css`
